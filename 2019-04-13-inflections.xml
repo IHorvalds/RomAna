@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Inflections>
+      <Inflection id="1">
+      <Description>Substantiv masculin, Nominativ-Acuzativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="2">
+      <Description>Substantiv masculin, Genitiv-Dativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="3">
+      <Description>Substantiv masculin, Nominativ-Acuzativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="4">
+      <Description>Substantiv masculin, Genitiv-Dativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="5">
+      <Description>Substantiv masculin, Nominativ-Acuzativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="6">
+      <Description>Substantiv masculin, Genitiv-Dativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="7">
+      <Description>Substantiv masculin, Nominativ-Acuzativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="8">
+      <Description>Substantiv masculin, Genitiv-Dativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="9">
+      <Description>Substantiv feminin, Nominativ-Acuzativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="10">
+      <Description>Substantiv feminin, Genitiv-Dativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="11">
+      <Description>Substantiv feminin, Nominativ-Acuzativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="12">
+      <Description>Substantiv feminin, Genitiv-Dativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="13">
+      <Description>Substantiv feminin, Nominativ-Acuzativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="14">
+      <Description>Substantiv feminin, Genitiv-Dativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="15">
+      <Description>Substantiv feminin, Nominativ-Acuzativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="16">
+      <Description>Substantiv feminin, Genitiv-Dativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="17">
+      <Description>Substantiv neutru, Nominativ-Acuzativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="18">
+      <Description>Substantiv neutru, Genitiv-Dativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="19">
+      <Description>Substantiv neutru, Nominativ-Acuzativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="20">
+      <Description>Substantiv neutru, Genitiv-Dativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="21">
+      <Description>Substantiv neutru, Nominativ-Acuzativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="22">
+      <Description>Substantiv neutru, Genitiv-Dativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="23">
+      <Description>Substantiv neutru, Nominativ-Acuzativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="24">
+      <Description>Substantiv neutru, Genitiv-Dativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="25">
+      <Description>Adjectiv, masculin, Nominativ-Acuzativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="26">
+      <Description>Adjectiv, masculin, Genitiv-Dativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="27">
+      <Description>Adjectiv, masculin, Nominativ-Acuzativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="28">
+      <Description>Adjectiv, masculin, Genitiv-Dativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="29">
+      <Description>Adjectiv, masculin, Nominativ-Acuzativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="30">
+      <Description>Adjectiv, masculin, Genitiv-Dativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="31">
+      <Description>Adjectiv, masculin, Nominativ-Acuzativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="32">
+      <Description>Adjectiv, masculin, Genitiv-Dativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="33">
+      <Description>Adjectiv, feminin, Nominativ-Acuzativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="34">
+      <Description>Adjectiv, feminin, Genitiv-Dativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="35">
+      <Description>Adjectiv, feminin, Nominativ-Acuzativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="36">
+      <Description>Adjectiv, feminin, Genitiv-Dativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="37">
+      <Description>Adjectiv, feminin, Nominativ-Acuzativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="38">
+      <Description>Adjectiv, feminin, Genitiv-Dativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="39">
+      <Description>Adjectiv, feminin, Nominativ-Acuzativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="40">
+      <Description>Adjectiv, feminin, Genitiv-Dativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="41">
+      <Description>Pronume, masculin, Nominativ-Acuzativ, singular</Description>
+    </Inflection>
+      <Inflection id="42">
+      <Description>Pronume, masculin, Genitiv-Dativ, singular</Description>
+    </Inflection>
+      <Inflection id="43">
+      <Description>Pronume, masculin, Nominativ-Acuzativ, plural</Description>
+    </Inflection>
+      <Inflection id="44">
+      <Description>Pronume, masculin, Genitiv-Dativ, plural</Description>
+    </Inflection>
+      <Inflection id="45">
+      <Description>Pronume, feminin, Nominativ-Acuzativ, singular</Description>
+    </Inflection>
+      <Inflection id="46">
+      <Description>Pronume, feminin, Genitiv-Dativ, singular</Description>
+    </Inflection>
+      <Inflection id="47">
+      <Description>Pronume, feminin, Nominativ-Acuzativ, plural</Description>
+    </Inflection>
+      <Inflection id="48">
+      <Description>Pronume, feminin, Genitiv-Dativ, plural</Description>
+    </Inflection>
+      <Inflection id="49">
+      <Description>Verb, Infinitiv prezent</Description>
+    </Inflection>
+      <Inflection id="50">
+      <Description>Verb, Infinitiv lung</Description>
+    </Inflection>
+      <Inflection id="51">
+      <Description>Verb, Imperativ, persoana a II-a, singular</Description>
+    </Inflection>
+      <Inflection id="52">
+      <Description>Verb, Participiu pasiv</Description>
+    </Inflection>
+      <Inflection id="53">
+      <Description>Verb, Gerunziu</Description>
+    </Inflection>
+      <Inflection id="54">
+      <Description>Verb, Indicativ, prezent, persoana I, singular</Description>
+    </Inflection>
+      <Inflection id="55">
+      <Description>Verb, Indicativ, prezent, persoana a II-a, singular</Description>
+    </Inflection>
+      <Inflection id="56">
+      <Description>Verb, Indicativ, prezent, persoana a III-a, singular</Description>
+    </Inflection>
+      <Inflection id="57">
+      <Description>Verb, Indicativ, prezent, persoana I, plural</Description>
+    </Inflection>
+      <Inflection id="58">
+      <Description>Verb, Indicativ, prezent, persoana a II-a, plural</Description>
+    </Inflection>
+      <Inflection id="59">
+      <Description>Verb, Indicativ, prezent, persoana a III-a, plural</Description>
+    </Inflection>
+      <Inflection id="60">
+      <Description>Verb, Conjunctiv, prezent, persoana I, singular</Description>
+    </Inflection>
+      <Inflection id="61">
+      <Description>Verb, Conjunctiv, prezent, persoana a II-a, singular</Description>
+    </Inflection>
+      <Inflection id="62">
+      <Description>Verb, Conjunctiv, prezent, persoana a III-a, singular</Description>
+    </Inflection>
+      <Inflection id="63">
+      <Description>Verb, Conjunctiv, prezent, persoana I, plural</Description>
+    </Inflection>
+      <Inflection id="64">
+      <Description>Verb, Conjunctiv, prezent, persoana a II-a, plural</Description>
+    </Inflection>
+      <Inflection id="65">
+      <Description>Verb, Conjunctiv, prezent, persoana a III-a, plural</Description>
+    </Inflection>
+      <Inflection id="66">
+      <Description>Verb, Indicativ, imperfect, persoana I, singular</Description>
+    </Inflection>
+      <Inflection id="67">
+      <Description>Verb, Indicativ, imperfect, persoana a II-a, singular</Description>
+    </Inflection>
+      <Inflection id="68">
+      <Description>Verb, Indicativ, imperfect, persoana a III-a, singular</Description>
+    </Inflection>
+      <Inflection id="69">
+      <Description>Verb, Indicativ, imperfect, persoana I, plural</Description>
+    </Inflection>
+      <Inflection id="70">
+      <Description>Verb, Indicativ, imperfect, persoana a II-a, plural</Description>
+    </Inflection>
+      <Inflection id="71">
+      <Description>Verb, Indicativ, imperfect, persoana a III-a, plural</Description>
+    </Inflection>
+      <Inflection id="72">
+      <Description>Verb, Indicativ, perfect simplu, persoana I, singular</Description>
+    </Inflection>
+      <Inflection id="73">
+      <Description>Verb, Indicativ, perfect simplu, persoana a II-a, singular</Description>
+    </Inflection>
+      <Inflection id="74">
+      <Description>Verb, Indicativ, perfect simplu, persoana a III-a, singular</Description>
+    </Inflection>
+      <Inflection id="75">
+      <Description>Verb, Indicativ, perfect simplu, persoana I, plural</Description>
+    </Inflection>
+      <Inflection id="76">
+      <Description>Verb, Indicativ, perfect simplu, persoana a II-a, plural</Description>
+    </Inflection>
+      <Inflection id="77">
+      <Description>Verb, Indicativ, perfect simplu, persoana a III-a, plural</Description>
+    </Inflection>
+      <Inflection id="78">
+      <Description>Verb, Indicativ, mai mult ca perfect, persoana I, singular</Description>
+    </Inflection>
+      <Inflection id="79">
+      <Description>Verb, Indicativ, mai mult ca perfect, persoana a II-a, singular</Description>
+    </Inflection>
+      <Inflection id="80">
+      <Description>Verb, Indicativ, mai mult ca perfect, persoana a III-a, singular</Description>
+    </Inflection>
+      <Inflection id="81">
+      <Description>Verb, Indicativ, mai mult ca perfect, persoana I, plural</Description>
+    </Inflection>
+      <Inflection id="82">
+      <Description>Verb, Indicativ, mai mult ca perfect, persoana a II-a, plural</Description>
+    </Inflection>
+      <Inflection id="83">
+      <Description>Verb, Indicativ, mai mult ca perfect, persoana a III-a, plural</Description>
+    </Inflection>
+      <Inflection id="84">
+      <Description>Invariabil</Description>
+    </Inflection>
+      <Inflection id="85">
+      <Description>Formă unică</Description>
+    </Inflection>
+      <Inflection id="86">
+      <Description>Verb, Imperativ, persoana a II-a, plural</Description>
+    </Inflection>
+      <Inflection id="87">
+      <Description>Substantiv masculin, Vocativ, singular</Description>
+    </Inflection>
+      <Inflection id="88">
+      <Description>Substantiv masculin, Vocativ, plural</Description>
+    </Inflection>
+      <Inflection id="89">
+      <Description>Substantiv feminin, Vocativ, singular</Description>
+    </Inflection>
+      <Inflection id="90">
+      <Description>Substantiv feminin, Vocativ, plural</Description>
+    </Inflection>
+      <Inflection id="91">
+      <Description>Substantiv neutru, Vocativ, singular</Description>
+    </Inflection>
+      <Inflection id="92">
+      <Description>Substantiv neutru, Vocativ, plural</Description>
+    </Inflection>
+      <Inflection id="93">
+      <Description>Adjectiv, masculin, Vocativ, singular</Description>
+    </Inflection>
+      <Inflection id="94">
+      <Description>Adjectiv, masculin, Vocativ, plural</Description>
+    </Inflection>
+      <Inflection id="95">
+      <Description>Adjectiv, feminin, Vocativ, singular</Description>
+    </Inflection>
+      <Inflection id="96">
+      <Description>Adjectiv, feminin, Vocativ, plural</Description>
+    </Inflection>
+      <Inflection id="98">
+      <Description>Substantiv propriu, Nominativ-Acuzativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="99">
+      <Description>Substantiv propriu, Genitiv-Dativ, singular, nearticulat</Description>
+    </Inflection>
+      <Inflection id="100">
+      <Description>Substantiv propriu, Nominativ-Acuzativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="101">
+      <Description>Substantiv propriu, Genitiv-Dativ, plural, nearticulat</Description>
+    </Inflection>
+      <Inflection id="102">
+      <Description>Substantiv propriu, Nominativ-Acuzativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="103">
+      <Description>Substantiv propriu, Genitiv-Dativ, singular, articulat</Description>
+    </Inflection>
+      <Inflection id="104">
+      <Description>Substantiv propriu, Nominativ-Acuzativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="105">
+      <Description>Substantiv propriu, Genitiv-Dativ, plural, articulat</Description>
+    </Inflection>
+      <Inflection id="106">
+      <Description>Verb, Participiu pasiv lung</Description>
+    </Inflection>
+      <Inflection id="107">
+      <Description>Verb, Gerunziu lung</Description>
+    </Inflection>
+  
+</Inflections>
