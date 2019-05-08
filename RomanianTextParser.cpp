@@ -3,13 +3,13 @@
 // TODO: for example, 'n-o' should be mapped to 'nu' and 'o'.
 // We could achieve that by storing a simple vector or hash table or trie with the word that it corresponds to.
 // What we also need: think if for a shorter form there exists more than one possibility.
-// TODO: implementation issues -> the iterations over a vector are done with old iterators. Change them in the newest ones.
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <cstring>
 #include <cstdlib>
+#include <map>
 
 #define MAX_LEN 1000     // change this for bigger texts
 #define ENGLISH_SIGMA 26
@@ -58,9 +58,9 @@ void error(const char* msg) {
 }
 
 // Add more specific characters that separate words in romanian.
-const unsigned MAX_SPECIFICS = 8;
+const unsigned MAX_SPECIFICS = 9;
 const unsigned MAX_VERY_SPECIFICS = 2;
-const char specifics[MAX_SPECIFICS] = {'-', '\'', '?', '!', ':', ',', '.', ';'};
+const char specifics[MAX_SPECIFICS] = {'-', '\'', '?', '!', ':', ',', '.', ';', '"'};
 const int verySpecifics[MAX_VERY_SPECIFICS][2] = {{0xc2, 0xab}, {0xc2, 0xbb}};
 
 // test for specific characters.
@@ -141,6 +141,66 @@ vector<string> getWords(char* line, uint32_t length) {
   return newWords;
 }
 
+//---------------------------------------
+// Code for when the smaller words derivate from bigger, but some could have more meanings.
+#define BEFORE 0
+#define AFTER 1
+
+// stores the two possibilities for a smaller word ->
+// the one that could appear before a specific (before) and the one after a specific (after).
+struct pairWord {
+  string before, after;
+
+  pairWord() {
+  }
+
+  pairWord(string singleWord) {
+    this -> before = singleWord;
+  }
+
+  pairWord(string before, string after) {
+    this -> before = before;
+    if (!after.empty())
+      this -> after = after;
+  }
+};
+
+// Initialize the map.
+map<string, pairWord> completedWords;
+
+void complete(string incompleteWord, string beforeSpecific, string afterSpecific) {
+  pairWord addNew = pairWord(beforeSpecific, afterSpecific);
+  completedWords[incompleteWord] = addNew;
+}
+
+// Put the smaller words together with the respective bigger ones.
+// Don't forget to also place those which begin with capitel letter.
+// Words like 'aib' (from aiba) don't count because they are already stored in trie.
+// The more special are those which are composed only out of one letter.
+void initCompletedWords() {
+  complete("n", "nu", "în");
+  complete("N", "Nu", "");
+  complete("Ș", "Și", "");
+  complete("ș", "și", "");
+  complete("l", "la", "îl");
+  complete("i", "", "fi"); // mi-i alunga, iarna-i aici -> hm, we've got a problem, but it could be solved if we know what type of functionality the words has (substantiv)
+}
+
+// Determinates, depending on the mode, what bigger word we should take.
+string shouldBeCompleted(string word, int mode) {
+  map<string, pairWord>::iterator it;
+  string ret;
+  for (it = completedWords.begin(); it != completedWords.end(); ++it) {
+    if (word == it -> first) {
+      ret = (mode == BEFORE) ? it -> second.before : it -> second.after;
+      goto returnString;
+    }
+  }
+  returnString : {
+    return ret;
+  }
+}
+
 // analyze the word, returning the smaller words which probably it consists from.
 vector<string> analyzeWord(string& word) {
   vector<string> wordsList;
@@ -156,11 +216,25 @@ vector<string> analyzeWord(string& word) {
       goto endOfAnalysis;
     }
 
+    if (word[index] == ' ') {
+      if (wordBuilder.size())
+        wordsList.push_back(wordBuilder);
+      wordBuilder.clear();
+      ++index;
+      goto checkForSpecific;
+    }
+
     // Separates the smaller words. If the specific characters are the end, nothing extra should be done.
     char c = word[index];
     if (isSpecific(c)) {
-      if (wordBuilder.size())
-        wordsList.push_back(wordBuilder);
+      if (!wordBuilder.empty()) {
+        // We know that the word is before the specific, so search for a "before-word".
+        if (shouldBeCompleted(wordBuilder, BEFORE).empty()) {
+          wordsList.push_back(wordBuilder);
+        } else {
+          wordsList.push_back(shouldBeCompleted(wordBuilder, BEFORE));
+        }
+      }
       wordBuilder.clear();
       ++index;
       goto checkForSpecific;
@@ -184,7 +258,18 @@ vector<string> analyzeWord(string& word) {
           index += 2;
           goto checkForSpecific;
         } else {
-          cerr << "We've got some problems " << c << endl;
+          if (!wordBuilder.empty()) {
+            wordsList.push_back(wordBuilder);
+          }
+
+          // Jump over those very special characters that I can't find in UTF-8 :)
+          wordBuilder.clear();
+          do {
+            ++index;
+          } while (word[index] & 0x80);
+          goto checkForSpecific;
+          //fprintf(stderr, "%s\n", word.data());
+          cerr << "We've got some problems " << word << endl;
         }
       }
     } else {
@@ -195,6 +280,13 @@ vector<string> analyzeWord(string& word) {
     cerr << "what case is out?\n";
   }
   endOfAnalysis : {
+    // At the end, look upon the smaller words which appear in completedWords (mode should be put on after).
+    vector<string>::iterator it;
+    for (it = wordsList.begin(); it != wordsList.end(); ++it) {
+      if (!shouldBeCompleted(*it, AFTER).empty()) {
+        *it = shouldBeCompleted(*it, AFTER);
+      }
+    }
     // end here the analysis.
   }
   return wordsList;
@@ -216,6 +308,9 @@ vector<string> filterWords(vector<string>& words) {
 int main(void) {
   ifstream in("text.in");
   ofstream ok("output.ok"); // in this file you should have the words you need.
+
+  // initialise the incompleted words that are separated by specific characters.
+  initCompletedWords();
 
   char* line;
   line = new char[MAX_LEN + 2];
