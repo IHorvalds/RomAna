@@ -11,7 +11,7 @@
 #include <cstdlib>
 #include <map>
 
-#define MAX_LEN 1000     // change this for bigger texts
+#define MAX_LEN 10000     // change this for bigger texts
 #define ENGLISH_SIGMA 26
 
 using namespace std;
@@ -109,6 +109,7 @@ vector<string> getWords(char* line, uint32_t length) {
 
       // Analyze the next character.
       char c = line[currPos];
+      //cerr << "wir sind bei ..." << c << "..." << endl;
       if (c & 0x80) {
         if (isDiacritic(c)) {
           buildWord.push_back(line[currPos++]);
@@ -120,7 +121,6 @@ vector<string> getWords(char* line, uint32_t length) {
           while (line[currPos] & 0x80) {
             buildWord.push_back(line[currPos++]);
           }
-          buildWord.push_back(line[currPos++]);
           goto constructWord;
         }
       } else {
