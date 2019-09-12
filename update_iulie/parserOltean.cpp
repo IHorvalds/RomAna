@@ -16,13 +16,16 @@ class text {
 
 
 public:
+  text() {
+  }
+    
   text(string filename) : index(0), currSize(0) {
     input.open(filename, ios::in | ios::binary);
     input.seekg(0, input.end);
     fileSize = input.tellg();
     input.seekg(0, input.beg);
   }
-  void cleanUpWord(string& word) {
+  static void cleanUpWord(string& word) {
     int amount;
     for (int i = 0; i < word.size(); i++) {
       amount = isPunctuation(&word[i]) + isNumber(word[i]);

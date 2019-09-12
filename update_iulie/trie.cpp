@@ -5,6 +5,7 @@
 //            e fascinant cum mintea noastră gândește corect logic fără să își pună explicit logic problemele)
 // flexiuni separate prin virgula + rescris consumeInflections
 
+#include <map>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -13,6 +14,9 @@
 #include <cassert>
 #include <cstdlib>
 #include <set>
+
+#include "parserOltean.cpp"
+text dummy_text;
 
 using namespace std;
 
@@ -26,6 +30,39 @@ using namespace std;
 #define ROOT 0
 #define NOTFOUND -1
 
+std::map<std::pair<int8_t, int8_t>, uint32_t> special_letters;
+
+void add_special_letter(int8_t byte1, int8_t byte2, uint32_t code) {
+  special_letters[std::make_pair(byte1, byte2)] = code;
+}
+
+void init_special_letters() {
+  add_special_letter(0xc3, 0xa4, 'a' - 'a'); // ä (german)
+  add_special_letter(0xc3, 0xa5, 'a' - 'a'); // å (scandinavian)
+  add_special_letter(0xc3, 0xa0, 'a' - 'a'); // à (french)
+  add_special_letter(0xc3, 0xa1, 'a' - 'a'); // á (french)
+  
+  add_special_letter(0xc3, 0xa7, 's' - 'a'); // ç (french)
+  
+  add_special_letter(0xc3, 0xaa, 'e' - 'a'); // ê (french)
+  add_special_letter(0xc3, 0xab, 'e' - 'a'); // ë (albanian)
+  add_special_letter(0xc3, 0xa9, 'e' - 'a'); // é (french)
+  add_special_letter(0xc3, 0xa8, 'e' - 'a'); // è (french)
+
+  add_special_letter(0xc3, 0xb6, 'o' - 'a'); // ö (german)
+  
+  add_special_letter(0xc3, 0xb1, 'n' - 'a'); // ñ (spanish)
+  
+  add_special_letter(0xc3, 0xbc, 'u' - 'a'); // ü (german)
+}
+
+int32_t get_special_letter(int8_t byte1, int8_t byte2) {
+  if (special_letters.find(std::make_pair(byte1, byte2)) == special_letters.end())
+    return -1;
+  else
+    return special_letters[std::make_pair(byte1, byte2)];
+}
+
 int isDiacritic(char c) {
   return (c > -62 && c < -55);
 }
@@ -33,7 +70,10 @@ int isDiacritic(char c) {
 // If c is a letter, returns the alphabetic order of c. Otherwise, -1.
 int32_t encode(char c) {
   int val = tolower(c) - 'a';
-  return (0 <= val && val < ENGLISH_SIGMA) ? val : -1;
+  if (0 <= val && val < ENGLISH_SIGMA)
+    return val;
+  else
+    return -1;
 }
 
 // check two bytes from string to see if you got a diacritică
@@ -50,7 +90,23 @@ int32_t diacriticEncode(int8_t byte1, int8_t byte2) {
   if (c == -158 || c == -157) // ț
     return 30;
   // no diacritică? ok, call function for regular letter
+  // std::cerr << "error" << byte1 << " " << byte2 << std::endl;
+#if 0
+  int32_t ret = encode(byte1);
+  if (ret != -1)
+    return ret;
+  else {
+    ret = get_special_letter(byte1, byte2);
+    if (ret == -1) {
+      std::cerr << "error for " << (int32_t)byte1 << " " << (int32_t)byte2 << std::endl; 
+      assert(0);
+    } else {
+      return ret;
+    }
+  }
+#else
   return encode(byte1);
+#endif
 }
 
 #pragma pack(push, 1)
@@ -78,7 +134,7 @@ class trie {
 
 public:
   trie();
-  trie(char* filename);
+  trie(const char* filename);
   ~trie();
   void insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_t& finalPtr);
   void addRoot(string str);
@@ -87,7 +143,7 @@ public:
   string formWord(int32_t ptr);
   int32_t findParent(int32_t ptr, int32_t& encoding);
   void updateFreq(string word);
-  void consumeInflexions(const char* filename);
+  void consumeInflexions(const char* uncleaned_filename, const char* cleaned_filename);
   void loadExternal(const char* filename);
   void saveExternal(const char* filename);
   void compressionTest(int root, int current, int& max, int& avg, int last, int& a, int& b);
@@ -120,7 +176,7 @@ uint32_t trie::getSize() {
 }
 
 // if we read from a binary file, mode must be set on true.
-trie::trie(char* filename) {
+trie::trie(const char* filename) {
   mode = true;
   auxTrie = NULL;
   auxsize = 1;
@@ -255,6 +311,11 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
 
     // why the third condition? - question for Alex.
     // Alex: good question
+    if (hideme && (staticTrieAccess(ptr)->code & 1)) {
+      // daca intai a fost root, iar acum vrea din nou sa fie root.
+      // Exemplu: abate are 2 liste in inflections.in
+      return;
+    }
     if (hideme && !(staticTrieAccess(ptr)->code & 1) && (staticTrieAccess(ptr)->code != 0)) {
       // daca intai a fost trimis ca derivat, iar acum imi cere sa-l fac root
       // ce fac? il las derivat, n-a zis sudo. adica nu mai modific nimic
@@ -334,23 +395,28 @@ int32_t trie::search(string str, int& lastPos) {
 }
 
 // erase c from word.
-void cleanWordOfChar(string& word, char c) {
+void getRidOfChar(string& word, char c) {
   word.erase(remove(word.begin(), word.end(), c), word.end());
 }
 
 // clean word of unusable characters.
-void cleanWord(string& word) {
+void getRidOfUnletters(string& word) {
+#if 0
   for (auto c = word.begin(); c != word.end(); c++) {
     if (isDiacritic(*c)) {
       c++;
     } else if (encode(*c) == -1) {
-      cleanWordOfChar(word, *c);
-      cleanWord(word);
+      getRidOfChar(word, *c);
+      getRidOfUnletters(word);
       return;
     }
   }
+#else
+  dummy_text.cleanUpWord(word);
+#endif
 }
 
+#if 0
 // Sorry, my GGC doesn't have neither stoi nor iterators ;)
 int32_t myStoi(string& str) {
   int ret = 0;
@@ -359,32 +425,96 @@ int32_t myStoi(string& str) {
     ret = (ret << 3) + (ret << 1) + str[i] - '0';
   return ret;
 }
+#endif
+
+bool isRomanian(string str, int pos = 0) {
+  if (pos == str.size())
+    return true;
+  if (pos == str.size() - 1)
+    return encode(str.back()) != -1;
+  else {
+    int ret = diacriticEncode(str[pos], str[pos + 1]);
+    if (ret == -1) {
+      std::cerr << str << std::endl;
+      return false;
+    }
+    return isRomanian(str, pos + 1 + !((0 <= ret) && (ret < ENGLISH_SIGMA)));  
+  }
+}
 
 #ifdef GENMODE
-void trie::consumeInflexions(const char* filename) {
+void trie::consumeInflexions(const char* uncleaned_filename, const char* cleaned_filename) {
   assert(!mode);
-  ifstream in(filename);
-  int32_t total, infl;
-  string word, inflexion;
-  string aux;
-  in >> total;
-  for (int i = 0; i < total; i++) {
-    in >> word >> aux;
-    if (!isdigit(aux[0])) {
-      getline(in, word);
+  ifstream cleaned_in(cleaned_filename);
+  ifstream uncleaned_in(uncleaned_filename);
+  
+  int32_t cleaned_total, cleaned_infl, uncleaned_total, uncleaned_infl;
+  string cleaned_word, cleaned_inflexion, uncleaned_word, uncleaned_inflexion;
+  string cleaned_aux, uncleaned_aux;
+  
+  uncleaned_in >> uncleaned_total;
+  cleaned_in >> cleaned_total;
+  
+  assert(cleaned_total == uncleaned_total);
+  for (int i = 0; i < uncleaned_total; i++) {
+    uncleaned_in >> uncleaned_word >> uncleaned_aux;
+    cleaned_in >> cleaned_word >> cleaned_aux;
+    
+    std::cerr << i << std::endl;
+    std::cerr << uncleaned_word << std::endl;
+    
+    if (!isdigit(uncleaned_aux[0])) {
+      std::cerr << "serios?" << std::endl;
+      getline(uncleaned_in, uncleaned_word);
       continue;
     }
-    cleanWord(word);
-    addRoot(word);
-    infl = myStoi(aux);
-    for (int j = 0; j < infl; j++) {
-      in >> inflexion;
-      cleanWord(inflexion);
+    
+    getRidOfUnletters(uncleaned_word);
+    getRidOfUnletters(cleaned_word);
+    
+    
+    std::cerr << i << std::endl;
+    std::cerr << uncleaned_word << std::endl;
+    
+    // Check if the word is indeed a romanian one.
+    bool root_is_romanian = true;
+    if (!isRomanian(uncleaned_word)) {
+      std::cerr << uncleaned_word << "-----------------------------------" << std::endl;
+      addRoot(cleaned_word);
+      root_is_romanian = false;
+      std::cerr << cleaned_word;
+    } else {
+      addRoot(uncleaned_word);
+    }
+    
+    // std::cerr << uncleaned_word << std::endl;
+    
+    //std::cerr << "before infle" << std::endl;
+    
+    // addRoot(uncleaned_word);
+    uncleaned_infl = stoi(uncleaned_aux);
+    for (int j = 0; j < uncleaned_infl; j++) {
+      //std::cerr << j << std::endl;
+      uncleaned_in >> uncleaned_inflexion;
+      cleaned_in >> cleaned_inflexion;
+      
+      getRidOfUnletters(uncleaned_inflexion);
+      getRidOfUnletters(cleaned_inflexion);
+      
       // Don't add duplicates.
-      if (inflexion != word)
-        addDerivated(word,  inflexion);
+      if (uncleaned_inflexion != uncleaned_word) {
+        if (!isRomanian(uncleaned_inflexion)) {
+          addDerivated(cleaned_word, cleaned_inflexion);
+        } else if (root_is_romanian) {
+          addDerivated(uncleaned_word, uncleaned_inflexion);
+        } else {
+          addDerivated(cleaned_word, uncleaned_inflexion);
+        }
+      }
     }
   }
+  cleaned_in.close();
+  uncleaned_in.close();
 }
 #endif
 
@@ -529,4 +659,26 @@ void trie::showFreqs(string filename) {
     for (; i != sorted.begin(); i--) {
       out << (i->second) << ' ' << i->first << endl;
     }
+}
+
+int main(void) {
+  // read represents, whether we want to build the trie or not (GENMODE should be instead).
+    
+  init_special_letters();  
+  
+  #define READ 1
+  if (READ) {
+    trie A;
+    cerr << "before" << std::endl;
+    A.consumeInflexions("uncleaned_inflections.in", "cleaned_inflections.in");
+    std::cerr << "after" << std::endl;
+    A.saveExternal("dictionary.bin");
+    int dummy;
+    cout << A.formWord(A.search("soluționatelor", dummy)) << endl;
+  } else {
+    trie A("dictionary.bin");
+    int dummy;
+    cerr << A.formWord(A.search("soluționatelor", dummy)) << endl;
+  }
+  return 0;
 }
