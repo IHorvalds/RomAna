@@ -1,7 +1,7 @@
 from unidecode import unidecode
 from urllib.parse import unquote
 
-fread = open('../inflections.in', 'r')
+fread = open('uncleaned_inflections.in', 'r')
 fwrite = open('cleaned_inflections.in', 'w')
 
 for line in fread:
