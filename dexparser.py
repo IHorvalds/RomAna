@@ -38,11 +38,19 @@ class Parser(object):
 
                 lexemList   = []
                 for lexem in root.getchildren():
-                    form    = lexem.findtext("Form").replace("'", "") ## Base word
+                    form    = lexem.findtext("Form")
+                    
+                    print(form)
+                    
+                    form = form.replace("'", "") ## Base word
+
+                    print(form)
 
                     inflexList = []
                     for inflection in lexem.findall("InflectedForm"):
-                        inflexList.append(inflection.findtext("Form").replace("'", ""))
+                        curr = inflection.findtext("Form")
+                        curr = curr.replace("'", "")
+                        inflexList.append(curr)
 
                     lexemList.append(Word(form, inflexList))
 

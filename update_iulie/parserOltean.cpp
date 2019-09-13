@@ -19,6 +19,7 @@ public:
   text() {
   }
     
+  // Better if we received a file with already preprocessed words in latin
   text(string filename) : index(0), currSize(0) {
     input.open(filename, ios::in | ios::binary);
     input.seekg(0, input.end);
@@ -34,6 +35,7 @@ public:
     }
   }
   string serveWord() {
+    // I don't like this ending EOF!
     if (currSize == fileSize && index + 1 >= input.gcount()) {
       return " EOF";
     }

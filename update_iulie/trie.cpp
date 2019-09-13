@@ -22,46 +22,13 @@ using namespace std;
 
 #define GENMODE 0
 //#ifdef GENMODE
-  #define SIZE 2323437 // we got some problems with this number. Apparently, it should be lower.
+  #define SIZE 3330000 // we got some problems with this number. Apparently, it should be lower.
   #define ROMANIAN_SIGMA 31
   #define ENGLISH_SIGMA 26
 //#endif
 
 #define ROOT 0
 #define NOTFOUND -1
-
-std::map<std::pair<int8_t, int8_t>, uint32_t> special_letters;
-
-void add_special_letter(int8_t byte1, int8_t byte2, uint32_t code) {
-  special_letters[std::make_pair(byte1, byte2)] = code;
-}
-
-void init_special_letters() {
-  add_special_letter(0xc3, 0xa4, 'a' - 'a'); // ä (german)
-  add_special_letter(0xc3, 0xa5, 'a' - 'a'); // å (scandinavian)
-  add_special_letter(0xc3, 0xa0, 'a' - 'a'); // à (french)
-  add_special_letter(0xc3, 0xa1, 'a' - 'a'); // á (french)
-  
-  add_special_letter(0xc3, 0xa7, 's' - 'a'); // ç (french)
-  
-  add_special_letter(0xc3, 0xaa, 'e' - 'a'); // ê (french)
-  add_special_letter(0xc3, 0xab, 'e' - 'a'); // ë (albanian)
-  add_special_letter(0xc3, 0xa9, 'e' - 'a'); // é (french)
-  add_special_letter(0xc3, 0xa8, 'e' - 'a'); // è (french)
-
-  add_special_letter(0xc3, 0xb6, 'o' - 'a'); // ö (german)
-  
-  add_special_letter(0xc3, 0xb1, 'n' - 'a'); // ñ (spanish)
-  
-  add_special_letter(0xc3, 0xbc, 'u' - 'a'); // ü (german)
-}
-
-int32_t get_special_letter(int8_t byte1, int8_t byte2) {
-  if (special_letters.find(std::make_pair(byte1, byte2)) == special_letters.end())
-    return -1;
-  else
-    return special_letters[std::make_pair(byte1, byte2)];
-}
 
 int isDiacritic(char c) {
   return (c > -62 && c < -55);
@@ -143,7 +110,7 @@ public:
   string formWord(int32_t ptr);
   int32_t findParent(int32_t ptr, int32_t& encoding);
   void updateFreq(string word);
-  void consumeInflexions(const char* uncleaned_filename, const char* cleaned_filename);
+  void consumeInflexions(const char* filename, const char* latin_filename);
   void loadExternal(const char* filename);
   void saveExternal(const char* filename);
   void compressionTest(int root, int current, int& max, int& avg, int last, int& a, int& b);
@@ -372,8 +339,10 @@ void trie::addRoot(string str) {
 
 // add a derivate. Use lastOrigin to connect the inflexion to its root-word.
 void trie::addDerivated(string root, string derivated) {
-  int dummy;
-  insert(ROOT, derivated, search(root, dummy), 0, dummy);
+  if (derivated == root)
+    return;
+  int dummy, root_pointer = search(root, dummy);
+  insert(ROOT, derivated, root_pointer, 0, dummy);
 }
 
 // Good for tests: if str is a rootWord returns the pointer where it was saved. Otherwise, the pointer of its rootword.
@@ -394,38 +363,10 @@ int32_t trie::search(string str, int& lastPos) {
   return (staticTrieAccess(ptr)->code & 1) ? ptr : staticTrieAccess(ptr)->code / 2;
 }
 
-// erase c from word.
-void getRidOfChar(string& word, char c) {
-  word.erase(remove(word.begin(), word.end(), c), word.end());
-}
-
 // clean word of unusable characters.
-void getRidOfUnletters(string& word) {
-#if 0
-  for (auto c = word.begin(); c != word.end(); c++) {
-    if (isDiacritic(*c)) {
-      c++;
-    } else if (encode(*c) == -1) {
-      getRidOfChar(word, *c);
-      getRidOfUnletters(word);
-      return;
-    }
-  }
-#else
+static void cleanUpWord(string& word) {
   dummy_text.cleanUpWord(word);
-#endif
 }
-
-#if 0
-// Sorry, my GGC doesn't have neither stoi nor iterators ;)
-int32_t myStoi(string& str) {
-  int ret = 0;
-  unsigned size = str.size();
-  for (unsigned i = 0; i < size; i++)
-    ret = (ret << 3) + (ret << 1) + str[i] - '0';
-  return ret;
-}
-#endif
 
 bool isRomanian(string str, int pos = 0) {
   if (pos == str.size())
@@ -442,79 +383,106 @@ bool isRomanian(string str, int pos = 0) {
   }
 }
 
+void print_inflex(string word, string inflex, bool val) {
+  if (word == "zgramboia") 
+    std::cerr << inflex << " " << val << std::endl;
+}
+
 #ifdef GENMODE
-void trie::consumeInflexions(const char* uncleaned_filename, const char* cleaned_filename) {
+void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   assert(!mode);
-  ifstream cleaned_in(cleaned_filename);
-  ifstream uncleaned_in(uncleaned_filename);
+  ifstream latin_in(latin_filename);
+  ifstream in(filename);
   
-  int32_t cleaned_total, cleaned_infl, uncleaned_total, uncleaned_infl;
-  string cleaned_word, cleaned_inflexion, uncleaned_word, uncleaned_inflexion;
-  string cleaned_aux, uncleaned_aux;
+  int32_t latin_total, latin_infl, total, infl;
+  string latin_word, latin_inflexion, word, inflexion;
+  string latin_aux, aux;
   
-  uncleaned_in >> uncleaned_total;
-  cleaned_in >> cleaned_total;
+  // Read both variants
+  in >> total;
+  latin_in >> latin_total;
   
-  assert(cleaned_total == uncleaned_total);
-  for (int i = 0; i < uncleaned_total; i++) {
-    uncleaned_in >> uncleaned_word >> uncleaned_aux;
-    cleaned_in >> cleaned_word >> cleaned_aux;
+  // Compare for equality of words
+  assert(latin_total == total);
+  
+  for (int i = 0; i < total; i++) {
+    //std::cerr << i << std::endl;
+    // Read both variants
+    in >> word >> aux;
+    latin_in >> latin_word >> latin_aux;
     
-    std::cerr << i << std::endl;
-    std::cerr << uncleaned_word << std::endl;
+    // Clean up both variants
+    cleanUpWord(word);
+    cleanUpWord(latin_word);
     
-    if (!isdigit(uncleaned_aux[0])) {
-      std::cerr << "serios?" << std::endl;
-      getline(uncleaned_in, uncleaned_word);
+    //std::cerr << word << " " << latin_word << std::endl;
+    
+    if ((!isdigit(aux[0])) || (latin_word == "PS")) {
+      //std::cerr << word << " " << aux << std::endl;
+      std::cerr << "serios?____________________________________" << std::endl;
+      
+      // Consume both lines
+      getline(in, word);
+      getline(latin_in, latin_word);
+      // TODO: pe asfintite. Add separator in inflextions
+      //std::cerr << word << std::endl; 
       continue;
     }
     
-    getRidOfUnletters(uncleaned_word);
-    getRidOfUnletters(cleaned_word);
     
-    
-    std::cerr << i << std::endl;
-    std::cerr << uncleaned_word << std::endl;
     
     // Check if the word is indeed a romanian one.
-    bool root_is_romanian = true;
-    if (!isRomanian(uncleaned_word)) {
-      std::cerr << uncleaned_word << "-----------------------------------" << std::endl;
-      addRoot(cleaned_word);
-      root_is_romanian = false;
-      std::cerr << cleaned_word;
+    bool latin_is_root = false;
+    if (!isRomanian(word)) {
+      latin_is_root = true;
+      addRoot(latin_word);
     } else {
-      addRoot(uncleaned_word);
+      addRoot(word);
+      
+      // And add the latin word a derivated of the root
+      addDerivated(word, latin_word);
     }
     
-    // std::cerr << uncleaned_word << std::endl;
+    //std::cerr << "romanina: daca " << !latin_is_root << std::endl;
     
-    //std::cerr << "before infle" << std::endl;
-    
-    // addRoot(uncleaned_word);
-    uncleaned_infl = stoi(uncleaned_aux);
-    for (int j = 0; j < uncleaned_infl; j++) {
-      //std::cerr << j << std::endl;
-      uncleaned_in >> uncleaned_inflexion;
-      cleaned_in >> cleaned_inflexion;
+    infl = stoi(aux);
+    for (int j = 0; j < infl; j++) {
+      in >> inflexion;
+      latin_in >> latin_inflexion;
       
-      getRidOfUnletters(uncleaned_inflexion);
-      getRidOfUnletters(cleaned_inflexion);
+      cleanUpWord(inflexion);
+      cleanUpWord(latin_inflexion);
       
-      // Don't add duplicates.
-      if (uncleaned_inflexion != uncleaned_word) {
-        if (!isRomanian(uncleaned_inflexion)) {
-          addDerivated(cleaned_word, cleaned_inflexion);
-        } else if (root_is_romanian) {
-          addDerivated(uncleaned_word, uncleaned_inflexion);
+      //print_inflex(latin_word, inflexion, isRomanian(inflexion));
+      
+      if (latin_is_root) {
+        // This means, the root is not a romanian word. But its derivates could be romanian
+        if (isRomanian(inflexion)) {
+          addDerivated(latin_word, inflexion);
+          
+          // And add the latin variant of the inflexion if it does not exist
+          if (latin_inflexion != inflexion)
+            addDerivated(latin_word, latin_inflexion);
         } else {
-          addDerivated(cleaned_word, uncleaned_inflexion);
+          addDerivated(latin_word, latin_inflexion);
+        }
+      } else {
+        // The root is romanian. We are sure that the inflexion also is romanian.
+        
+        //print_inflex(latin_word, latin_inflexion, isRomanian(inflexion));
+        addDerivated(word, inflexion);
+        
+        // And add the latin variant of the inflexion if it does not exist
+        if (latin_inflexion != inflexion) {
+          //print_inflex(latin_word, latin_inflexion, true);
+          addDerivated(word, latin_inflexion);
         }
       }
+      //print_inflex(latin_word, inflexion, true);
     }
   }
-  cleaned_in.close();
-  uncleaned_in.close();
+  latin_in.close();
+  in.close();
 }
 #endif
 
@@ -661,24 +629,28 @@ void trie::showFreqs(string filename) {
     }
 }
 
-int main(void) {
+int main(int argc, char** argv) {
   // read represents, whether we want to build the trie or not (GENMODE should be instead).
-    
-  init_special_letters();  
+  if (argc < 2) {
+    std::cout << "ceva pe aci" << std::endl;
+    return -1;
+  }
   
-  #define READ 1
-  if (READ) {
+  int read = stoi(argv[1]);
+  string find_me(argv[2]);
+  if (read) {
     trie A;
     cerr << "before" << std::endl;
-    A.consumeInflexions("uncleaned_inflections.in", "cleaned_inflections.in");
+    A.consumeInflexions("inflections.in", "latin_inflections.in");
     std::cerr << "after" << std::endl;
+    
+    std::cerr << A.getSize() << std::endl;
+    
     A.saveExternal("dictionary.bin");
-    int dummy;
-    cout << A.formWord(A.search("soluționatelor", dummy)) << endl;
   } else {
     trie A("dictionary.bin");
     int dummy;
-    cerr << A.formWord(A.search("soluționatelor", dummy)) << endl;
+    cerr << A.formWord(A.search(find_me, dummy)) << endl;
   }
   return 0;
 }

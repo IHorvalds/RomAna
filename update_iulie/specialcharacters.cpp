@@ -19,6 +19,8 @@ int isPunctuation(char* str) {
   }
   if (strlen(str) == 1)
     return 0;
+  // TODO: Alex the problem is: str[1] can be ngative, so it moves the sign-bit forward and changes everything.
+  // Encore un problem: str[0] is a byte. When you shift by 8...
   int hash = (str[0] << 8) ^ str[1];
   for (int i = 0; i < COUNT_PUNCTUATION_TWO; i++) {
     if (hash == punctuationTwo[i]) {
