@@ -153,8 +153,8 @@ void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
   staticTrieAccess(ptr)->sons[pos] = goesTo;
 }
 
-// insert in trie str, the position the be regarded is now pos. connect is the node which str should be connected with.
-// If str itself is a rootWord, connect must be set on -1.
+// Insert in trie "str", the position to be regarded is now pos. "connect" is the node which str should be connected with.
+// If "str" itself is a rootWord, connect must be set on -1.
 void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_t& finalPtr) {
   // It isn't <= because even with a diacritica we arrive at the end of str.
   if (str.size() == pos) {
@@ -257,13 +257,6 @@ int32_t trie::search(string str, int& lastPos) {
   return (staticTrieAccess(ptr)->code & 1) ? ptr : staticTrieAccess(ptr)->code / 2;
 }
 
-#if 0
-void print_inflex(string word, string inflex, bool val) {
-  if (word == "zgramboia") 
-    std::cerr << inflex << " " << val << std::endl;
-}
-#endif
-
 void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   assert(mode == BUILD_MODE);
   ifstream latin_in(latin_filename);
@@ -289,6 +282,7 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
     specialChars::cleanUpWord(word);
     specialChars::cleanUpWord(latin_word);
     
+    // Check for invalid lines - TODO: still work on it! PS (pount sign) :)
     if ((!isdigit(aux[0])) || (latin_word == "PS")) {
       // std::cerr << "serios?____________________________________" << std::endl;
       
