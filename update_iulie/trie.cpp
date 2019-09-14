@@ -469,37 +469,3 @@ void trie::showFreqs(string filename) {
     for (auto iter = init_vector.begin(); iter != init_vector.end(); ++iter)
       out << iter->second << " " << iter->first << std::endl;
 }
-
-#if 1
-int main(int argc, char** argv) {
-  if (argc < 3) {
-    std::cout << argv[0] << " [file to read the inflections from] [read(0 -> build_trie, 1 -> read_only)] [find_me]" << std::endl;
-    return -1;
-  }
-  
-  const char* file_name = argv[1];
-  string tmp = file_name;
-  tmp = "latin_" + tmp;
-  const char* latin_file_name = tmp.data();
-  int read = stoi(argv[2]);
-
-  if (!read) {
-    trie A;
-    
-    cerr << "before consume" << std::endl;
-    A.consumeInflexions(file_name, latin_file_name);
-    std::cerr << "after consume" << std::endl;
-    
-    std::cerr << A.getSize() << std::endl;
-    A.saveExternal("dictionary.bin");
-    
-    std::cerr << "after save" << std::endl;
-  } else {
-    trie A("dictionary.bin");
-    int dummy;
-    string find_me(argv[3]);
-    cerr << A.formWord(A.search(find_me, dummy)) << endl;
-  }
-  return 0;
-}
-#endif

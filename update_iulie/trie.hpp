@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#include <vector>
+
 #pragma pack(push, 1)
 struct trieNode {
   uint32_t code;

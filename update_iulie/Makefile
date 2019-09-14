@@ -1,3 +1,3 @@
-trie: trie.cpp
-	g++ -O3  trie.cpp -o trie
+gui: gui.cpp
+	g++ -O3  gui.cpp -o gui
 

@@ -4,6 +4,8 @@
 #include <string>
 #include <cstring>
 #include <cctype>
+#include <algorithm>
+#include <vector>
 
 namespace specialChars {
   static constexpr unsigned count_punctuation_2byte = 2;
