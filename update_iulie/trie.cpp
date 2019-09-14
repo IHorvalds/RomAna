@@ -8,100 +8,20 @@
 //        (adică ~(GENMODE & mode) LOL, adică fix ~(ce avem acum), și am gândit-o super natural, super repede
 //            e fascinant cum mintea noastră gândește corect logic fără să își pună explicit logic problemele)
 
-#include <map>
 #include <vector>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <cctype>
 #include <cassert>
 #include <cstdlib>
 
+#include "trie.hpp"
 #include "bits_ops.hpp"
 #include "diacritica.hpp"
 #include "special_characters.hpp"
 
 using namespace std;
-
-#pragma pack(push, 1)
-struct trieNode {
-  uint32_t code;
-  uint32_t parent;
-  int32_t configuration;
-  uint32_t* sons;
-};
-#pragma pack(pop)
-
-class trie {
-  static constexpr unsigned SIZE = 3330000;
-  static constexpr unsigned EXPAND_TRIE_CONSTANT = 16;
-  static constexpr unsigned ROOT = 0;
-  static constexpr int32_t FULL_OF_BITS = ~0;
-  
-  // Modes of trie
-  static constexpr bool BUILD_MODE = false;
-  static constexpr bool READ_MODE = true;
-  
-  trieNode* staticTrie;
-  trieNode* auxTrie;
-  
-  // current sizes of both tries
-  int32_t size, auxsize;
-  
-  // the size of the alphabet
-  uint32_t sigma;
-  
-  // Last used position
-  uint32_t bufferPos;
-  
-  // If trie loaded from binary -> mode == true (READ_MODE)
-  bool mode;
-  
-  // Update the frequency for this pointer
-  void updateFreqOfPointer(int32_t ptr);
-  
-  // Used for adding new words
-  void updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo);
-  trieNode* staticTrieAccess(int32_t ptr);
-
-public:
-  trie();
-  trie(const char* filename);
-  ~trie();
-  
-  void addRoot(string str);
-  void addDerivated(string root, string derivated);
-
-  void insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_t& finalPtr);
-  int search(string str, int& lastPos);
-  
-  // Functions to get the parent of each word
-  string formWord(int32_t ptr);
-  int32_t findParent(int32_t ptr, int32_t& encoding);
-  
-  // Functions for updating the frequencies while parsing a text
-  void tryUpdateFreq(string word);
-  void updateFreq(string word, string latin_word);
-  
-  // Build the trie with the inflexions from dexonline.ro
-  void consumeInflexions(const char* filename, const char* latin_filename);
-  
-  // Functions with files
-  void loadExternal(const char* filename);
-  void saveExternal(const char* filename);
-  
-#if 0
-  void compressionTest(int root, int current, int& max, int& avg, int last, int& a, int& b);
-#endif
-
-  // Compute the frequencies
-  void getAllFreqs(int root, std::vector<pair<int, string>>& init_vector);
-  void showFreqs(string filename);
-  
-  // Size of trie
-  uint32_t getSize();
-};
 
 // Set mode on false (BUILD_MODE), if we build the trie (we don't use configuration).
 trie::trie() {
