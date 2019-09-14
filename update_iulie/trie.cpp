@@ -1,4 +1,5 @@
-// TODO
+// TODO: there is somewhere a problem with memory-leaks. Use valgrind for that!
+// TODO: Modificarea lui Alex de o linie.
 // DONE: curățenie!!!
 // flexiuni separate prin virgula + rescris consumeInflections
 
@@ -271,9 +272,8 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
   if (((mode == READ_MODE) && (!bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding))) || !staticTrieAccess(ptr)->sons[encoding]) {
     if (staticTrieAccess(ptr)->configuration != FULL_OF_BITS)
       updateMihailsJmenuri(ptr, encoding, ++bufferPos);
-    else {
+    else
       staticTrieAccess(ptr)->sons[encoding] = ++bufferPos;
-    }
     staticTrieAccess(bufferPos)->parent = encoding | (ptr << 7);
   }
   
