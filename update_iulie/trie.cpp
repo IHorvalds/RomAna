@@ -1,11 +1,14 @@
 // TO DO
 // curățenie!!!
-//      ori folosim GENMODE, ori folosim mode, ori nu folosim niciuna
-//        (adică ~(GENMODE & mode) LOL, adică fix ~(ce avem acum), și am gândit-o super natural, super repede
-//            e fascinant cum mintea noastră gândește corect logic fără să își pună explicit logic problemele)
 // flexiuni separate prin virgula + rescris consumeInflections
 
+
+// DONE: ori folosim GENMODE, ori folosim mode, ori nu folosim niciuna
+//        (adică ~(GENMODE & mode) LOL, adică fix ~(ce avem acum), și am gândit-o super natural, super repede
+//            e fascinant cum mintea noastră gândește corect logic fără să își pună explicit logic problemele)
+
 #include <map>
+#include <vector>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -13,68 +16,19 @@
 #include <cctype>
 #include <cassert>
 #include <cstdlib>
-#include <set>
 
-#include "parserOltean.cpp"
-text dummy_text;
+#include "bits_ops.hpp"
+#include "diacritica.hpp"
+#include "special_characters.hpp"
 
 using namespace std;
 
-#define GENMODE 0
-//#ifdef GENMODE
-  #define SIZE 3330000 // we got some problems with this number. Apparently, it should be lower.
-  #define ROMANIAN_SIGMA 31
-  #define ENGLISH_SIGMA 26
-//#endif
+#define SIZE 3330000
+#define EXPAND_TRIE_CONSTANT 16
+
+const int32_t FULL_OF_BITS = ~0;
 
 #define ROOT 0
-#define NOTFOUND -1
-
-int isDiacritic(char c) {
-  return (c > -62 && c < -55);
-}
-
-// If c is a letter, returns the alphabetic order of c. Otherwise, -1.
-int32_t encode(char c) {
-  int val = tolower(c) - 'a';
-  if (0 <= val && val < ENGLISH_SIGMA)
-    return val;
-  else
-    return -1;
-}
-
-// check two bytes from string to see if you got a diacritică
-int32_t diacriticEncode(int8_t byte1, int8_t byte2) {
-  int32_t c = byte1 + byte2;
-  if (c == -186 || c == -185) // ă
-    return 26;
-  if (c == -187 || c == -155) // â
-    return 27;
-  if (c == -175 || c == -143) // î
-    return 28;
-  if (c == -160 || c == -159) // ș
-    return 29;
-  if (c == -158 || c == -157) // ț
-    return 30;
-  // no diacritică? ok, call function for regular letter
-  // std::cerr << "error" << byte1 << " " << byte2 << std::endl;
-#if 0
-  int32_t ret = encode(byte1);
-  if (ret != -1)
-    return ret;
-  else {
-    ret = get_special_letter(byte1, byte2);
-    if (ret == -1) {
-      std::cerr << "error for " << (int32_t)byte1 << " " << (int32_t)byte2 << std::endl; 
-      assert(0);
-    } else {
-      return ret;
-    }
-  }
-#else
-  return encode(byte1);
-#endif
-}
 
 #pragma pack(push, 1)
 struct trieNode {
@@ -88,12 +42,16 @@ struct trieNode {
 class trie {
   trieNode* staticTrie;
   trieNode* auxTrie;
-  int32_t size;
-  int32_t auxsize;
+  
+  // current sizes of both tries
+  int32_t size, auxsize;
+  
+  // the size of the alphabet
   uint32_t sigma;
+  
   uint32_t bufferPos;
   uint32_t lastOrigin;
-  bool mode; // if trie is implemented with configuration (so only if it is loaded from a binary), mode == true. It should be changed with GENMODE.
+  bool mode; // if trie is implemented with configuration (so only if it is loaded from a binary), mode == true.
   int32_t leafCheck(int32_t ptr);
   void updatePtrFreq(int32_t ptr);
   void updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo);
@@ -113,18 +71,23 @@ public:
   void consumeInflexions(const char* filename, const char* latin_filename);
   void loadExternal(const char* filename);
   void saveExternal(const char* filename);
+  
+#if 0
   void compressionTest(int root, int current, int& max, int& avg, int last, int& a, int& b);
-  void computeFreqs(string filename);
-  void sortFreqs(int root, set<pair<int, string>>& heap);
+#endif
+
+  // Compute the frequencies
+  void getAllFreqs(int root, std::vector<pair<int, string>>& init_vector);
   void showFreqs(string filename);
+  
+  // Size of trie
   uint32_t getSize();
 };
 
-#ifdef GENMODE
 // set mode on false, if we build the trie (we don't use configuration).
 trie::trie() {
   size = SIZE + 1;
-  sigma = ROMANIAN_SIGMA;
+  sigma = romanian::ROMANIAN_SIGMA;
   bufferPos = 0;
   lastOrigin = 0;
   mode = false;
@@ -133,11 +96,11 @@ trie::trie() {
     staticTrie[i].code = 0;
     staticTrie[i].parent = 0;
     staticTrie[i].sons = new uint32_t[sigma]();
-    staticTrie[i].configuration = ~0;
+    staticTrie[i].configuration = FULL_OF_BITS;
   }
 }
-#endif
 
+// Return the current size of the trie
 uint32_t trie::getSize() {
   return bufferPos;
 }
@@ -155,7 +118,8 @@ trie::~trie() {
     delete[] staticTrieAccess(i)->sons;
   }
   delete[] staticTrie;
-  free(auxTrie);
+  if (sizeof(auxTrie) != 0)
+    free(auxTrie);
 }
 
 trieNode* trie::staticTrieAccess(int32_t ptr) {
@@ -164,13 +128,13 @@ trieNode* trie::staticTrieAccess(int32_t ptr) {
   int index = ptr % size;
   int oldsize = auxsize - 1;
   if (index > oldsize) {
-    auxsize *= 512;
+    auxsize *= EXPAND_TRIE_CONSTANT;
     auxTrie = (trieNode*) realloc(auxTrie, auxsize * sizeof(trieNode) - 1);
     for (int i = oldsize; i < auxsize - 1; i++) {
       auxTrie[i].code = 0;
       auxTrie[i].parent = 0;
       auxTrie[i].sons = new uint32_t[sigma]();
-      auxTrie[i].configuration = ~0;
+      auxTrie[i].configuration = FULL_OF_BITS;
     }
 //    cout << "realloc success!" << endl;
   }
@@ -199,53 +163,8 @@ void trie::updateFreq(string word) {
     updatePtrFreq(ptr);
 }
 
-//--------------------------------------------------------
-// Operations on bits
-
-// set in change the bit 'pos' on 1.
-// TODO: save also the powers of 2 into a static vector.
-void setBit(int32_t& change, unsigned pos) {
-  change |= (1 << pos);
-}
-
-// returns the value of bit pos.
-bool getBit(int32_t val, unsigned pos) {
-  return (val >> pos) & 1;
-}
-
-// Count the number of bits of val.
-uint32_t countOfBits(int32_t val) {
-  unsigned count;
-  for (count = 0; val; val &= (val - 1))
-    count++;
-  return count;
-}
-
-// A help-function to see the configuration (should be erased).
-void printBits(int val, int pos) {
-  cerr << "An welcher Stelle steht " << pos << "?\n";
-  for (int i = 31; i >= 0; i--)
-    cerr << ((val >> i) & 1);
-  cerr << "ret = " << countOfBits(val & ((1 << pos) - 1)) << endl;
-}
-
-// returns how many set bits are before the bit pos.
-// creates a mask: 00000111111, where the count of 1s equals pos.
-uint32_t orderOfBit(int32_t val, uint32_t pos) {
-  // assures that the bit pos is set in val, otherwise this wouldn't work.
-  assert(getBit(val, pos));
-  return countOfBits(val & ((1 << pos) - 1));
-}
-//----------------------------------------------------
-
-// print any error message you wish.
-void error(const char *msg) {
-  cerr << msg;
-  exit(0);
-}
-
 void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
-  int size = countOfBits(staticTrieAccess(ptr)->configuration);
+  int size = bitOp::countOfBits(staticTrieAccess(ptr)->configuration);
   uint32_t* temp = new uint32_t[size]();
   for (int i = 0; i < size; i++) {
     temp[i] = staticTrieAccess(ptr)->sons[i];
@@ -253,12 +172,12 @@ void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
   delete[] staticTrieAccess(ptr)->sons;
   staticTrieAccess(ptr)->sons = new uint32_t[sigma]();
   for (int i = 0; i < sigma; i++) {
-    if (getBit(staticTrieAccess(ptr)->configuration, i))
-      staticTrieAccess(ptr)->sons[i] = temp[orderOfBit(staticTrieAccess(ptr)->configuration, i)];
+    if (bitOp::getBit(staticTrieAccess(ptr)->configuration, i))
+      staticTrieAccess(ptr)->sons[i] = temp[bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, i)];
     else
       staticTrieAccess(ptr)->sons[i] = 0;
   }
-  staticTrieAccess(ptr)->configuration = ~0;
+  staticTrieAccess(ptr)->configuration = FULL_OF_BITS;
   staticTrieAccess(ptr)->sons[pos] = goesTo;
 }
 
@@ -307,17 +226,17 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
     staticTrieAccess(ptr)->code = (hideme) ? 1 : connect * 2;
     finalPtr = ptr;
     // wtf was that, right?
-    // I use GENMODE to tell the program whether I want to generate a new dictionary, or I want to update an existing
+    // I use  to tell the program whether I want to generate a new dictionary, or I want to update an existing
     // one. If I want to generate a new dictionary, ie. use the inflexions file from Domi, the frequency of every word I
     // insert in the dictionary *has to be 0*. Regardless of how many times I read it from the inflexions file. So if
     // GENMODE is defined, I simply no longer increment each word's frequency.
     // If, however, I want to update an existing dictionary, I'll need updated frequencies.
     return;
   }
-  int32_t encoding = (pos == str.size() - 1) ? encode(str[pos]) : diacriticEncode(str[pos], str[pos + 1]);
+  int32_t encoding = (pos == str.size() - 1) ? romanian::encode(str[pos]) : romanian::diacriticEncode(str[pos], str[pos + 1]);
   // if the next edge does not yet exist, create it.
-  if ((mode && !getBit(staticTrieAccess(ptr)->configuration, encoding)) || !staticTrieAccess(ptr)->sons[encoding]) {
-    if (staticTrieAccess(ptr)->configuration != ~0)
+  if ((mode && !bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding)) || !staticTrieAccess(ptr)->sons[encoding]) {
+    if (staticTrieAccess(ptr)->configuration != FULL_OF_BITS)
       updateMihailsJmenuri(ptr, encoding, ++bufferPos);
     else {
       staticTrieAccess(ptr)->sons[encoding] = ++bufferPos;
@@ -326,7 +245,7 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
 //    cout << bufferPos << ' ' << formWord(bufferPos) << endl;
   }
   // if encoding shows we reached a diacritic character, move to next byte
-  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != ~0 ? orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding], str, connect, pos + 1 + isDiacritic(str[pos]), finalPtr);
+  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding], str, connect, pos + 1 + romanian::isDiacritic(str[pos]), finalPtr);
 }
 
 // add a root-word. Save the position in buffer where its last character has been saved.
@@ -351,44 +270,25 @@ int32_t trie::search(string str, int& lastPos) {
   bool toCheck;
   ptr = 0;
   for (pos = 0; pos < str.size();) {
-    encoding = (pos == str.size() - 1) ? encode(str[pos]) : diacriticEncode(str[pos], str[pos + 1]);
-    toCheck = staticTrieAccess(ptr)->configuration != ~0 ? getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
+    encoding = (pos == str.size() - 1) ? romanian::encode(str[pos]) : romanian::diacriticEncode(str[pos], str[pos + 1]);
+    toCheck = staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
     if (!toCheck) {
       lastPos = pos;
       return -ptr;
     }
-    ptr = staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != ~0 ? orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding];
-    pos += 1 + isDiacritic(str[pos]);
+    ptr = staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding];
+    pos += 1 + romanian::isDiacritic(str[pos]);
   }
   return (staticTrieAccess(ptr)->code & 1) ? ptr : staticTrieAccess(ptr)->code / 2;
 }
 
-// clean word of unusable characters.
-static void cleanUpWord(string& word) {
-  dummy_text.cleanUpWord(word);
-}
-
-bool isRomanian(string str, int pos = 0) {
-  if (pos == str.size())
-    return true;
-  if (pos == str.size() - 1)
-    return encode(str.back()) != -1;
-  else {
-    int ret = diacriticEncode(str[pos], str[pos + 1]);
-    if (ret == -1) {
-      std::cerr << str << std::endl;
-      return false;
-    }
-    return isRomanian(str, pos + 1 + !((0 <= ret) && (ret < ENGLISH_SIGMA)));  
-  }
-}
-
+#if 0
 void print_inflex(string word, string inflex, bool val) {
   if (word == "zgramboia") 
     std::cerr << inflex << " " << val << std::endl;
 }
+#endif
 
-#ifdef GENMODE
 void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   assert(!mode);
   ifstream latin_in(latin_filename);
@@ -412,8 +312,8 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
     latin_in >> latin_word >> latin_aux;
     
     // Clean up both variants
-    cleanUpWord(word);
-    cleanUpWord(latin_word);
+    specialChars::cleanUpWord(word);
+    specialChars::cleanUpWord(latin_word);
     
     //std::cerr << word << " " << latin_word << std::endl;
     
@@ -429,11 +329,9 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
       continue;
     }
     
-    
-    
     // Check if the word is indeed a romanian one.
     bool latin_is_root = false;
-    if (!isRomanian(word)) {
+    if (!romanian::isRomanian(word)) {
       latin_is_root = true;
       addRoot(latin_word);
     } else {
@@ -450,14 +348,14 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
       in >> inflexion;
       latin_in >> latin_inflexion;
       
-      cleanUpWord(inflexion);
-      cleanUpWord(latin_inflexion);
+      specialChars::cleanUpWord(inflexion);
+      specialChars::cleanUpWord(latin_inflexion);
       
       //print_inflex(latin_word, inflexion, isRomanian(inflexion));
       
       if (latin_is_root) {
         // This means, the root is not a romanian word. But its derivates could be romanian
-        if (isRomanian(inflexion)) {
+        if (romanian::isRomanian(inflexion)) {
           addDerivated(latin_word, inflexion);
           
           // And add the latin variant of the inflexion if it does not exist
@@ -484,7 +382,6 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   latin_in.close();
   in.close();
 }
-#endif
 
 // load class members from external file
 void trie::loadExternal(const char* filename) {
@@ -500,7 +397,7 @@ void trie::loadExternal(const char* filename) {
     in.read((char*) &staticTrie[i].code, sizeof(uint32_t));
     in.read((char*) &staticTrie[i].configuration, sizeof(int32_t));
     in.read((char*) &staticTrie[i].parent, sizeof(int32_t));
-    unsigned howMany = countOfBits(staticTrie[i].configuration);
+    unsigned howMany = bitOp::countOfBits(staticTrie[i].configuration);
     if (howMany) {
       staticTrie[i].sons = new uint32_t[howMany];
       in.read((char*) staticTrie[i].sons, howMany * sizeof(uint32_t));
@@ -517,10 +414,10 @@ void trie::saveExternal(const char* filename) {
   out.write((char*) &sigma, sizeof(int32_t));
 
   for (unsigned i = 0; i < writeSize; i++) {
-    unsigned howMany = countOfBits(staticTrieAccess(i)->configuration);
+    unsigned howMany = bitOp::countOfBits(staticTrieAccess(i)->configuration);
     int dummy;
-//    if (staticTrieAccess(findParent(i, dummy))->configuration == ~0)
-    if (staticTrieAccess(i)->configuration == ~0) {
+//    if (staticTrieAccess(findParent(i, dummy))->configuration == FULL_OF_BITS)
+    if (staticTrieAccess(i)->configuration == FULL_OF_BITS) {
       // Computes configuration (the sons with non-zero values).
       staticTrieAccess(i)->configuration = 0;
       for (unsigned j = 0; j < sigma; j++)
@@ -550,47 +447,19 @@ int32_t trie::findParent(int32_t ptr, int32_t& encoding) {
   return staticTrieAccess(ptr)->parent >> 7;
 }
 
-// decode into string the hash encoding.
-string decode(int32_t encoding) {
-  string ret;
-  if (encoding < ENGLISH_SIGMA) {
-    ret = 'a' + encoding;
-  } else {
-    // particular cases.
-    switch(encoding) {
-    case 26:
-      ret = "ă";
-      break;
-    case 27:
-      ret = "â";
-      break;
-    case 28:
-      ret = "î";
-      break;
-    case 29:
-      ret = "ș";
-      break;
-    case 30:
-      ret = "ț";
-      break;
-    }
-  }
-  return ret;
-}
-
 // create the word that ends in ptr.
 string trie::formWord(int32_t ptr) {
   string ret;
-  //cout << ptr << endl;
   if (ptr <= 0)
     return ret;
   int32_t encoding;
   int32_t nextPtr = findParent(ptr, encoding);
-  return formWord(nextPtr) + decode(encoding);
+  return formWord(nextPtr) + romanian::decode(encoding);
 }
 
+#if 0
 void trie::compressionTest(int root, int current, int& max, int& avg, int last, int& a, int& b) {
-  if (countOfBits(staticTrieAccess(root)->configuration) == 1) {
+  if (bitOp::countOfBits(staticTrieAccess(root)->configuration) == 1) {
     if (!current)
       last = root;
     if (++current > max) {
@@ -607,49 +476,63 @@ void trie::compressionTest(int root, int current, int& max, int& avg, int last, 
     compressionTest(staticTrieAccess(root)->sons[i], 0, max, avg, root, a, b);
   }
 }
+#endif
 
-void trie::sortFreqs(int root, set<pair<int, string>>& heap) {
-  if ((staticTrieAccess(root)->code & 1) && (staticTrieAccess(root)->code >> 1)) {
-    heap.insert(make_pair(staticTrieAccess(root)->code >> 1, formWord(root)));
-  }
-  for (auto i = 0; i < countOfBits(staticTrieAccess(root)->configuration); i++) {
+void trie::getAllFreqs(int root, std::vector<pair<int, string>>& init_vector) {
+  // Push the frequence of from this node
+  if ((staticTrieAccess(root)->code & 1) && (staticTrieAccess(root)->code >> 1))
+    init_vector.push_back(make_pair(staticTrieAccess(root)->code >> 1, formWord(root)));
+  
+  // And go further with the children
+  for (unsigned i = 0; i < bitOp::countOfBits(staticTrieAccess(root)->configuration); i++)
     if (staticTrieAccess(root)->sons[i] != 0)
-      sortFreqs(staticTrieAccess(root)->sons[i], heap);
-  }
+      getAllFreqs(staticTrieAccess(root)->sons[i], init_vector);
 }
 
 void trie::showFreqs(string filename) {
     ofstream out(filename);
-    set<pair<int, string>> sorted;
-    sortFreqs(0, sorted);
-    auto i = sorted.end();
-    i--;
-    for (; i != sorted.begin(); i--) {
-      out << (i->second) << ' ' << i->first << endl;
-    }
+    
+    // Get all frequencies from trie
+    std::vector<pair<int, string>> init_vector;
+    getAllFreqs(0, init_vector);
+
+    // Sort the accumulated frequencies
+    std::sort(init_vector.begin(), init_vector.end(), [](auto& left, auto& right) {
+      return left.first > right.first;
+    });
+    
+    // And print them
+    for (auto iter = init_vector.begin(); iter != init_vector.end(); ++iter)
+      out << iter->second << " " << iter->first << std::endl;
 }
 
 int main(int argc, char** argv) {
   // read represents, whether we want to build the trie or not (GENMODE should be instead).
-  if (argc < 2) {
-    std::cout << "ceva pe aci" << std::endl;
+  if (argc < 3) {
+    std::cout << argv[0] << " file read(0 -> build_trie, 1 -> read_only) find_me" << std::endl;
     return -1;
   }
   
-  int read = stoi(argv[1]);
-  string find_me(argv[2]);
-  if (read) {
+  const char* file_name = argv[1];
+  string tmp = file_name;
+  tmp = "latin_" + tmp;
+  const char* latin_file_name = tmp.data();
+  int read = stoi(argv[2]);
+
+  if (!read) {
     trie A;
-    cerr << "before" << std::endl;
-    A.consumeInflexions("inflections.in", "latin_inflections.in");
-    std::cerr << "after" << std::endl;
+    
+    cerr << "before consume" << std::endl;
+    A.consumeInflexions(file_name, latin_file_name);
+    std::cerr << "after consume" << std::endl;
     
     std::cerr << A.getSize() << std::endl;
-    
     A.saveExternal("dictionary.bin");
+    std::cerr << "after save" << std::endl;
   } else {
     trie A("dictionary.bin");
     int dummy;
+    string find_me(argv[3]);
     cerr << A.formWord(A.search(find_me, dummy)) << endl;
   }
   return 0;

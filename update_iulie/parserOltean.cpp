@@ -1,19 +1,18 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 #include "specialcharacters.cpp"
 
 using namespace std;
 
-#define BUFF_SIZE 1024
-
 class text {
+  static constexpr unsigned BUFF_SIZE = 1024;  
   ifstream input;
   char buffer[BUFF_SIZE];
   int fileSize;
   int currSize;
   int index;
-
 
 public:
   text() {
@@ -26,16 +25,9 @@ public:
     fileSize = input.tellg();
     input.seekg(0, input.beg);
   }
-  static void cleanUpWord(string& word) {
-    int amount;
-    for (int i = 0; i < word.size(); i++) {
-      amount = isPunctuation(&word[i]) + isNumber(word[i]);
-      word.erase(i, amount);
-      i -= (amount > 0);
-    }
-  }
+  
   string serveWord() {
-    // I don't like this ending EOF!
+    // TODO: I don't like this ending EOF!
     if (currSize == fileSize && index + 1 >= input.gcount()) {
       return " EOF";
     }
@@ -57,7 +49,7 @@ public:
     while (index < BUFF_SIZE && (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '-' || buffer[index] == '/')) {
       index++;
     }
-    cleanUpWord(word);
+    specialcharacters::cleanUpWord(word);
     if (!word.size())
       word = serveWord();
     return word;
