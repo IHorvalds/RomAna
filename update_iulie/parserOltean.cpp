@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 
-#include "specialcharacters.cpp"
+#include "special_characters.hpp"
 
 using namespace std;
 
@@ -49,7 +49,7 @@ public:
     while (index < BUFF_SIZE && (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '-' || buffer[index] == '/')) {
       index++;
     }
-    specialcharacters::cleanUpWord(word);
+    specialChars::cleanUpWord(word);
     if (!word.size())
       word = serveWord();
     return word;

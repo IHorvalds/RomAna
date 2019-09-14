@@ -529,6 +529,7 @@ void trie::showFreqs(string filename) {
       out << iter->second << " " << iter->first << std::endl;
 }
 
+#if 0
 int main(int argc, char** argv) {
   if (argc < 3) {
     std::cout << argv[0] << " file read(0 -> build_trie, 1 -> read_only) find_me" << std::endl;
@@ -559,3 +560,4 @@ int main(int argc, char** argv) {
   }
   return 0;
 }
+#endif
