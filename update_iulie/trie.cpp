@@ -451,21 +451,3 @@ void trie::getAllFreqs(int root, std::vector<pair<int, string>>& init_vector) {
     if (staticTrieAccess(root)->sons[i] != 0)
       getAllFreqs(staticTrieAccess(root)->sons[i], init_vector);
 }
-
-void trie::showFreqs(string filename) {
-    ofstream out(filename);
-    
-    // Get all frequencies from trie
-    std::vector<pair<int, string>> init_vector;
-    getAllFreqs(0, init_vector);
-
-    // Sort the accumulated frequencies. Where equality between frequencies, prefer lexicografically order on words
-    std::sort(init_vector.begin(), init_vector.end(), [](auto& left, auto& right) {
-      return (left.first > right.first) || 
-             ((left.first == right.first) && (left.second < right.second));
-    });
-    
-    // And print them
-    for (auto iter = init_vector.begin(); iter != init_vector.end(); ++iter)
-      out << iter->second << " " << iter->first << std::endl;
-}

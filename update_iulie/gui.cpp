@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 #include "trie.cpp"
 #include "parserOltean.cpp"
@@ -9,6 +10,13 @@ using namespace std;
 #define PROCESS_TEXT 1
 #define UPDATE_DICT 2
 
+void errorArgs(int32_t option, int32_t argc, int32_t expected) {
+  if (argc != expected) {
+    std::cout << "You have chosen the option " << option << ", but the number of args is false! There should be " << expected << " args " << std::endl;
+    exit(0);
+  }
+}
+
 void dictionaryTask(trie& dict, char* textName) {
   // Open the normal file
   text txt(textName);
@@ -18,11 +26,9 @@ void dictionaryTask(trie& dict, char* textName) {
   latin_text_name = "latin_" + latin_text_name;
   text latin_txt(latin_text_name); 
   
-  string word, latin_word;
-  
   // Read the first words
-  word = txt.serveWord();
-  latin_word = latin_txt.serveWord();
+  string word = txt.serveWord();
+  string latin_word = latin_txt.serveWord();
   
   // Continue parsing the text until its end
   while ((word != " <EOF> ") && (latin_word != " <EOF> ")) {
@@ -46,6 +52,8 @@ int main(int argc, char** argv) {
   uint32_t option = atoi(argv[1]);
   switch (option) {
     case BUILD_TRIE : {
+      errorArgs(BUILD_TRIE, argc, 4); 
+      
       const char* file_name = argv[2];
       const char* save_into = argv[3];
       string tmp = file_name;
@@ -63,6 +71,8 @@ int main(int argc, char** argv) {
       break;
     }
     case PROCESS_TEXT : {
+      errorArgs(PROCESS_TEXT, argc, 5); 
+      
       // Use the trie while parsing the text
       string dictName = argv[2];
       trie dict(dictName.data());
@@ -73,6 +83,8 @@ int main(int argc, char** argv) {
       break;
     }
     case UPDATE_DICT : {
+      errorArgs(UPDATE_DICT, argc, 5); 
+      
       // Use the trie while parsing the text
       string dictName = argv[2];
       trie dict(dictName.data());
