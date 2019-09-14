@@ -20,7 +20,7 @@ int main(int argv, char** argc) {
   
   word = txt.serveWord();
   int place;
-  while (word != " EOF") {
+  while (word != " ") {
     dict.updateFreq(word);
     word = txt.serveWord();
   }

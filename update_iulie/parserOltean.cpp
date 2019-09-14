@@ -27,9 +27,9 @@ public:
   }
   
   string serveWord() {
-    // TODO: I don't like this ending EOF!
+    // It's not possible that we receive a white-space
     if (currSize == fileSize && index + 1 >= input.gcount()) {
-      return " EOF";
+      return " ";
     }
     if (index == input.gcount()) {
       input.read(buffer, BUFF_SIZE);
