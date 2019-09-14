@@ -33,7 +33,7 @@ struct trieNode {
 #pragma pack(pop)
 
 class trie {
-  static constexpr unsigned EXPAND_TRIE_CONSTANT = 3330000;
+  static constexpr unsigned SIZE = 3330000;
   static constexpr unsigned EXPAND_TRIE_CONSTANT = 16;
   static constexpr unsigned ROOT = 0;
   static constexpr int32_t FULL_OF_BITS = ~0;
@@ -58,7 +58,9 @@ class trie {
   bool mode;
   
   // Update the frequency for this pointer
-  void updatePtrFreq(int32_t ptr);
+  void updateFreqOfPointer(int32_t ptr);
+  
+  // Used for adding new words
   void updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo);
   trieNode* staticTrieAccess(int32_t ptr);
 
@@ -66,14 +68,23 @@ public:
   trie();
   trie(const char* filename);
   ~trie();
-  void insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_t& finalPtr);
+  
   void addRoot(string str);
   void addDerivated(string root, string derivated);
+
+  void insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_t& finalPtr);
   int search(string str, int& lastPos);
+  
+  // Functions to get the parent of each word
   string formWord(int32_t ptr);
   int32_t findParent(int32_t ptr, int32_t& encoding);
+  
   void updateFreq(string word);
+  
+  // Build the trie with the inflexions from dexonline.ro
   void consumeInflexions(const char* filename, const char* latin_filename);
+  
+  // Functions with files
   void loadExternal(const char* filename);
   void saveExternal(const char* filename);
   
@@ -146,9 +157,11 @@ trieNode* trie::staticTrieAccess(int32_t ptr) {
   return auxTrie + index;
 }
 
-void trie::updatePtrFreq(int32_t ptr) {
+void trie::updateFreqOfPointer(int32_t ptr) {
   // If derivated, increase frequency for root
   // If root, increase frequency for itself
+  
+  // Reminder: the first bit of code is occupied - that's why += 2!
   if (!(staticTrieAccess(ptr)->code & 1))
     staticTrieAccess(staticTrieAccess(ptr)->code >> 1)->code += 2;
   else
@@ -161,10 +174,10 @@ void trie::updateFreq(string word) {
   if (ptr < 0) {
     int finalPtr;
     insert(-ptr, word, -1, lastPos, finalPtr);
-    updatePtrFreq(finalPtr);
+    updateFreqOfPointer(finalPtr);
+  } else if (ptr > 0) {
+    updateFreqOfPointer(ptr);
   }
-  if (ptr > 0)
-    updatePtrFreq(ptr);
 }
 
 // Enlarge the vector of sons - the edge of "pos" points now to "goesTo" 
@@ -357,8 +370,8 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
       addDerivated(word, latin_word);
     }
     
-    countOfInflexions = stoi(aux);
-    for (int j = 0; j < countOfInflexions; j++) {
+    unsigned countOfInflexions = stoi(aux);
+    for (unsigned j = 0; j < countOfInflexions; j++) {
       // Read both words
       in >> inflexion;
       latin_in >> latin_inflexion;
