@@ -1,0 +1,35 @@
+3135336
+==2881== Invalid read of size 4
+==2881==    at 0x110528: trie::saveExternal(char const*) (in /home/mihail/Distractie/RomAna/update_iulie/trie)
+==2881==    by 0x10AC85: main (in /home/mihail/Distractie/RomAna/update_iulie/trie)
+==2881==  Address 0x4db3d5c is 0 bytes after a block of size 124 alloc'd
+==2881==    at 0x48394DF: operator new[](unsigned long) (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2881==    by 0x10CC99: trie::trie() (in /home/mihail/Distractie/RomAna/update_iulie/trie)
+==2881==    by 0x10AC04: main (in /home/mihail/Distractie/RomAna/update_iulie/trie)
+==2881== 
+after save
+==2881== Conditional jump or move depends on uninitialised value(s)
+==2881==    at 0x4839931: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2881==    by 0x10ACB7: main (in /home/mihail/Distractie/RomAna/update_iulie/trie)
+==2881== 
+==2881== Invalid free() / delete / delete[] / realloc()
+==2881==    at 0x483997B: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2881==    by 0x10ACB7: main (in /home/mihail/Distractie/RomAna/update_iulie/trie)
+==2881==  Address 0x4a47060 is 0 bytes inside data symbol "_ZSt4wcin"
+==2881== 
+==2881== 
+==2881== HEAP SUMMARY:
+==2881==     in use at exit: 24,138,460 bytes in 194,665 blocks
+==2881==   total heap usage: 5,611,729 allocs, 5,417,065 frees, 521,161,172 bytes allocated
+==2881== 
+==2881== LEAK SUMMARY:
+==2881==    definitely lost: 24,138,212 bytes in 194,663 blocks
+==2881==    indirectly lost: 0 bytes in 0 blocks
+==2881==      possibly lost: 248 bytes in 2 blocks
+==2881==    still reachable: 0 bytes in 0 blocks
+==2881==         suppressed: 0 bytes in 0 blocks
+==2881== Rerun with --leak-check=full to see details of leaked memory
+==2881== 
+==2881== For counts of detected and suppressed errors, rerun with: -v
+==2881== Use --track-origins=yes to see where uninitialised values come from
+==2881== ERROR SUMMARY: 3135522 errors from 7 contexts (suppressed: 0 from 0)

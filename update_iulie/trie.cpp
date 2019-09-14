@@ -40,29 +40,31 @@ trie::trie() {
 
 // Return the current size of the trie
 uint32_t trie::getSize() {
-  return bufferPos;
+  return bufferPos + 1;
 }
 
 // if we read from a binary file, mode must be set on true (READ_MODE)
 trie::trie(const char* filename) {
   mode = READ_MODE;
-  auxTrie = NULL;
+  auxTrie = nullptr;
   auxsize = 1;
   loadExternal(filename);
 }
 
 trie::~trie() {
-  for (int i = 0; i < bufferPos; i++) {
-    delete[] staticTrieAccess(i)->sons;
+  for (unsigned i = 0; i < bufferPos; i++) {
+    if (staticTrieAccess(i)->sons != nullptr)
+      delete[] staticTrieAccess(i)->sons;
   }
   delete[] staticTrie;
-  if (sizeof(auxTrie) != 0)
+  if (auxTrie != nullptr)
     free(auxTrie);
 }
 
-trieNode* trie::staticTrieAccess(int32_t ptr) {
+trieNode* trie::staticTrieAccess(uint32_t ptr) {
   if (ptr < size)
     return staticTrie + ptr;
+  // TODO:? should be - size?
   int index = ptr % size;
   int oldsize = auxsize - 1;
   if (index > oldsize) {
@@ -209,8 +211,9 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
                       romanian::encode(str[pos]) : 
                       romanian::diacriticEncode(str[pos], str[pos + 1]);
   
+  // TODO: Alex, nu inteleg de ce mode era pe true, adica READ_MODE?
   // If the next edge does not yet exist, create it.
-  if (((mode == READ_MODE) && (!bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding))) || !staticTrieAccess(ptr)->sons[encoding]) {
+  if (((mode == READ_MODE) && (!bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding))) || (!staticTrieAccess(ptr)->sons[encoding])) {
     if (staticTrieAccess(ptr)->configuration != FULL_OF_BITS)
       updateMihailsJmenuri(ptr, encoding, ++bufferPos);
     else
@@ -304,7 +307,7 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
       // And add the latin word as a derivated of the root
       addDerivated(word, latin_word);
     }
-    
+
     unsigned countOfInflexions = stoi(aux);
     for (unsigned j = 0; j < countOfInflexions; j++) {
       // Read both words
@@ -341,7 +344,7 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   in.close();
 }
 
-// load class members from external file
+// Load class members from external file
 void trie::loadExternal(const char* filename) {
   ifstream in;
   in.open(filename, ios::in | ios::binary);
@@ -363,16 +366,19 @@ void trie::loadExternal(const char* filename) {
   }
 }
 
-// save class members to external file
+// Save class members to external file
+// TODO: there is somewhere here a leak of reading over 4 bytes
 void trie::saveExternal(const char* filename) {
   ofstream out;
   out.open(filename, ios::out | ios::binary);
+  
+  // "+ 1" because bufferPos points on the last used pointer
   int writeSize = bufferPos + 1;
   out.write((char*) &writeSize, sizeof(int32_t));
   out.write((char*) &sigma, sizeof(int32_t));
 
   for (unsigned i = 0; i < writeSize; i++) {
-    unsigned howMany = bitOp::countOfBits(staticTrieAccess(i)->configuration);
+    unsigned countOfSons = bitOp::countOfBits(staticTrieAccess(i)->configuration);
     int dummy;
 //    if (staticTrieAccess(findParent(i, dummy))->configuration == FULL_OF_BITS)
     if (staticTrieAccess(i)->configuration == FULL_OF_BITS) {
@@ -387,11 +393,10 @@ void trie::saveExternal(const char* filename) {
     out.write((char*) &staticTrieAccess(i)->parent, sizeof(int32_t));
 
     // Writes only the sons with non-zero values.
-    for (unsigned j = 0; j < howMany; j++)
+    for (unsigned j = 0; j < countOfSons; j++)
       if (staticTrieAccess(i)->sons[j])
         out.write((char*) &staticTrieAccess(i)->sons[j], sizeof(uint32_t));
   }
-//  size = writeSize;
   out.close();
 }
 
@@ -465,10 +470,10 @@ void trie::showFreqs(string filename) {
       out << iter->second << " " << iter->first << std::endl;
 }
 
-#if 0
+#if 1
 int main(int argc, char** argv) {
   if (argc < 3) {
-    std::cout << argv[0] << " file read(0 -> build_trie, 1 -> read_only) find_me" << std::endl;
+    std::cout << argv[0] << " [file to read the inflections from] [read(0 -> build_trie, 1 -> read_only)] [find_me]" << std::endl;
     return -1;
   }
   
@@ -487,6 +492,7 @@ int main(int argc, char** argv) {
     
     std::cerr << A.getSize() << std::endl;
     A.saveExternal("dictionary.bin");
+    
     std::cerr << "after save" << std::endl;
   } else {
     trie A("dictionary.bin");

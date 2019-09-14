@@ -105,7 +105,7 @@ namespace romanian {
     else {
       int ret = romanian::diacriticEncode(str[index], str[index + 1]);
       if (ret == -1) {
-        std::cerr << str << std::endl;
+        // std::cerr << str << std::endl;
         return false;
       }
       return isRomanian(str, index + 1 + !isEnglishAlphabetIndex(ret)); 

@@ -9,6 +9,13 @@ struct trieNode {
   uint32_t parent;
   int32_t configuration;
   uint32_t* sons;
+  
+  trieNode() {  
+    this->code = 0;
+    this->parent = 0;
+    this->configuration = 0;
+    this->sons = nullptr;
+  }
 };
 #pragma pack(pop)
 
@@ -35,7 +42,7 @@ class trie
   // the size of the alphabet
   uint32_t sigma;
   
-  // Last used position
+  // Last used pointer in trie
   uint32_t bufferPos;
   
   // If trie loaded from binary -> mode == true (READ_MODE)
@@ -46,7 +53,7 @@ class trie
   
   // Used for adding new words
   void updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo);
-  trieNode* staticTrieAccess(int32_t ptr);
+  trieNode* staticTrieAccess(uint32_t ptr);
 
   public:
   trie();
