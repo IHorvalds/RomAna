@@ -89,7 +89,6 @@ trie::trie() {
   size = SIZE + 1;
   sigma = romanian::ROMANIAN_SIGMA;
   bufferPos = 0;
-  lastOrigin = 0;
   mode = false;
   staticTrie = new trieNode[size];
   for (int i = 0; i < size; i++) {
@@ -248,15 +247,11 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
   insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding], str, connect, pos + 1 + romanian::isDiacritic(str[pos]), finalPtr);
 }
 
-// add a root-word. Save the position in buffer where its last character has been saved.
 void trie::addRoot(string str) {
   int dummy;
   insert(ROOT, str, -1, 0, dummy);
-  // save the position of the position where the origin was put (provided derivates are added after the origin).
-  lastOrigin = bufferPos;
 }
 
-// add a derivate. Use lastOrigin to connect the inflexion to its root-word.
 void trie::addDerivated(string root, string derivated) {
   if (derivated == root)
     return;
@@ -302,11 +297,10 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   in >> total;
   latin_in >> latin_total;
   
-  // Compare for equality of words
+  // Compare for equality of count of words
   assert(latin_total == total);
   
   for (int i = 0; i < total; i++) {
-    //std::cerr << i << std::endl;
     // Read both variants
     in >> word >> aux;
     latin_in >> latin_word >> latin_aux;
@@ -315,17 +309,13 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
     specialChars::cleanUpWord(word);
     specialChars::cleanUpWord(latin_word);
     
-    //std::cerr << word << " " << latin_word << std::endl;
-    
     if ((!isdigit(aux[0])) || (latin_word == "PS")) {
-      //std::cerr << word << " " << aux << std::endl;
-      std::cerr << "serios?____________________________________" << std::endl;
+      // std::cerr << "serios?____________________________________" << std::endl;
       
       // Consume both lines
       getline(in, word);
       getline(latin_in, latin_word);
       // TODO: pe asfintite. Add separator in inflextions
-      //std::cerr << word << std::endl; 
       continue;
     }
     
@@ -337,21 +327,19 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
     } else {
       addRoot(word);
       
-      // And add the latin word a derivated of the root
+      // And add the latin word as a derivated of the root
       addDerivated(word, latin_word);
     }
     
-    //std::cerr << "romanina: daca " << !latin_is_root << std::endl;
-    
-    infl = stoi(aux);
-    for (int j = 0; j < infl; j++) {
+    countOfInflexions = stoi(aux);
+    for (int j = 0; j < countOfInflexions; j++) {
+      // Read both words
       in >> inflexion;
       latin_in >> latin_inflexion;
       
+      // Clean up both words
       specialChars::cleanUpWord(inflexion);
       specialChars::cleanUpWord(latin_inflexion);
-      
-      //print_inflex(latin_word, inflexion, isRomanian(inflexion));
       
       if (latin_is_root) {
         // This means, the root is not a romanian word. But its derivates could be romanian
@@ -365,20 +353,16 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
           addDerivated(latin_word, latin_inflexion);
         }
       } else {
-        // The root is romanian. We are sure that the inflexion also is romanian.
-        
-        //print_inflex(latin_word, latin_inflexion, isRomanian(inflexion));
+        // This mens, the root is romanian. We are sure that the inflexion also is romanian.
         addDerivated(word, inflexion);
         
         // And add the latin variant of the inflexion if it does not exist
-        if (latin_inflexion != inflexion) {
-          //print_inflex(latin_word, latin_inflexion, true);
+        if (latin_inflexion != inflexion)
           addDerivated(word, latin_inflexion);
-        }
       }
-      //print_inflex(latin_word, inflexion, true);
     }
   }
+  // Close both files
   latin_in.close();
   in.close();
 }
@@ -507,7 +491,6 @@ void trie::showFreqs(string filename) {
 }
 
 int main(int argc, char** argv) {
-  // read represents, whether we want to build the trie or not (GENMODE should be instead).
   if (argc < 3) {
     std::cout << argv[0] << " file read(0 -> build_trie, 1 -> read_only) find_me" << std::endl;
     return -1;
