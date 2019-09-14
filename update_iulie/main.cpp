@@ -15,19 +15,30 @@ int main(int argc, char** argv) {
     newDictName = argv[5];
   
   trie dict(&dictName[0]);
-  text txt(textName);
-  string word;
   
+  // Open the normal file
+  text txt(textName);
+  
+  // Open the latin_file
+  string latin_text_name = textName;
+  latin_text_name = "latin_" + latin_text_name;
+  text latin_txt(latin_text_name); 
+  
+  string word, latin_word;
+  
+  // Read the first words
   word = txt.serveWord();
-  int place;
-  while (word != " ") {
-    dict.updateFreq(word);
+  latin_word = latin_txt.serveWord();
+  while ((word != " <EOF> ") && (latin_word != " <EOF> ")) {
+    // Update the frequencies
+    dict.updateFreq(word, latin_word);
     word = txt.serveWord();
+    latin_word = latin_txt.serveWord();
   }
+  
   dict.showFreqs(outName);
 
   if (argc == 6)
     dict.saveExternal(argv[5]);
-  
   return 0;
 }

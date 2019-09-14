@@ -80,7 +80,9 @@ public:
   string formWord(int32_t ptr);
   int32_t findParent(int32_t ptr, int32_t& encoding);
   
-  void updateFreq(string word);
+  // Functions for updating the frequencies while parsing a text
+  void tryUpdateFreq(string word);
+  void updateFreq(string word, string latin_word);
   
   // Build the trie with the inflexions from dexonline.ro
   void consumeInflexions(const char* filename, const char* latin_filename);
@@ -169,15 +171,34 @@ void trie::updateFreqOfPointer(int32_t ptr) {
     staticTrieAccess(ptr)->code += 2;
 }
 
-void trie::updateFreq(string word) {
-  int lastPos;
-  int ptr = search(word, lastPos);
+// Updade frequency of word. If not found, add it as a as-is word
+void trie::tryUpdateFreq(string word) {
+  int32_t lastPos;
+  int32_t ptr = search(word, lastPos);
+  // assert(ptr != ROOT);
+  
   if (ptr < 0) {
-    int finalPtr;
+    int32_t finalPtr;
     insert(-ptr, word, -1, lastPos, finalPtr);
     updateFreqOfPointer(finalPtr);
   } else if (ptr > 0) {
     updateFreqOfPointer(ptr);
+  }
+}
+
+// The strategy is to add the latin variant, if the normal one hasn't been found or it's not a romanian word
+void trie::updateFreq(string word, string latin_word = "") {
+  if (!romanian::isRomanian(word)) {
+    tryUpdateFreq(latin_word);
+  } else {
+    int32_t lastPos;
+    int32_t ptr = search(word, lastPos);
+    // assert(ptr != ROOT);
+    
+    if (ptr > 0)
+      updateFreqOfPointer(ptr);
+    else
+      tryUpdateFreq(latin_word);
   }
 }
 
@@ -519,9 +540,10 @@ void trie::showFreqs(string filename) {
     std::vector<pair<int, string>> init_vector;
     getAllFreqs(0, init_vector);
 
-    // Sort the accumulated frequencies
+    // Sort the accumulated frequencies. Where equality between frequencies, prefer lexicografically order on words
     std::sort(init_vector.begin(), init_vector.end(), [](auto& left, auto& right) {
-      return left.first > right.first;
+      return (left.first > right.first) || 
+             ((left.first == right.first) && (left.second < right.second));
     });
     
     // And print them

@@ -6,13 +6,14 @@
 #include <cctype>
 
 namespace specialChars {
-  static constexpr unsigned count_punctuation_1byte = 16;
+  static constexpr unsigned count_punctuation_1byte = 17;
   static constexpr unsigned count_punctuation_2byte = 2;
   static constexpr unsigned count_punctuation_3byte = 4;
 
   // TODO: add the coresponding character to each encoding 
   static int32_t punctuation_1byte[count_punctuation_1byte] = 
   {
+    35,  // #
     44,  //  
     45,  //
     46,  //
