@@ -1,5 +1,5 @@
-// TO DO
-// curățenie!!!
+// TODO
+// DONE: curățenie!!!
 // flexiuni separate prin virgula + rescris consumeInflections
 
 
@@ -23,13 +23,6 @@
 
 using namespace std;
 
-#define SIZE 3330000
-#define EXPAND_TRIE_CONSTANT 16
-
-const int32_t FULL_OF_BITS = ~0;
-
-#define ROOT 0
-
 #pragma pack(push, 1)
 struct trieNode {
   uint32_t code;
@@ -40,6 +33,15 @@ struct trieNode {
 #pragma pack(pop)
 
 class trie {
+  static constexpr unsigned EXPAND_TRIE_CONSTANT = 3330000;
+  static constexpr unsigned EXPAND_TRIE_CONSTANT = 16;
+  static constexpr unsigned ROOT = 0;
+  static constexpr int32_t FULL_OF_BITS = ~0;
+  
+  // Modes of trie
+  static constexpr bool BUILD_MODE = false;
+  static constexpr bool READ_MODE = true;
+  
   trieNode* staticTrie;
   trieNode* auxTrie;
   
@@ -52,7 +54,7 @@ class trie {
   // Last used position
   uint32_t bufferPos;
   
-  // If trie loaded from binary -> mode == true
+  // If trie loaded from binary -> mode == true (READ_MODE)
   bool mode;
   
   // Update the frequency for this pointer
@@ -87,12 +89,12 @@ public:
   uint32_t getSize();
 };
 
-// set mode on false, if we build the trie (we don't use configuration).
+// Set mode on false (BUILD_MODE), if we build the trie (we don't use configuration).
 trie::trie() {
   size = SIZE + 1;
   sigma = romanian::ROMANIAN_SIGMA;
   bufferPos = 0;
-  mode = false;
+  mode = BUILD_MODE;
   staticTrie = new trieNode[size];
   for (int i = 0; i < size; i++) {
     staticTrie[i].code = 0;
@@ -107,9 +109,9 @@ uint32_t trie::getSize() {
   return bufferPos;
 }
 
-// if we read from a binary file, mode must be set on true.
+// if we read from a binary file, mode must be set on true (READ_MODE)
 trie::trie(const char* filename) {
-  mode = true;
+  mode = READ_MODE;
   auxTrie = NULL;
   auxsize = 1;
   loadExternal(filename);
@@ -248,19 +250,27 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
     // If, however, I want to update an existing dictionary, I'll need updated frequencies.
     return;
   }
-  int32_t encoding = (pos == str.size() - 1) ? romanian::encode(str[pos]) : romanian::diacriticEncode(str[pos], str[pos + 1]);
-  // if the next edge does not yet exist, create it.
-  if ((mode && !bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding)) || !staticTrieAccess(ptr)->sons[encoding]) {
+  int32_t encoding = (pos == str.size() - 1) ? 
+                      romanian::encode(str[pos]) : 
+                      romanian::diacriticEncode(str[pos], str[pos + 1]);
+  
+  // If the next edge does not yet exist, create it.
+  if (((mode == READ_MODE) && (!bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding))) || !staticTrieAccess(ptr)->sons[encoding]) {
     if (staticTrieAccess(ptr)->configuration != FULL_OF_BITS)
       updateMihailsJmenuri(ptr, encoding, ++bufferPos);
     else {
       staticTrieAccess(ptr)->sons[encoding] = ++bufferPos;
     }
     staticTrieAccess(bufferPos)->parent = encoding | (ptr << 7);
-//    cout << bufferPos << ' ' << formWord(bufferPos) << endl;
   }
-  // if encoding shows we reached a diacritic character, move to next byte
-  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding], str, connect, pos + 1 + romanian::isDiacritic(str[pos]), finalPtr);
+  
+  // If encoding shows we reached a diacritica, move to the next byte
+  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? 
+        bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : 
+        encoding], 
+        str, 
+        connect, 
+        pos + 1 + romanian::isDiacritic(str[pos]), finalPtr);
 }
 
 void trie::addRoot(string str) {
@@ -301,7 +311,7 @@ void print_inflex(string word, string inflex, bool val) {
 #endif
 
 void trie::consumeInflexions(const char* filename, const char* latin_filename) {
-  assert(!mode);
+  assert(mode == BUILD_MODE);
   ifstream latin_in(latin_filename);
   ifstream in(filename);
   
@@ -437,8 +447,8 @@ void trie::saveExternal(const char* filename) {
   out.close();
 }
 
-// returns the parent in trie of ptr and also saves the type of edge that lies between them.
-// this function depends also on mode.
+// TODO: Alex? te rog sa scrii despre ">> 7", nu am inteles. Merci!
+// Returns the parent in trie of "ptr" and also saves the type of edge that lies between them.
 // TODO: update configuration during insert. Not necessary! because we only build a trie with sons at full size (SIGMA).
 int32_t trie::findParent(int32_t ptr, int32_t& encoding) {
   if (ptr == 0)
