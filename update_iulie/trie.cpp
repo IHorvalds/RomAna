@@ -49,10 +49,13 @@ class trie {
   // the size of the alphabet
   uint32_t sigma;
   
+  // Last used position
   uint32_t bufferPos;
-  uint32_t lastOrigin;
-  bool mode; // if trie is implemented with configuration (so only if it is loaded from a binary), mode == true.
-  int32_t leafCheck(int32_t ptr);
+  
+  // If trie loaded from binary -> mode == true
+  bool mode;
+  
+  // Update the frequency for this pointer
   void updatePtrFreq(int32_t ptr);
   void updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo);
   trieNode* staticTrieAccess(int32_t ptr);
@@ -142,8 +145,8 @@ trieNode* trie::staticTrieAccess(int32_t ptr) {
 }
 
 void trie::updatePtrFreq(int32_t ptr) {
-  // dacă e derivat, crește frecvența pentru rădăcină
-  // dacă e rădăcină, crește frecvența pentru el
+  // If derivated, increase frequency for root
+  // If root, increase frequency for itself
   if (!(staticTrieAccess(ptr)->code & 1))
     staticTrieAccess(staticTrieAccess(ptr)->code >> 1)->code += 2;
   else
@@ -162,21 +165,34 @@ void trie::updateFreq(string word) {
     updatePtrFreq(ptr);
 }
 
+// Enlarge the vector of sons - the edge of "pos" points now to "goesTo" 
+// The idea is to fully alloc the vector of sons
 void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
-  int size = bitOp::countOfBits(staticTrieAccess(ptr)->configuration);
-  uint32_t* temp = new uint32_t[size]();
-  for (int i = 0; i < size; i++) {
+  // Get the number of sons
+  int countOfSons = bitOp::countOfBits(staticTrieAccess(ptr)->configuration);
+  
+  // Create temporary copy of the sons
+  uint32_t* temp = new uint32_t[countOfSons]();
+  for (int i = 0; i < countOfSons; i++) {
     temp[i] = staticTrieAccess(ptr)->sons[i];
   }
   delete[] staticTrieAccess(ptr)->sons;
+  
+  // Alloc a new vector of sons
   staticTrieAccess(ptr)->sons = new uint32_t[sigma]();
+  
+  // Restablish the sons. 
   for (int i = 0; i < sigma; i++) {
     if (bitOp::getBit(staticTrieAccess(ptr)->configuration, i))
       staticTrieAccess(ptr)->sons[i] = temp[bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, i)];
     else
       staticTrieAccess(ptr)->sons[i] = 0;
   }
+  
+  // Update the configuration
   staticTrieAccess(ptr)->configuration = FULL_OF_BITS;
+  
+  // Let the edge "pos" point to "goesTo"
   staticTrieAccess(ptr)->sons[pos] = goesTo;
 }
 
