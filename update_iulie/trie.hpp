@@ -4,12 +4,14 @@
 using namespace std;
 
 #include <vector>
+#include <iomanip>
+#include <cmath>
 
 #pragma pack(push, 1)
 struct trieNode {
   uint32_t code;
   uint32_t parent;
-  int32_t configuration;
+  uint32_t configuration; // keep it with signed
   uint32_t* sons;
   
   trieNode() {  
@@ -28,6 +30,7 @@ class trie
   private:
   static constexpr unsigned SIZE = 3330000;
   static constexpr unsigned EXPAND_TRIE_CONSTANT = 16;
+  static constexpr unsigned MAX_ACCEPTED_SIGMA = 32;
   static constexpr unsigned ROOT = 0;
   
   // Modes of trie
@@ -40,8 +43,8 @@ class trie
   // current sizes of both tries
   uint32_t size, auxTrie_size;
   
-  // the size of the alphabet
-  uint32_t sigma;
+  // Properties of the alphabet
+  uint32_t sigma, full_bits, bits_sigma, mask_sigma; // formula of mask_sigma = (1 << bits_sigma) - 1
   
   // Last used pointer in trie
   uint32_t bufferPos;
@@ -56,6 +59,14 @@ class trie
   void updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo);
   trieNode* staticTrieAccess(uint32_t ptr);
 
+  // If sigma is a power of 2, we need log + 1. Example 2^5 -> 6 bits
+  // Otherwise, simply rounded log. Example 26 -> 5 bits 
+  uint32_t computeCountOfBits(unsigned curr_sigma) {
+    uint32_t log = ceil(log2(curr_sigma));
+    // Check if pow of 2
+    return log + ((curr_sigma & (curr_sigma - 1)) == 0);
+  }
+  
   public:
   trie();
   trie(const char* filename);
@@ -94,7 +105,6 @@ class trie
   // Compute the frequencies
   void getAllFreqs(int root, std::vector<pair<int, string>>& init_vector);
   void showFreqs(string filename) {
-    std::cerr << "Got here" << std::endl;
     ofstream out(filename);
     
     // Get all frequencies from trie
@@ -114,7 +124,7 @@ class trie
 
     // And print them as word - (frequency, ratio)
     for (auto iter = init_vector.begin(); iter != init_vector.end(); ++iter)
-      out << iter->second << " (" << iter->first << ", " << (iter->first / sumOfFreqs) * 100 << "%)" << std::endl;
+      out << setprecision(3) << iter->second << " (" << iter->first << ", " << (iter->first / sumOfFreqs) * 100 << "%)" << std::endl;
   }
 };
 

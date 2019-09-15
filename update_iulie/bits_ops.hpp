@@ -2,8 +2,8 @@
 #define BITS_OPS_H
 
 namespace bitOp {
-  static void setBit(int32_t& x, unsigned index) {
-    x |= (1 << index);
+  static void setBit(uint32_t& x, unsigned index) {
+    x |= (1u << index);
   }
 
   static bool getBit(int32_t x, unsigned index) {
@@ -11,7 +11,7 @@ namespace bitOp {
   }
 
   // Count the number of bits of val.
-  static uint32_t countOfBits(int32_t x) {
+  static uint32_t countOfBits(uint32_t x) {
     return __builtin_popcount(x);
   }
 
@@ -27,10 +27,10 @@ namespace bitOp {
   
   // returns how many set bits are before the bit index.
   // creates a mask: 00000111111, where the count of 1s equals "index".
-  static uint32_t orderOfBit(int32_t x, uint32_t index) {
+  static uint32_t orderOfBit(uint32_t x, uint32_t index) {
     // assures that the bit "index" is set in "x", otherwise this wouldn't work.
     assert(getBit(x, index));
-    return countOfBits(x & ((1 << index) - 1));
+    return countOfBits(x & ((1u << index) - 1));
   }
 };
 
