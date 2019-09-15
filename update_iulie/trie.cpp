@@ -78,7 +78,7 @@ trieNode* trie::staticTrieAccess(uint32_t ptr) {
   // No? Then use auxTrie
   int index = ptr - size;
   int oldsize = auxTrie_size;
-  if (index > auxTrie_size) {
+  if (index >= auxTrie_size) {
     // Check for the first entrance in this case (auxTrie_size == 0)
     auxTrie_size = (!auxTrie_size) ? 1 : (auxTrie_size * EXPAND_TRIE_CONSTANT);
     
@@ -128,6 +128,8 @@ void trie::tryUpdateFreq(string word) {
 
 // The strategy is to add the latin variant, if the normal one hasn't been found or it's not a romanian word
 void trie::updateFreq(string word, string latin_word = "") {
+  std::cerr << word << " " << latin_word << std::endl;
+  
   if (!romanian::isRomanian(word)) {
     tryUpdateFreq(latin_word);
   } else {
@@ -135,11 +137,14 @@ void trie::updateFreq(string word, string latin_word = "") {
     int32_t ptr = search(word, lastPos);
     // assert(ptr != ROOT);
     
+    std::cerr << "should be here" << ptr << std::endl;
+    
     if (ptr > 0)
       updateFreqOfPointer(ptr);
     else
       tryUpdateFreq(latin_word);
   }
+  std::cerr << "Passed of that" << std::endl;
 }
 
 // Enlarge the vector of sons - the edge of "pos" points now to "goesTo" 
@@ -268,8 +273,10 @@ int32_t trie::search(string str, int& lastPos) {
   bool toCheck;
   ptr = 0;
   for (pos = 0; pos < str.size();) {
+    // Get the encoding
     encoding = (pos == str.size() - 1) ? romanian::encode(str[pos]) : romanian::diacriticEncode(str[pos], str[pos + 1]);
-    toCheck = staticTrieAccess(ptr)->configuration != romanian::FULL_BITS ? bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
+    
+    toCheck = (staticTrieAccess(ptr)->configuration != romanian::FULL_BITS) ? bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
     if (!toCheck) {
       lastPos = pos;
       return -ptr;
@@ -277,7 +284,7 @@ int32_t trie::search(string str, int& lastPos) {
     ptr = staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != romanian::FULL_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding];
     pos += 1 + romanian::isDiacritic(str[pos]);
   }
-  return (staticTrieAccess(ptr)->code & 1) ? ptr : staticTrieAccess(ptr)->code / 2;
+  return (staticTrieAccess(ptr)->code & 1) ? ptr : (staticTrieAccess(ptr)->code / 2);
 }
 
 void trie::consumeInflexions(const char* filename, const char* latin_filename) {
@@ -425,8 +432,8 @@ void trie::saveExternal(const char* filename) {
 int32_t trie::findParent(int32_t ptr, int32_t& encoding) {
   if (ptr == 0)
     return -1;
-  encoding = staticTrieAccess(ptr)->parent & romanian::MASK_SIGMA;
-  return staticTrieAccess(ptr)->parent >> romanian::BITS_SIGMA;
+  encoding = (staticTrieAccess(ptr)->parent & romanian::MASK_SIGMA);
+  return (staticTrieAccess(ptr)->parent >> romanian::BITS_SIGMA);
 }
 
 // create the word that ends in ptr.

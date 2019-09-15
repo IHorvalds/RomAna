@@ -30,12 +30,16 @@ void dictionaryTask(trie& dict, char* textName) {
   string word = txt.serveWord();
   string latin_word = latin_txt.serveWord();
   
+  std::cerr << word << " " << latin_word << std::endl;
+  
   // Continue parsing the text until its end
   while ((word != " <EOF> ") && (latin_word != " <EOF> ")) {
     // Update the frequencies
     dict.updateFreq(word, latin_word);
     word = txt.serveWord();
     latin_word = latin_txt.serveWord();
+    
+    std::cerr << word << " " << latin_word << std::endl;
   }
 }
 

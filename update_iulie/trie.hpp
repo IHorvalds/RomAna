@@ -94,6 +94,7 @@ class trie
   // Compute the frequencies
   void getAllFreqs(int root, std::vector<pair<int, string>>& init_vector);
   void showFreqs(string filename) {
+    std::cerr << "Got here" << std::endl;
     ofstream out(filename);
     
     // Get all frequencies from trie

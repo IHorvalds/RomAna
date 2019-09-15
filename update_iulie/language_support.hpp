@@ -7,9 +7,9 @@
 namespace romanian {
   static constexpr unsigned ROMANIAN_SIGMA = 31;
   static constexpr unsigned ENGLISH_SIGMA = 26;
-  static constexpr unsigned FULL_BITS = 0x7fff;
-  static constexpr unsigned BITS_SIGMA = 5;
-  static constexpr unsigned MASK_SIGMA = (1 << 5) - 1;
+  static constexpr int32_t FULL_BITS = ~0;
+  static constexpr unsigned BITS_SIGMA = 7;
+  static constexpr unsigned MASK_SIGMA = (1 << 7) - 1;
   
   // TODO: This should be used in diacriticEncode
 #if 0
