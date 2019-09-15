@@ -22,10 +22,12 @@ void dictionaryTask(trie& dict, char* textName) {
   text txt(textName);
   
   // Open the latin_file
-  string latin_text_name = textName;
-  latin_text_name = "latin_" + latin_text_name;
-  text latin_txt(latin_text_name); 
-  
+  string tmp = textName;
+  string pythonCommand = "python3 convert_into_latin.py " + tmp;
+  system(pythonCommand.data());
+  tmp = "latin_" + tmp;
+  text latin_txt(tmp); 
+
   // Read the first words
   string word = txt.serveWord();
   string latin_word = latin_txt.serveWord();
@@ -56,7 +58,11 @@ int main(int argc, char** argv) {
       
       const char* file_name = argv[2];
       const char* save_into = argv[3];
+      
+      // Create the latin_file with python
       string tmp = file_name;
+      string pythonCommand = "python3 convert_into_latin.py " + tmp;
+      system(pythonCommand.data());
       tmp = "latin_" + tmp;
       const char* latin_file_name = tmp.data();
       
