@@ -18,26 +18,38 @@
 
 #include "trie.hpp"
 #include "bits_ops.hpp"
-#include "diacritica.hpp"
+#include "language_support.hpp"
 #include "special_characters.hpp"
 
 using namespace std;
 
 // Set mode on false (BUILD_MODE), if we build the trie (we don't use configuration).
 trie::trie() {
+  // Initialize the staticTrie
+  
+  // Properties of the namespace
   size = SIZE + 1;
   sigma = romanian::ROMANIAN_SIGMA;
+  
+  assert(sigma <= MAX_ACCEPTED_SIGMA);
+  full_bits = (sigma == MAX_ACCEPTED_SIGMA) ? 0xffffffff : ((1u << sigma) - 1);
+  bits_sigma = trie::computeCountOfBits(sigma);
+  mask_sigma = (1u << bits_sigma) - 1;
+  
+  // Alloc staticTrie
   bufferPos = 0;
   mode = BUILD_MODE;
-  auxsize = 1;
-  auxTrie = nullptr;
   staticTrie = new trieNode[size];
   for (int i = 0; i < size; i++) {
     staticTrie[i].code = 0;
     staticTrie[i].parent = 0;
     staticTrie[i].sons = new uint32_t[sigma]();
-    staticTrie[i].configuration = FULL_OF_BITS;
+    staticTrie[i].configuration = full_bits;
   }
+  
+  // Also auxTrie
+  auxTrie_size = 0;
+  auxTrie = nullptr;
 }
 
 // Return the current size of the trie
@@ -48,40 +60,54 @@ uint32_t trie::getSize() {
 // if we read from a binary file, mode must be set on true (READ_MODE)
 trie::trie(const char* filename) {
   mode = READ_MODE;
+  
+  // Initialize auxTrie
+  auxTrie_size = 0;
   auxTrie = nullptr;
-  auxsize = 0;
   loadExternal(filename);
 }
 
 trie::~trie() {
   for (unsigned i = 0; i < bufferPos; i++) {
-    if (staticTrieAccess(i)->sons != nullptr) {
+    if (staticTrieAccess(i)->sons != nullptr)
       delete[] staticTrieAccess(i)->sons;
-    }
   }
   delete[] staticTrie;
-  if (auxsize > 1) {
+  
+  // Free auxTrie, if it has been reallocated
+  if ((mode != BUILD_MODE) && (auxTrie_size))
     free(auxTrie);
-  }
 }
 
 trieNode* trie::staticTrieAccess(uint32_t ptr) {
+  // Included in staticTrie?
   if (ptr < size)
     return staticTrie + ptr;
+  
+  // No? Then use auxTrie
   int index = ptr - size;
-  int oldsize = auxsize;
-  if (index > oldsize) {
-    auxsize = (auxsize == 0) ? EXPAND_TRIE_CONSTANT : auxsize * EXPAND_TRIE_CONSTANT;
-    auxTrie = (trieNode*) realloc(auxTrie, auxsize * sizeof(trieNode));
-    for (int i = oldsize; i < auxsize; i++) {
+  int oldsize = auxTrie_size;
+  
+  // Is index contained in the old auxtrie?
+  if (index >= oldsize) {
+    // Check for the first entrance in this case (auxTrie_size == 0)
+    auxTrie_size = (!auxTrie_size) ? EXPAND_TRIE_CONSTANT : (auxTrie_size * EXPAND_TRIE_CONSTANT);
+    
+    // Realloc the entire auxTrie
+    auxTrie = (trieNode*)realloc(auxTrie, auxTrie_size * sizeof(trieNode));
+    
+    // Init the new allocated entries
+    for (int i = oldsize; i < auxTrie_size; i++) {
       auxTrie[i].code = 0;
       auxTrie[i].parent = 0;
-      auxTrie[i].sons = new uint32_t[sigma + 1]();
-      auxTrie[i].configuration = FULL_OF_BITS;
+      
+      // TODO: Alex suggested (sigma + 1). I think, there was the problem with ~0.
+      // In ~0 there are 32 set bits. But we need only 31.
+      // Now it should work as it's now. But still, check for that.
+      auxTrie[i].sons = new uint32_t[sigma]();
+      auxTrie[i].configuration = full_bits; // 31 bits
     }
-//    cout << "realloc success!" << endl;
   }
-//  cout << ptr << ' ' << index << ' ' << auxTrie[index].code << ' ' << (auxTrie[index].parent >> 7) << ' ' << auxTrie[index].configuration << endl;
   return auxTrie + index;
 }
 
@@ -143,7 +169,7 @@ void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
   // Alloc a new vector of sons
   staticTrieAccess(ptr)->sons = new uint32_t[sigma]();
   
-  // Restablish the sons. 
+  // Re-establish the sons. 
   for (int i = 0; i < sigma; i++) {
     if (bitOp::getBit(staticTrieAccess(ptr)->configuration, i))
       staticTrieAccess(ptr)->sons[i] = temp[bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, i)];
@@ -152,7 +178,7 @@ void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
   }
   
   // Update the configuration
-  staticTrieAccess(ptr)->configuration = FULL_OF_BITS;
+  staticTrieAccess(ptr)->configuration = full_bits;
   
   // Let the edge "pos" point to "goesTo"
   staticTrieAccess(ptr)->sons[pos] = goesTo;
@@ -217,15 +243,17 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
   // TODO: Alex, nu inteleg de ce mode era pe true, adica READ_MODE?
   // If the next edge does not yet exist, create it.
   if (((mode == READ_MODE) && (!bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding))) || (!staticTrieAccess(ptr)->sons[encoding])) {
-    if (staticTrieAccess(ptr)->configuration != FULL_OF_BITS)
+    if (staticTrieAccess(ptr)->configuration != full_bits)
       updateMihailsJmenuri(ptr, encoding, ++bufferPos);
     else
       staticTrieAccess(ptr)->sons[encoding] = ++bufferPos;
-    staticTrieAccess(bufferPos)->parent = encoding | (ptr << 7);
+    
+    // Save the parent and also the encoding of the edge, which represents the index of the character in alphabet
+    staticTrieAccess(bufferPos)->parent = (ptr << bits_sigma) | encoding;
   }
   
   // If encoding shows we reached a diacritica, move to the next byte
-  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? 
+  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != full_bits ? 
         bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : 
         encoding], 
         str, 
@@ -251,16 +279,18 @@ int32_t trie::search(string str, int& lastPos) {
   bool toCheck;
   ptr = 0;
   for (pos = 0; pos < str.size();) {
+    // Get the encoding
     encoding = (pos == str.size() - 1) ? romanian::encode(str[pos]) : romanian::diacriticEncode(str[pos], str[pos + 1]);
-    toCheck = staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
+    
+    toCheck = (staticTrieAccess(ptr)->configuration != full_bits) ? bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
     if (!toCheck) {
       lastPos = pos;
       return -ptr;
     }
-    ptr = staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding];
+    ptr = staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != full_bits ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding];
     pos += 1 + romanian::isDiacritic(str[pos]);
   }
-  return (staticTrieAccess(ptr)->code & 1) ? ptr : staticTrieAccess(ptr)->code / 2;
+  return (staticTrieAccess(ptr)->code & 1) ? ptr : (staticTrieAccess(ptr)->code / 2);
 }
 
 void trie::consumeInflexions(const char* filename, const char* latin_filename) {
@@ -352,15 +382,18 @@ void trie::loadExternal(const char* filename) {
   ifstream in;
   in.open(filename, ios::in | ios::binary);
 
-  in.read((char*) &size, sizeof(int32_t));
-  in.read((char*) &sigma, sizeof(int32_t));
+  in.read((char*) &size, sizeof(uint32_t));
+  in.read((char*) &sigma, sizeof(uint32_t));
+  in.read((char*) &full_bits, sizeof(uint32_t));
+  in.read((char*) &bits_sigma, sizeof(uint32_t));
+  in.read((char*) &mask_sigma, sizeof(uint32_t));
   
   bufferPos = size;
   staticTrie = new trieNode[size];
   for (unsigned i = 0; i < size; i++) {
     in.read((char*) &staticTrie[i].code, sizeof(uint32_t));
-    in.read((char*) &staticTrie[i].configuration, sizeof(int32_t));
-    in.read((char*) &staticTrie[i].parent, sizeof(int32_t));
+    in.read((char*) &staticTrie[i].configuration, sizeof(uint32_t));
+    in.read((char*) &staticTrie[i].parent, sizeof(uint32_t));
     unsigned howMany = bitOp::countOfBits(staticTrie[i].configuration);
     if (howMany) {
       staticTrie[i].sons = new uint32_t[howMany];
@@ -378,22 +411,25 @@ void trie::saveExternal(const char* filename) {
   // "+ 1" because bufferPos points on the last used pointer
   int writeSize = bufferPos + 1;
   out.write((char*) &writeSize, sizeof(int32_t));
-  out.write((char*) &sigma, sizeof(int32_t));
-
+  out.write((char*) &sigma, sizeof(uint32_t));
+  out.write((char*) &full_bits, sizeof(uint32_t));
+  out.write((char*) &bits_sigma, sizeof(uint32_t));
+  out.write((char*) &mask_sigma, sizeof(uint32_t));
+  
   for (unsigned i = 0; i < writeSize; i++) {
     unsigned countOfSons = bitOp::countOfBits(staticTrieAccess(i)->configuration);
     int dummy;
-//    if (staticTrieAccess(findParent(i, dummy))->configuration == FULL_OF_BITS)
-    if (staticTrieAccess(i)->configuration == FULL_OF_BITS) {
+//    if (staticTrieAccess(findParent(i, dummy))->configuration == full_bits)
+    if (staticTrieAccess(i)->configuration == full_bits) {
       // Computes configuration (the sons with non-zero values).
       staticTrieAccess(i)->configuration = 0;
       for (unsigned j = 0; j < sigma; j++)
         if (staticTrieAccess(i)->sons[j])
-          staticTrieAccess(i)->configuration |= (1 << j);
+          staticTrieAccess(i)->configuration |= (1u << j);
     }
-    out.write((char*) &staticTrieAccess(i)->code, sizeof(int32_t));
-    out.write((char*) &staticTrieAccess(i)->configuration, sizeof(int32_t));
-    out.write((char*) &staticTrieAccess(i)->parent, sizeof(int32_t));
+    out.write((char*) &staticTrieAccess(i)->code, sizeof(uint32_t));
+    out.write((char*) &staticTrieAccess(i)->configuration, sizeof(uint32_t));
+    out.write((char*) &staticTrieAccess(i)->parent, sizeof(uint32_t));
 
     // Writes only the sons with non-zero values.
     for (unsigned j = 0; j < countOfSons; j++)
@@ -403,14 +439,13 @@ void trie::saveExternal(const char* filename) {
   out.close();
 }
 
-// TODO: Alex? te rog sa scrii despre ">> 7", nu am inteles. Merci!
 // Returns the parent in trie of "ptr" and also saves the type of edge that lies between them.
 // TODO: update configuration during insert. Not necessary! because we only build a trie with sons at full size (SIGMA).
-int32_t trie::findParent(int32_t ptr, int32_t& encoding) {
+uint32_t trie::findParent(int32_t ptr, int32_t& encoding) {
   if (ptr == 0)
     return -1;
-  encoding = staticTrieAccess(ptr)->parent & 63;
-  return staticTrieAccess(ptr)->parent >> 7;
+  encoding = (staticTrieAccess(ptr)->parent & mask_sigma);
+  return (staticTrieAccess(ptr)->parent >> bits_sigma);
 }
 
 // create the word that ends in ptr.
