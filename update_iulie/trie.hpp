@@ -29,7 +29,6 @@ class trie
   static constexpr unsigned SIZE = 3330000;
   static constexpr unsigned EXPAND_TRIE_CONSTANT = 16;
   static constexpr unsigned ROOT = 0;
-  static constexpr int32_t FULL_OF_BITS = ~0;
   
   // Modes of trie
   static constexpr bool BUILD_MODE = false;
@@ -39,7 +38,7 @@ class trie
   trieNode* auxTrie;
   
   // current sizes of both tries
-  int32_t size, auxsize;
+  uint32_t size, auxTrie_size;
   
   // the size of the alphabet
   uint32_t sigma;

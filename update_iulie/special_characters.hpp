@@ -50,6 +50,9 @@ namespace specialChars {
     // First get rid of the punctuation of 1 byte, using "ispunct"
     word.erase(std::remove_if(word.begin(), word.end(), ::ispunct), word.end());
       
+    // Also get rid of digits
+    word.erase(std::remove_if(word.begin(), word.end(), ::isdigit), word.end());
+      
     // Then look at the punctuation of many more bytes
     int amount;
     for (int i = 0; i < word.size(); i++) {

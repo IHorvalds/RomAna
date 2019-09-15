@@ -67,7 +67,10 @@ int main(int argc, char** argv) {
       
       // And save the trie
       A.saveExternal(save_into);
+      
+#if 0
       std::cerr << "Has this step been reached? Then your dictionary has been succesfully stored in " << save_into << ", although it might exist some problems with the allocation. We will get rid of them in short time." << std::endl;
+#endif
       break;
     }
     case PROCESS_TEXT : {

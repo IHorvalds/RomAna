@@ -18,13 +18,14 @@
 
 #include "trie.hpp"
 #include "bits_ops.hpp"
-#include "diacritica.hpp"
+#include "language_support.hpp"
 #include "special_characters.hpp"
 
 using namespace std;
 
 // Set mode on false (BUILD_MODE), if we build the trie (we don't use configuration).
 trie::trie() {
+  // Initialize the staticTrie
   size = SIZE + 1;
   sigma = romanian::ROMANIAN_SIGMA;
   bufferPos = 0;
@@ -34,8 +35,12 @@ trie::trie() {
     staticTrie[i].code = 0;
     staticTrie[i].parent = 0;
     staticTrie[i].sons = new uint32_t[sigma]();
-    staticTrie[i].configuration = FULL_OF_BITS;
+    staticTrie[i].configuration = romanian::FULL_BITS;
   }
+  
+  // Also auxTrie
+  auxTrie_size = 0;
+  auxTrie = nullptr;
 }
 
 // Return the current size of the trie
@@ -46,8 +51,10 @@ uint32_t trie::getSize() {
 // if we read from a binary file, mode must be set on true (READ_MODE)
 trie::trie(const char* filename) {
   mode = READ_MODE;
+  
+  // Initialize auxTrie
+  auxTrie_size = 0;
   auxTrie = nullptr;
-  auxsize = 1;
   loadExternal(filename);
 }
 
@@ -57,28 +64,39 @@ trie::~trie() {
       delete[] staticTrieAccess(i)->sons;
   }
   delete[] staticTrie;
-  if (auxTrie != nullptr)
+  
+  // Free auxTrie, if it has been reallocated
+  if ((mode != BUILD_MODE) && (auxTrie_size))
     free(auxTrie);
 }
 
 trieNode* trie::staticTrieAccess(uint32_t ptr) {
+  // Included in staticTrie?
   if (ptr < size)
     return staticTrie + ptr;
-  // TODO:? should be - size?
-  int index = ptr % size;
-  int oldsize = auxsize - 1;
-  if (index > oldsize) {
-    auxsize *= EXPAND_TRIE_CONSTANT;
-    auxTrie = (trieNode*) realloc(auxTrie, auxsize * sizeof(trieNode) - 1);
-    for (int i = oldsize; i < auxsize - 1; i++) {
+  
+  // No? Then use auxTrie
+  int index = ptr - size;
+  int oldsize = auxTrie_size;
+  if (index > auxTrie_size) {
+    // Check for the first entrance in this case (auxTrie_size == 0)
+    auxTrie_size = (!auxTrie_size) ? 1 : (auxTrie_size * EXPAND_TRIE_CONSTANT);
+    
+    // Realloc the entire auxTrie
+    auxTrie = (trieNode*)realloc(auxTrie, auxTrie_size * sizeof(trieNode));
+    
+    // Init the new allocated entries
+    for (int i = oldsize; i < auxTrie_size; i++) {
       auxTrie[i].code = 0;
       auxTrie[i].parent = 0;
+      
+      // TODO: Alex suggested (sigma + 1). I think, there was the problem with ~0.
+      // In ~0 there are 32 set bits. But we need only 31.
+      // Now it should work as it's now. But still, check for that.
       auxTrie[i].sons = new uint32_t[sigma]();
-      auxTrie[i].configuration = FULL_OF_BITS;
+      auxTrie[i].configuration = romanian::FULL_BITS; // 31 bits
     }
-//    cout << "realloc success!" << endl;
   }
-//  cout << ptr << ' ' << index << ' ' << auxTrie[index].code << ' ' << (auxTrie[index].parent >> 7) << ' ' << auxTrie[index].configuration << endl;
   return auxTrie + index;
 }
 
@@ -140,7 +158,7 @@ void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
   // Alloc a new vector of sons
   staticTrieAccess(ptr)->sons = new uint32_t[sigma]();
   
-  // Restablish the sons. 
+  // Re-establish the sons. 
   for (int i = 0; i < sigma; i++) {
     if (bitOp::getBit(staticTrieAccess(ptr)->configuration, i))
       staticTrieAccess(ptr)->sons[i] = temp[bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, i)];
@@ -149,7 +167,7 @@ void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
   }
   
   // Update the configuration
-  staticTrieAccess(ptr)->configuration = FULL_OF_BITS;
+  staticTrieAccess(ptr)->configuration = romanian::FULL_BITS;
   
   // Let the edge "pos" point to "goesTo"
   staticTrieAccess(ptr)->sons[pos] = goesTo;
@@ -214,15 +232,17 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
   // TODO: Alex, nu inteleg de ce mode era pe true, adica READ_MODE?
   // If the next edge does not yet exist, create it.
   if (((mode == READ_MODE) && (!bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding))) || (!staticTrieAccess(ptr)->sons[encoding])) {
-    if (staticTrieAccess(ptr)->configuration != FULL_OF_BITS)
+    if (staticTrieAccess(ptr)->configuration != romanian::FULL_BITS)
       updateMihailsJmenuri(ptr, encoding, ++bufferPos);
     else
       staticTrieAccess(ptr)->sons[encoding] = ++bufferPos;
-    staticTrieAccess(bufferPos)->parent = encoding | (ptr << 7);
+    
+    // Save the parent and also the encoding of the edge, which represents the index of the character in alphabet
+    staticTrieAccess(bufferPos)->parent = (ptr << romanian::BITS_SIGMA) | encoding;
   }
   
   // If encoding shows we reached a diacritica, move to the next byte
-  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? 
+  insert(staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != romanian::FULL_BITS ? 
         bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : 
         encoding], 
         str, 
@@ -249,12 +269,12 @@ int32_t trie::search(string str, int& lastPos) {
   ptr = 0;
   for (pos = 0; pos < str.size();) {
     encoding = (pos == str.size() - 1) ? romanian::encode(str[pos]) : romanian::diacriticEncode(str[pos], str[pos + 1]);
-    toCheck = staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
+    toCheck = staticTrieAccess(ptr)->configuration != romanian::FULL_BITS ? bitOp::getBit(staticTrieAccess(ptr)->configuration, encoding) : staticTrieAccess(ptr)->sons[encoding];
     if (!toCheck) {
       lastPos = pos;
       return -ptr;
     }
-    ptr = staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != FULL_OF_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding];
+    ptr = staticTrieAccess(ptr)->sons[staticTrieAccess(ptr)->configuration != romanian::FULL_BITS ? bitOp::orderOfBit(staticTrieAccess(ptr)->configuration, encoding) : encoding];
     pos += 1 + romanian::isDiacritic(str[pos]);
   }
   return (staticTrieAccess(ptr)->code & 1) ? ptr : staticTrieAccess(ptr)->code / 2;
@@ -380,8 +400,8 @@ void trie::saveExternal(const char* filename) {
   for (unsigned i = 0; i < writeSize; i++) {
     unsigned countOfSons = bitOp::countOfBits(staticTrieAccess(i)->configuration);
     int dummy;
-//    if (staticTrieAccess(findParent(i, dummy))->configuration == FULL_OF_BITS)
-    if (staticTrieAccess(i)->configuration == FULL_OF_BITS) {
+//    if (staticTrieAccess(findParent(i, dummy))->configuration == romanian::FULL_BITS)
+    if (staticTrieAccess(i)->configuration == romanian::FULL_BITS) {
       // Computes configuration (the sons with non-zero values).
       staticTrieAccess(i)->configuration = 0;
       for (unsigned j = 0; j < sigma; j++)
@@ -400,14 +420,13 @@ void trie::saveExternal(const char* filename) {
   out.close();
 }
 
-// TODO: Alex? te rog sa scrii despre ">> 7", nu am inteles. Merci!
 // Returns the parent in trie of "ptr" and also saves the type of edge that lies between them.
 // TODO: update configuration during insert. Not necessary! because we only build a trie with sons at full size (SIGMA).
 int32_t trie::findParent(int32_t ptr, int32_t& encoding) {
   if (ptr == 0)
     return -1;
-  encoding = staticTrieAccess(ptr)->parent & 63;
-  return staticTrieAccess(ptr)->parent >> 7;
+  encoding = staticTrieAccess(ptr)->parent & romanian::MASK_SIGMA;
+  return staticTrieAccess(ptr)->parent >> romanian::BITS_SIGMA;
 }
 
 // create the word that ends in ptr.
