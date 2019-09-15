@@ -36,9 +36,6 @@ trie::trie() {
   bits_sigma = trie::computeCountOfBits(sigma);
   mask_sigma = (1u << bits_sigma) - 1;
   
-  assert(full_bits == 0x7fffffff);
-  std::cerr << full_bits << " " << bits_sigma << " " << mask_sigma << std::endl;
-  
   // Alloc staticTrie
   bufferPos = 0;
   mode = BUILD_MODE;

@@ -86,7 +86,7 @@ int main(int argc, char** argv) {
       break;
     }
     case UPDATE_DICT : {
-      errorArgs(UPDATE_DICT, argc, 5); 
+      errorArgs(UPDATE_DICT, argc, 6); 
       
       // Use the trie while parsing the text
       string dictName = argv[2];
