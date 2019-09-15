@@ -252,7 +252,7 @@ void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_
       staticTrieAccess(ptr)->sons[encoding] = ++bufferPos;
     
     // Save the parent and also the encoding of the edge, which represents the index of the character in alphabet
-    staticTrieAccess(bufferPos)->parent = (parent << bits_sigma) | encoding;
+    staticTrieAccess(bufferPos)->parent = (ptr << bits_sigma) | encoding;
   }
   
   // If encoding shows we reached a diacritica, move to the next byte
@@ -385,13 +385,16 @@ void trie::loadExternal(const char* filename) {
   ifstream in;
   in.open(filename, ios::in | ios::binary);
 
-  in.read((char*) &size, sizeof(int32_t));
-  in.read((char*) &sigma, sizeof(int32_t));
+  in.read((char*) &size, sizeof(uint32_t));
+  in.read((char*) &sigma, sizeof(uint32_t));
+  in.read((char*) &full_bits, sizeof(uint32_t));
+  in.read((char*) &bits_sigma, sizeof(uint32_t));
+  in.read((char*) &mask_sigma, sizeof(uint32_t));
   
   bufferPos = size;
   staticTrie = new trieNode[size];
   for (unsigned i = 0; i < size; i++) {
-    in.read((char*) &staticTrie[i].code, sizeof(uuint32_t));
+    in.read((char*) &staticTrie[i].code, sizeof(uint32_t));
     in.read((char*) &staticTrie[i].configuration, sizeof(uint32_t));
     in.read((char*) &staticTrie[i].parent, sizeof(uint32_t));
     unsigned howMany = bitOp::countOfBits(staticTrie[i].configuration);
@@ -411,8 +414,11 @@ void trie::saveExternal(const char* filename) {
   // "+ 1" because bufferPos points on the last used pointer
   int writeSize = bufferPos + 1;
   out.write((char*) &writeSize, sizeof(int32_t));
-  out.write((char*) &sigma, sizeof(int32_t));
-
+  out.write((char*) &sigma, sizeof(uint32_t));
+  out.write((char*) &full_bits, sizeof(uint32_t));
+  out.write((char*) &bits_sigma, sizeof(uint32_t));
+  out.write((char*) &mask_sigma, sizeof(uint32_t));
+  
   for (unsigned i = 0; i < writeSize; i++) {
     unsigned countOfSons = bitOp::countOfBits(staticTrieAccess(i)->configuration);
     int dummy;
@@ -438,7 +444,7 @@ void trie::saveExternal(const char* filename) {
 
 // Returns the parent in trie of "ptr" and also saves the type of edge that lies between them.
 // TODO: update configuration during insert. Not necessary! because we only build a trie with sons at full size (SIGMA).
-int32_t trie::findParent(int32_t ptr, int32_t& encoding) {
+uint32_t trie::findParent(int32_t ptr, int32_t& encoding) {
   if (ptr == 0)
     return -1;
   encoding = (staticTrieAccess(ptr)->parent & mask_sigma);

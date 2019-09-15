@@ -85,7 +85,7 @@ class trie
   
   // Functions to get the parent of each word
   string formWord(int32_t ptr);
-  int32_t findParent(int32_t ptr, int32_t& encoding);
+  uint32_t findParent(int32_t ptr, int32_t& encoding);
   
   // Functions for updating the frequencies while parsing a text
   void tryUpdateFreq(string word);
