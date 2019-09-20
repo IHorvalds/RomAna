@@ -14,8 +14,23 @@ class text {
   int currSize;
   int index;
 
+  static constexpr unsigned COUNT_UNALLOWED = 5; 
+  static constexpr char unallowed[COUNT_UNALLOWED] = {' ', ',', '\n', '-', '/'};
+  
 public:
   text() {
+  }
+    
+  static bool isUnallowed(char c) {
+    for (unsigned index = 0; index < COUNT_UNALLOWED; ++index) {
+      if (unallowed[index] == c)
+        return true;
+    }
+    return false;
+  }
+    
+  static bool isSeparator(char c) {
+    return isUnallowed(c) || ispunct(c);
   }
     
   // Better if we received a file with already preprocessed words in latin
@@ -37,16 +52,16 @@ public:
       currSize += input.gcount();
     }
     string word;
-    while (index < BUFF_SIZE && buffer[index] != ' ' && buffer[index] != '\n' && buffer[index] != '-' && buffer[index] != '/') {
+    while ((index < BUFF_SIZE) && !isSeparator(buffer[index])) {
       word.append(1, buffer[index]);
       index++;
     }
-    if (index == BUFF_SIZE && currSize != fileSize) {
+    if ((index == BUFF_SIZE) && (currSize != fileSize)) {
       input.seekg(-word.length(), input.cur);
       fileSize += word.length();
       return serveWord();
     }
-    while (index < BUFF_SIZE && (buffer[index] == ' ' || buffer[index] == '\n' || buffer[index] == '-' || buffer[index] == '/')) {
+    while ((index < BUFF_SIZE) && isSeparator(buffer[index])) {
       index++;
     }
     specialChars::cleanUpWord(word);
