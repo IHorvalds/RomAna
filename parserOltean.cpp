@@ -43,7 +43,7 @@ public:
   
   string serveWord() {
     // It's not possible that we receive a white-space
-    if (currSize == fileSize && index + 1 >= input.gcount()) {
+    if ((currSize == fileSize) && (index + 1 >= input.gcount())) {
       return " <EOF> ";
     }
     if (index == input.gcount()) {

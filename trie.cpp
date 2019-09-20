@@ -1,7 +1,5 @@
-// TODO: there is somewhere a problem with memory-leaks. Use valgrind for that!
-// TODO: Modificarea lui Alex de o linie.
-// DONE: curățenie!!!
 // flexiuni separate prin virgula + rescris consumeInflections
+// TODO: "aş" is not in inflections.in!!!
 
 
 // DONE: ori folosim GENMODE, ori folosim mode, ori nu folosim niciuna
