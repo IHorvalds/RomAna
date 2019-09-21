@@ -1,6 +1,5 @@
 # The role of this script:
 # Uses the site romanianvoice.com to take only the poetry out of the html file
-# TODO: for a specific author, put in a folder with his name separated files with his poems
 import urllib.request
 import html
 import sys
