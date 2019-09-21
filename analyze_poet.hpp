@@ -8,6 +8,7 @@
 
 class PoetAnalyzer {
   private:
+  unsigned countPoems = 0;
   std::string poet;
   std::map<std::string, std::vector<uint32_t>> wordToFreqs;
   
@@ -52,6 +53,8 @@ class PoetAnalyzer {
     // Read each poem from the list
     std::string currPoem; 
     while (in >> currPoem) {
+      ++countPoems;
+      
       // Read the poetry from the html file
       receivePoem(currPoem);
       
@@ -77,11 +80,13 @@ class PoetAnalyzer {
   public:
   
   PoetAnalyzer(std::string poet_name) : poet(poet_name) {
+    countPoems = 0;
     wordToFreqs.clear();
   }
   
   void setPoet(std::string poet) {
     this->poet = poet;
+    countPoems = 0;
     wordToFreqs.clear();
   }
   
@@ -97,7 +102,10 @@ class PoetAnalyzer {
     processPoems();
     
     // Save in the file "poet_words_frequencies.txt"
-    // The encoding is: word = [word] count = [number of poems the words appears in] [list of "count" frequencies]
+    // The encoding is:
+    // At the beginning of the file: countPoems = [how many poems the poet has]
+    // word = [word] count = [number of poems the words appears in] [list of "count" frequencies]
+    out << countPoems << "\n";
     for (auto iter: wordToFreqs) {
       std::string word = iter.first;
       std::vector<uint32_t> freqs = iter.second;
