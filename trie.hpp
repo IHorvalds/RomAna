@@ -4,6 +4,12 @@
 #include <vector>
 #include <iomanip>
 #include <cmath>
+#include <iostream>
+#include <fstream>
+
+#include "bits_ops.hpp"
+#include "language_support.hpp"
+#include "special_characters.hpp"
 
 #pragma pack(push, 1)
 struct trieNode {
@@ -32,6 +38,7 @@ class trie
   static constexpr unsigned ROOT = 0;
   
   // Modes of trie
+  // TODO: make them public enums
   static constexpr bool BUILD_MODE = false;
   static constexpr bool READ_MODE = true;
   
@@ -66,6 +73,7 @@ class trie
   }
   
   public:
+  trie();
   trie(bool alloc);
   trie(const char* filename);
   ~trie();
@@ -99,8 +107,8 @@ class trie
   
   // Load class members from external file
   void loadExternal(const char* filename) {
-    ifstream in;
-    in.open(filename, ios::in | ios::binary);
+    std::ifstream in;
+    in.open(filename, std::ios::in | std::ios::binary);
 
     in.read((char*) &size, sizeof(uint32_t));
     in.read((char*) &sigma, sizeof(uint32_t));
@@ -121,13 +129,13 @@ class trie
       }
     }
   }
-}
+
 
   // Save class members to external file
   // TODO: there is somewhere here a leak of reading over 4 bytes
   void saveExternal(const char* filename) {
-    ofstream out;
-    out.open(filename, ios::out | ios::binary);
+    std::ofstream out;
+    out.open(filename, std::ios::out | std::ios::binary);
     
     // "+ 1" because bufferPos points on the last used pointer
     int writeSize = bufferPos + 1;
@@ -162,14 +170,21 @@ class trie
   void compressionTest(int root, int current, int& max, int& avg, int last, int& a, int& b);
 #endif
 
+  // Compute the frequencies (wrapper)
+  std::vector<std::pair<uint32_t, std::string>> getFrequencies() {
+    std::vector<std::pair<uint32_t, std::string>> dummy;
+    getAllFreqs(ROOT, dummy);
+    return dummy;
+  }
+  
   // Compute the frequencies
-  void getAllFreqs(int root, std::vector<std::pair<int, std::string>>& init_vector);
+  void getAllFreqs(int root, std::vector<std::pair<uint32_t, std::string>>& init_vector);
   void showFreqs(std::string filename) {
-    ofstream out(filename);
+    std::ofstream out(filename);
     
     // Get all frequencies from trie
-    std::vector<std::pair<int, std::string>> init_vector;
-    getAllFreqs(0, init_vector);
+    std::vector<std::pair<uint32_t, std::string>> init_vector;
+    getAllFreqs(ROOT, init_vector);
 
     // Sort the accumulated frequencies. Where equality between frequencies, prefer lexicografically order on words
     std::sort(init_vector.begin(), init_vector.end(), [](auto& left, auto& right) {
@@ -184,7 +199,7 @@ class trie
 
     // And print them as word - (frequency, ratio)
     for (auto iter = init_vector.begin(); iter != init_vector.end(); ++iter)
-      out << setprecision(3) << iter->second << " (" << iter->first << ", " << (iter->first / sumOfFreqs) * 100 << "%)" << std::endl;
+      out << std::setprecision(3) << iter->second << " (" << iter->first << ", " << (iter->first / sumOfFreqs) * 100 << "%)" << std::endl;
   }
 };
 

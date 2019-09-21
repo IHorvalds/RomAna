@@ -93,10 +93,10 @@ def main():
     
     # Create the url
     poetry = sys.argv[1]
-    textx = getHtmlText(poetry)
+    text = getHtmlText(poetry)
     
-    # Print the poetry in "poetry".out
-    poetryFile = open(poetry + ".txt", "w")
+    # Print the poetry in a default file
+    poetryFile = open("parsed.txt", "w")
     poetryFile.write(keepOnlyPoetry(text))
 
 if __name__ == '__main__':

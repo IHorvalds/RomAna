@@ -2,13 +2,15 @@
 #include <cstdlib>
 
 #include "trie.cpp"
-#include "parserOltean.cpp"
+#include "parserOltean.hpp"
+#include "analyze_poet.hpp"
 
 using namespace std;
 
 #define BUILD_TRIE 0
 #define PROCESS_TEXT 1
 #define UPDATE_DICT 2
+#define PROCESS_POET 3
 
 void errorArgs(int32_t option, int32_t argc, int32_t expected) {
   if (argc != expected) {
@@ -24,7 +26,7 @@ void dictionaryTask(trie& dict, char* textName) {
   // Open the latin_file
   std::string tmp = textName;
   std::string pythonCommand = "python3 convert_into_latin.py " + tmp;
-  system(pythonCommand.data());
+  int warning = system(pythonCommand.data());
   tmp = "latin_" + tmp;
   text latin_txt(tmp); 
 
@@ -48,6 +50,7 @@ int main(int argc, char** argv) {
     std::cout << "BUILD_TRIE: " << argv[0] << " 0 [file to read the inflections from] [file in which to save the dictionary]" << std::endl;
     std::cout << "PROCESS_TEXT: " << argv[0] << " 1 [dictionary file name] [input file name] [output file name]" << std::endl;
     std::cout << "UPDATE_DICT: " << argv[0] << " 2 [dictionary file name] [input file name] [output file name] [new dictionary file name]" << std::endl;
+    std::cout << "PROCESS_POET: " << argv[0] << " 3 [poet name from poets.txt]" << std::endl;
     return -1;
   }
   
@@ -62,10 +65,11 @@ int main(int argc, char** argv) {
       // Create the latin_file with python
       std::string tmp = file_name;
       std::string pythonCommand = "python3 convert_into_latin.py " + tmp;
-      system(pythonCommand.data());
+      int warning = system(pythonCommand.data());
       tmp = "latin_" + tmp;
       const char* latin_file_name = tmp.data();
       
+      // Alloc the dictionary
       trie A(true);
       
       // Read the files
@@ -104,6 +108,15 @@ int main(int argc, char** argv) {
       
       // Save the new obtained dictionary
       dict.saveExternal(argv[5]);
+      break;
+    }
+    case PROCESS_POET : {
+      errorArgs(PROCESS_POET, argc, 3);
+      
+      std::string poetName = argv[2];
+      
+      PoetAnalyzer analyzer(poetName);
+      analyzer.save();
       break;
     }
     default : {

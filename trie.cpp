@@ -9,18 +9,16 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <cassert>
 #include <cstdlib>
 
 #include "trie.hpp"
-#include "bits_ops.hpp"
-#include "language_support.hpp"
-#include "special_characters.hpp"
 
-using namespace std;
-
+// Simple constructor
+trie::trie() {
+  mode = READ_MODE;
+}
 // Set mode on false (BUILD_MODE), if we build the trie (we don't use configuration).
 trie::trie(bool alloc) {
   if (alloc) {
@@ -125,7 +123,7 @@ void trie::updateFreqOfPointer(int32_t ptr) {
 }
 
 // Updade frequency of word. If not found, add it as a as-is word
-void trie::tryUpdateFreq(string word) {
+void trie::tryUpdateFreq(std::string word) {
   int32_t lastPos;
   int32_t ptr = search(word, lastPos);
   // assert(ptr != ROOT);
@@ -140,7 +138,7 @@ void trie::tryUpdateFreq(string word) {
 }
 
 // The strategy is to add the latin variant, if the normal one hasn't been found or it's not a romanian word
-void trie::updateFreq(string word, std::string latin_word = "") {
+void trie::updateFreq(std::string word, std::string latin_word = "") {
   if (!romanian::isRomanian(word)) {
     tryUpdateFreq(latin_word);
   } else {
@@ -263,12 +261,12 @@ void trie::insert(int32_t ptr, std::string str, int32_t connect, uint32_t pos, i
         pos + 1 + romanian::isDiacritic(str[pos]), finalPtr);
 }
 
-void trie::addRoot(string str) {
+void trie::addRoot(std::string str) {
   int dummy;
   insert(ROOT, str, -1, 0, dummy);
 }
 
-void trie::addDerivated(string root, std::string derivated) {
+void trie::addDerivated(std::string root, std::string derivated) {
   if (derivated == root)
     return;
   int dummy, root_pointer = search(root, dummy);
@@ -276,7 +274,7 @@ void trie::addDerivated(string root, std::string derivated) {
 }
 
 // Good for tests: if str is a rootWord returns the pointer where it was saved. Otherwise, the pointer of its rootword.
-int32_t trie::search(string str, int& lastPos) {
+int32_t trie::search(std::string str, int& lastPos) {
   int32_t ptr, pos, encoding;
   bool toCheck;
   ptr = 0;
@@ -297,8 +295,8 @@ int32_t trie::search(string str, int& lastPos) {
 
 void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   assert(mode == BUILD_MODE);
-  ifstream latin_in(latin_filename);
-  ifstream in(filename);
+  std::ifstream latin_in(latin_filename);
+  std::ifstream in(filename);
   
   int32_t latin_total, latin_infl, total, infl;
   std::string latin_word, latin_inflexion, word, inflexion;
@@ -389,7 +387,7 @@ uint32_t trie::findParent(int32_t ptr, int32_t& encoding) {
 }
 
 // create the word that ends in ptr.
-string trie::formWord(int32_t ptr) {
+std::string trie::formWord(int32_t ptr) {
   std::string ret;
   if (ptr <= 0)
     return ret;
@@ -419,7 +417,7 @@ void trie::compressionTest(int root, int current, int& max, int& avg, int last, 
 }
 #endif
 
-void trie::getAllFreqs(int root, std::vector<pair<int, std::string>>& init_vector) {
+void trie::getAllFreqs(int root, std::vector<std::pair<uint32_t, std::string>>& init_vector) {
   // Push the frequence of from this node
   if ((staticTrieAccess(root)->code & 1) && (staticTrieAccess(root)->code >> 1))
     init_vector.push_back(make_pair(staticTrieAccess(root)->code >> 1, formWord(root)));
