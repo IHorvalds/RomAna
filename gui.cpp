@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
       tmp = "latin_" + tmp;
       const char* latin_file_name = tmp.data();
       
-      trie A;
+      trie A(true);
       
       // Read the files
       A.consumeInflexions(file_name, latin_file_name);

@@ -68,7 +68,7 @@ class trie
   }
   
   public:
-  trie();
+  trie(bool alloc);
   trie(const char* filename);
   ~trie();
   
@@ -94,10 +94,72 @@ class trie
   // Build the trie with the inflexions from dexonline.ro
   void consumeInflexions(const char* filename, const char* latin_filename);
   
-  // Functions with files
-  void loadExternal(const char* filename);
-  void saveExternal(const char* filename);
+  // Reset the trie with a dictionary
+  void reset(const char* filename) {
+    loadExternal(filename);
+  }
   
+  // Load class members from external file
+  void loadExternal(const char* filename) {
+    ifstream in;
+    in.open(filename, ios::in | ios::binary);
+
+    in.read((char*) &size, sizeof(uint32_t));
+    in.read((char*) &sigma, sizeof(uint32_t));
+    in.read((char*) &full_bits, sizeof(uint32_t));
+    in.read((char*) &bits_sigma, sizeof(uint32_t));
+    in.read((char*) &mask_sigma, sizeof(uint32_t));
+    
+    bufferPos = size;
+    staticTrie = new trieNode[size];
+    for (unsigned i = 0; i < size; i++) {
+      in.read((char*) &staticTrie[i].code, sizeof(uint32_t));
+      in.read((char*) &staticTrie[i].configuration, sizeof(uint32_t));
+      in.read((char*) &staticTrie[i].parent, sizeof(uint32_t));
+      unsigned howMany = bitOp::countOfBits(staticTrie[i].configuration);
+      if (howMany) {
+        staticTrie[i].sons = new uint32_t[howMany];
+        in.read((char*) staticTrie[i].sons, howMany * sizeof(uint32_t));
+      }
+    }
+  }
+}
+
+  // Save class members to external file
+  // TODO: there is somewhere here a leak of reading over 4 bytes
+  void saveExternal(const char* filename) {
+    ofstream out;
+    out.open(filename, ios::out | ios::binary);
+    
+    // "+ 1" because bufferPos points on the last used pointer
+    int writeSize = bufferPos + 1;
+    out.write((char*) &writeSize, sizeof(int32_t));
+    out.write((char*) &sigma, sizeof(uint32_t));
+    out.write((char*) &full_bits, sizeof(uint32_t));
+    out.write((char*) &bits_sigma, sizeof(uint32_t));
+    out.write((char*) &mask_sigma, sizeof(uint32_t));
+    
+    for (unsigned i = 0; i < writeSize; i++) {
+      unsigned countOfSons = bitOp::countOfBits(staticTrieAccess(i)->configuration);
+      if (staticTrieAccess(i)->configuration == full_bits) {
+        // Computes configuration (the sons with non-zero values).
+        staticTrieAccess(i)->configuration = 0;
+        for (unsigned j = 0; j < sigma; j++)
+          if (staticTrieAccess(i)->sons[j])
+            staticTrieAccess(i)->configuration |= (1u << j);
+      }
+      out.write((char*) &staticTrieAccess(i)->code, sizeof(uint32_t));
+      out.write((char*) &staticTrieAccess(i)->configuration, sizeof(uint32_t));
+      out.write((char*) &staticTrieAccess(i)->parent, sizeof(uint32_t));
+
+      // Writes only the sons with non-zero values.
+      for (unsigned j = 0; j < countOfSons; j++)
+        if (staticTrieAccess(i)->sons[j])
+          out.write((char*) &staticTrieAccess(i)->sons[j], sizeof(uint32_t));
+    }
+    out.close();
+  }
+
 #if 0
   void compressionTest(int root, int current, int& max, int& avg, int last, int& a, int& b);
 #endif

@@ -22,32 +22,36 @@
 using namespace std;
 
 // Set mode on false (BUILD_MODE), if we build the trie (we don't use configuration).
-trie::trie() {
-  // Initialize the staticTrie
-  
-  // Properties of the namespace
-  size = SIZE + 1;
-  sigma = romanian::ROMANIAN_SIGMA;
-  
-  assert(sigma <= MAX_ACCEPTED_SIGMA);
-  full_bits = (sigma == MAX_ACCEPTED_SIGMA) ? 0xffffffff : ((1u << sigma) - 1);
-  bits_sigma = trie::computeCountOfBits(sigma);
-  mask_sigma = (1u << bits_sigma) - 1;
-  
-  // Alloc staticTrie
-  bufferPos = 0;
-  mode = BUILD_MODE;
-  staticTrie = new trieNode[size];
-  for (int i = 0; i < size; i++) {
-    staticTrie[i].code = 0;
-    staticTrie[i].parent = 0;
-    staticTrie[i].sons = new uint32_t[sigma]();
-    staticTrie[i].configuration = full_bits;
+trie::trie(bool alloc) {
+  if (alloc) {
+    // Initialize the staticTrie
+    
+    // Properties of the namespace
+    size = SIZE + 1;
+    sigma = romanian::ROMANIAN_SIGMA;
+    
+    assert(sigma <= MAX_ACCEPTED_SIGMA);
+    full_bits = (sigma == MAX_ACCEPTED_SIGMA) ? 0xffffffff : ((1u << sigma) - 1);
+    bits_sigma = trie::computeCountOfBits(sigma);
+    mask_sigma = (1u << bits_sigma) - 1;
+    
+    // Alloc staticTrie
+    bufferPos = 0;
+    mode = BUILD_MODE;
+    staticTrie = new trieNode[size];
+    for (int i = 0; i < size; i++) {
+      staticTrie[i].code = 0;
+      staticTrie[i].parent = 0;
+      staticTrie[i].sons = new uint32_t[sigma]();
+      staticTrie[i].configuration = full_bits;
+    }
+    
+    // Also auxTrie
+    auxTrie_size = 0;
+    auxTrie = nullptr;
+  } else {
+    mode = READ_MODE;
   }
-  
-  // Also auxTrie
-  auxTrie_size = 0;
-  auxTrie = nullptr;
 }
 
 // Return the current size of the trie
@@ -373,68 +377,6 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   // Close both files
   latin_in.close();
   in.close();
-}
-
-// Load class members from external file
-void trie::loadExternal(const char* filename) {
-  ifstream in;
-  in.open(filename, ios::in | ios::binary);
-
-  in.read((char*) &size, sizeof(uint32_t));
-  in.read((char*) &sigma, sizeof(uint32_t));
-  in.read((char*) &full_bits, sizeof(uint32_t));
-  in.read((char*) &bits_sigma, sizeof(uint32_t));
-  in.read((char*) &mask_sigma, sizeof(uint32_t));
-  
-  bufferPos = size;
-  staticTrie = new trieNode[size];
-  for (unsigned i = 0; i < size; i++) {
-    in.read((char*) &staticTrie[i].code, sizeof(uint32_t));
-    in.read((char*) &staticTrie[i].configuration, sizeof(uint32_t));
-    in.read((char*) &staticTrie[i].parent, sizeof(uint32_t));
-    unsigned howMany = bitOp::countOfBits(staticTrie[i].configuration);
-    if (howMany) {
-      staticTrie[i].sons = new uint32_t[howMany];
-      in.read((char*) staticTrie[i].sons, howMany * sizeof(uint32_t));
-    }
-  }
-}
-
-// Save class members to external file
-// TODO: there is somewhere here a leak of reading over 4 bytes
-void trie::saveExternal(const char* filename) {
-  ofstream out;
-  out.open(filename, ios::out | ios::binary);
-  
-  // "+ 1" because bufferPos points on the last used pointer
-  int writeSize = bufferPos + 1;
-  out.write((char*) &writeSize, sizeof(int32_t));
-  out.write((char*) &sigma, sizeof(uint32_t));
-  out.write((char*) &full_bits, sizeof(uint32_t));
-  out.write((char*) &bits_sigma, sizeof(uint32_t));
-  out.write((char*) &mask_sigma, sizeof(uint32_t));
-  
-  for (unsigned i = 0; i < writeSize; i++) {
-    unsigned countOfSons = bitOp::countOfBits(staticTrieAccess(i)->configuration);
-    int dummy;
-//    if (staticTrieAccess(findParent(i, dummy))->configuration == full_bits)
-    if (staticTrieAccess(i)->configuration == full_bits) {
-      // Computes configuration (the sons with non-zero values).
-      staticTrieAccess(i)->configuration = 0;
-      for (unsigned j = 0; j < sigma; j++)
-        if (staticTrieAccess(i)->sons[j])
-          staticTrieAccess(i)->configuration |= (1u << j);
-    }
-    out.write((char*) &staticTrieAccess(i)->code, sizeof(uint32_t));
-    out.write((char*) &staticTrieAccess(i)->configuration, sizeof(uint32_t));
-    out.write((char*) &staticTrieAccess(i)->parent, sizeof(uint32_t));
-
-    // Writes only the sons with non-zero values.
-    for (unsigned j = 0; j < countOfSons; j++)
-      if (staticTrieAccess(i)->sons[j])
-        out.write((char*) &staticTrieAccess(i)->sons[j], sizeof(uint32_t));
-  }
-  out.close();
 }
 
 // Returns the parent in trie of "ptr" and also saves the type of edge that lies between them.
