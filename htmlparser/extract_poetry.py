@@ -70,14 +70,8 @@ def keepOnlyPoetry(text):
         elif countWriters == 0:
             poetry += c
     return poetry
-    
-def main():
-    if len(sys.argv) < 2:
-        print("Usage: python3 " + sys.argv[0] + " [poetry name]")
-        sys.exit(1)
-    
-    # Create the url
-    poetry = sys.argv[1]
+
+def getHtmlText(poetry):
     url = "http://www.romanianvoice.com/poezii/poezii/" + poetry + ".php"
 
     # Connect to the site
@@ -87,6 +81,19 @@ def main():
     # Decode the site into utf-8
     # When utf-8 sends an error, put instead a slash encoding
     text = response.read().decode('utf-8', errors = 'backslashreplace')
+    
+    # The utf-8 decoded file has some problems. First solve them
+    text = applyDiacritics(text)
+    return text
+    
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: python3 " + sys.argv[0] + " [poetry name]")
+        sys.exit(1)
+    
+    # Create the url
+    poetry = sys.argv[1]
+    textx = getHtmlText(poetry)
     
     # Print the poetry in "poetry".out
     poetryFile = open(poetry + ".txt", "w")
