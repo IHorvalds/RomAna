@@ -78,6 +78,11 @@ class trie
   trie(const char* filename);
   ~trie();
   
+  // Functions used within de/constructor 
+  void dealloc_();
+  void prepare(const char* filename);
+  void reset(const char* filename);
+  
   // Size of trie
   uint32_t getSize();
   
@@ -99,11 +104,6 @@ class trie
   
   // Build the trie with the inflexions from dexonline.ro
   void consumeInflexions(const char* filename, const char* latin_filename);
-  
-  // Reset the trie with a dictionary
-  void reset(const char* filename) {
-    loadExternal(filename);
-  }
   
   // Load class members from external file
   void loadExternal(const char* filename) {

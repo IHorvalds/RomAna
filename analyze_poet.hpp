@@ -1,3 +1,4 @@
+// TODO: for poets with few poems it works. But for eminescu, segfault
 #ifndef ANALYZE_POET_H
 #define ANALYZE_POET_H
 
@@ -51,11 +52,19 @@ class PoetAnalyzer {
     // Read each poem from the list
     std::string currPoem; 
     while (in >> currPoem) {
+      // Read the poetry from the html file
       receivePoem(currPoem);
+      
+      // Reset the trie with the initial dictionary
       dict.reset("dict.bin");
+      
+      // Parse the poetry and save the frequencies in trie
       dictionaryTask(dict, "parsed.txt");
       
+      // Get the frequencies from inflections
       std::vector<std::pair<uint32_t, std::string>> freqs = dict.getFrequencies();
+      
+      // Update the map with frequencies per word
       for (auto iter: freqs) {
         std::string word = iter.second;
         uint32_t currFreq = iter.first;
@@ -80,19 +89,28 @@ class PoetAnalyzer {
     return this->poet;
   }
   
-  void save() {
+  void saveFrequencies() {
     std::string filename = "poets/" + poet + "_words_frequencies.txt";
     ofstream out(filename);
     
+    // Parse all his/her poems
     processPoems();
+    
+    // Save in the file "poet_words_frequencies.txt"
+    // The encoding is: word = [word] count = [number of poems the words appears in] [list of "count" frequencies]
     for (auto iter: wordToFreqs) {
       std::string word = iter.first;
       std::vector<uint32_t> freqs = iter.second;
-      
+
+      // Sort the frequencies
+      std::sort(freqs.begin(), freqs.end(), [](auto& left, auto& right) {
+        return (left.first < right.first);
+      });
+
+      // And print the file
       out << word << " " << freqs.size();
-      for (auto freq: freqs) {
+      for (auto freq: freqs)
         out << " " << freq; 
-      }
       out << "\n";
     }
   }

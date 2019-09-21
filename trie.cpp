@@ -17,8 +17,14 @@
 
 // Simple constructor
 trie::trie() {
+  // Init the most important parameters
   mode = READ_MODE;
+  bufferPos = 0;
+  auxTrie_size = 0;
+  auxTrie = nullptr;
 }
+
+// TODO: create enums for constructors!!
 // Set mode on false (BUILD_MODE), if we build the trie (we don't use configuration).
 trie::trie(bool alloc) {
   if (alloc) {
@@ -59,6 +65,15 @@ uint32_t trie::getSize() {
 
 // if we read from a binary file, mode must be set on true (READ_MODE)
 trie::trie(const char* filename) {
+  prepare(filename);
+}
+
+trie::~trie() {
+  dealloc_();
+}
+
+void trie::prepare(const char* filename) {
+  // Similar to the constructor of "filename"
   mode = READ_MODE;
   
   // Initialize auxTrie
@@ -67,13 +82,20 @@ trie::trie(const char* filename) {
   loadExternal(filename);
 }
 
-trie::~trie() {
+// Reset the trie with a new dictionary
+void trie::reset(const char* filename) {
+  dealloc_();
+  prepare(filename);
+}
+  
+void trie::dealloc_() {
+  // Dealloc staticTrie. If bufferPos, nothing is deallocated
   for (unsigned i = 0; i < bufferPos; i++) {
     if (staticTrieAccess(i)->sons != nullptr)
       delete[] staticTrieAccess(i)->sons;
   }
   delete[] staticTrie;
-  
+
   // Free auxTrie, if it has been reallocated
   if ((mode != BUILD_MODE) && (auxTrie_size))
     free(auxTrie);

@@ -100,12 +100,12 @@ int main(int argc, char** argv) {
       
       // Use the trie while parsing the text
       std::string dictName = argv[2];
-      trie dict(dictName.data());
+      trie dict(dictName.data()); 
       dictionaryTask(dict, argv[3]);
       
       // Print the frequencies obtained
       dict.showFreqs(argv[4]);
-      
+    
       // Save the new obtained dictionary
       dict.saveExternal(argv[5]);
       break;
@@ -113,10 +113,9 @@ int main(int argc, char** argv) {
     case PROCESS_POET : {
       errorArgs(PROCESS_POET, argc, 3);
       
-      std::string poetName = argv[2];
-      
+      std::string poetName = argv[2];  
       PoetAnalyzer analyzer(poetName);
-      analyzer.save();
+      analyzer.saveFrequencies();
       break;
     }
     default : {
