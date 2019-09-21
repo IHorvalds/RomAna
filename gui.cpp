@@ -22,15 +22,15 @@ void dictionaryTask(trie& dict, char* textName) {
   text txt(textName);
   
   // Open the latin_file
-  string tmp = textName;
-  string pythonCommand = "python3 convert_into_latin.py " + tmp;
+  std::string tmp = textName;
+  std::string pythonCommand = "python3 convert_into_latin.py " + tmp;
   system(pythonCommand.data());
   tmp = "latin_" + tmp;
   text latin_txt(tmp); 
 
   // Read the first words
-  string word = txt.serveWord();
-  string latin_word = latin_txt.serveWord();
+  std::string word = txt.serveWord();
+  std::string latin_word = latin_txt.serveWord();
   
   // Continue parsing the text until its end
   while ((word != " <EOF> ") && (latin_word != " <EOF> ")) {
@@ -60,8 +60,8 @@ int main(int argc, char** argv) {
       const char* save_into = argv[3];
       
       // Create the latin_file with python
-      string tmp = file_name;
-      string pythonCommand = "python3 convert_into_latin.py " + tmp;
+      std::string tmp = file_name;
+      std::string pythonCommand = "python3 convert_into_latin.py " + tmp;
       system(pythonCommand.data());
       tmp = "latin_" + tmp;
       const char* latin_file_name = tmp.data();
@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
       errorArgs(PROCESS_TEXT, argc, 5); 
       
       // Use the trie while parsing the text
-      string dictName = argv[2];
+      std::string dictName = argv[2];
       trie dict(dictName.data());
       dictionaryTask(dict, argv[3]);
       
@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
       errorArgs(UPDATE_DICT, argc, 6); 
       
       // Use the trie while parsing the text
-      string dictName = argv[2];
+      std::string dictName = argv[2];
       trie dict(dictName.data());
       dictionaryTask(dict, argv[3]);
       

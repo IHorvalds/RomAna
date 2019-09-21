@@ -1,8 +1,6 @@
 #ifndef TRIE_H
 #define TRIE_H
 
-using namespace std;
-
 #include <vector>
 #include <iomanip>
 #include <cmath>
@@ -76,20 +74,20 @@ class trie
   uint32_t getSize();
   
   // Functions for adding the romanian words
-  void addRoot(string str);
-  void addDerivated(string root, string derivated);
+  void addRoot(std::string str);
+  void addDerivated(std::string root, std::string derivated);
 
   // Typical functions for such a data structure
-  void insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_t& finalPtr);
-  int search(string str, int& lastPos);
+  void insert(int32_t ptr, std::string str, int32_t connect, uint32_t pos, int32_t& finalPtr);
+  int search(std::string str, int& lastPos);
   
   // Functions to get the parent of each word
-  string formWord(int32_t ptr);
+  std::string formWord(int32_t ptr);
   uint32_t findParent(int32_t ptr, int32_t& encoding);
   
   // Functions for updating the frequencies while parsing a text
-  void tryUpdateFreq(string word);
-  void updateFreq(string word, string latin_word);
+  void tryUpdateFreq(std::string word);
+  void updateFreq(std::string word, std::string latin_word);
   
   // Build the trie with the inflexions from dexonline.ro
   void consumeInflexions(const char* filename, const char* latin_filename);
@@ -165,12 +163,12 @@ class trie
 #endif
 
   // Compute the frequencies
-  void getAllFreqs(int root, std::vector<pair<int, string>>& init_vector);
-  void showFreqs(string filename) {
+  void getAllFreqs(int root, std::vector<std::pair<int, std::string>>& init_vector);
+  void showFreqs(std::string filename) {
     ofstream out(filename);
     
     // Get all frequencies from trie
-    std::vector<pair<int, string>> init_vector;
+    std::vector<std::pair<int, std::string>> init_vector;
     getAllFreqs(0, init_vector);
 
     // Sort the accumulated frequencies. Where equality between frequencies, prefer lexicografically order on words
