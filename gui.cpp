@@ -45,9 +45,9 @@ int main(int argc, char** argv) {
   if (argc < 3) {
     std::cout << "The following options are available: 0(BUILD_TRIE) or 1 (PROCESS_TEXT) or 2 (UPDATE_DICT)]" << std::endl;
     std::cout << "You should insert one of the following schemas: " << std::endl;
-    std::cout << "BUILD_TRIE : " << argv[0] << " 0 [file to read the inflections from] [file in which to save the dictionary]" << std::endl;
-    std::cout << "PROCESS_TEXT : " << argv[0] << " 1 [dictionary file name] [input file name] [output file name]" << std::endl;
-    std::cout << "UPDATE_DICT : " << argv[0] << " 2 [dictionary file name] [input file name] [output file name] [new dictionary file name]" << std::endl;
+    std::cout << "BUILD_TRIE: " << argv[0] << " 0 [file to read the inflections from] [file in which to save the dictionary]" << std::endl;
+    std::cout << "PROCESS_TEXT: " << argv[0] << " 1 [dictionary file name] [input file name] [output file name]" << std::endl;
+    std::cout << "UPDATE_DICT: " << argv[0] << " 2 [dictionary file name] [input file name] [output file name] [new dictionary file name]" << std::endl;
     return -1;
   }
   

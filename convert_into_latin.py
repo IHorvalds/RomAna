@@ -2,7 +2,6 @@ import sys
 from unidecode import unidecode
 from urllib.parse import unquote
 
-
 filename = sys.argv[1]
 fread = open(filename, 'r')
 fwrite = open('latin_' + filename, 'w') 
