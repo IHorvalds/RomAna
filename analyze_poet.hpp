@@ -104,7 +104,7 @@ class PoetAnalyzer {
 
       // Sort the frequencies
       std::sort(freqs.begin(), freqs.end(), [](auto& left, auto& right) {
-        return (left.first < right.first);
+        return (left < right);
       });
 
       // And print the file
