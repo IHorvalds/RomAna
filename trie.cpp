@@ -140,7 +140,7 @@ void trie::tryUpdateFreq(string word) {
 }
 
 // The strategy is to add the latin variant, if the normal one hasn't been found or it's not a romanian word
-void trie::updateFreq(string word, string latin_word = "") {
+void trie::updateFreq(string word, std::string latin_word = "") {
   if (!romanian::isRomanian(word)) {
     tryUpdateFreq(latin_word);
   } else {
@@ -188,7 +188,7 @@ void trie::updateMihailsJmenuri(int32_t ptr, uint32_t pos, int32_t goesTo) {
 
 // Insert in trie "str", the position to be regarded is now pos. "connect" is the node which str should be connected with.
 // If "str" itself is a rootWord, connect must be set on -1.
-void trie::insert(int32_t ptr, string str, int32_t connect, uint32_t pos, int32_t& finalPtr) {
+void trie::insert(int32_t ptr, std::string str, int32_t connect, uint32_t pos, int32_t& finalPtr) {
   // It isn't <= because even with a diacritica we arrive at the end of str.
   if (str.size() == pos) {
     // to keep track of which words are root words, and which words are derived from root words, the "code" variable of
@@ -268,7 +268,7 @@ void trie::addRoot(string str) {
   insert(ROOT, str, -1, 0, dummy);
 }
 
-void trie::addDerivated(string root, string derivated) {
+void trie::addDerivated(string root, std::string derivated) {
   if (derivated == root)
     return;
   int dummy, root_pointer = search(root, dummy);
@@ -301,8 +301,8 @@ void trie::consumeInflexions(const char* filename, const char* latin_filename) {
   ifstream in(filename);
   
   int32_t latin_total, latin_infl, total, infl;
-  string latin_word, latin_inflexion, word, inflexion;
-  string latin_aux, aux;
+  std::string latin_word, latin_inflexion, word, inflexion;
+  std::string latin_aux, aux;
   
   // Read both variants
   in >> total;
@@ -390,7 +390,7 @@ uint32_t trie::findParent(int32_t ptr, int32_t& encoding) {
 
 // create the word that ends in ptr.
 string trie::formWord(int32_t ptr) {
-  string ret;
+  std::string ret;
   if (ptr <= 0)
     return ret;
   int32_t encoding;
@@ -419,7 +419,7 @@ void trie::compressionTest(int root, int current, int& max, int& avg, int last, 
 }
 #endif
 
-void trie::getAllFreqs(int root, std::vector<pair<int, string>>& init_vector) {
+void trie::getAllFreqs(int root, std::vector<pair<int, std::string>>& init_vector) {
   // Push the frequence of from this node
   if ((staticTrieAccess(root)->code & 1) && (staticTrieAccess(root)->code >> 1))
     init_vector.push_back(make_pair(staticTrieAccess(root)->code >> 1, formWord(root)));
