@@ -86,6 +86,10 @@ def getHtmlText(poetry):
     text = applyDiacritics(text)
     return text
     
+def getPoetry(poetry):
+    text = getHtmlText(poetry)
+    return keepOnlyPoetry(text)
+    
 def main():
     if len(sys.argv) < 2:
         print("Usage: python3 " + sys.argv[0] + " [poetry name]")
@@ -93,11 +97,11 @@ def main():
     
     # Create the url
     poetry = sys.argv[1]
-    text = getHtmlText(poetry)
+    text = getPoetry(poetry)
     
     # Print the poetry in a default file
     poetryFile = open("parsed.txt", "w")
-    poetryFile.write(keepOnlyPoetry(text))
+    poetryFile.write(text)
 
 if __name__ == '__main__':
     main()
