@@ -4,11 +4,13 @@
 
 #include <fstream>
 #include <map>
+#include <numeric>
+#include <vector>
 #include "trie.hpp"
 
 class PoetAnalyzer {
   private:
-  unsigned countPoems = 0;
+  unsigned countPoems;
   std::string poet;
   std::map<std::string, std::vector<uint32_t>> wordToFreqs;
   
@@ -101,11 +103,16 @@ class PoetAnalyzer {
     // Parse all his/her poems
     processPoems();
     
+    // Count how many words in his entire work
+    uint64_t countWords = 0;
+    for (auto iter: wordToFreqs)
+      countWords += std::accumulate(iter.first.begin(), iter.first.end(), 0);
+    
     // Save in the file "poet_words_frequencies.txt"
     // The encoding is:
-    // At the beginning of the file: countPoems = [how many poems the poet has]
+    // On the first line of the file: countPoems = [how many poems the poet has] countWord = [how many words in his entire work]
     // word = [word] count = [number of poems the words appears in] [list of "count" frequencies]
-    out << countPoems << "\n";
+    out << countPoems << " " << countWords << "\n";
     for (auto iter: wordToFreqs) {
       std::string word = iter.first;
       std::vector<uint32_t> freqs = iter.second;
