@@ -15,6 +15,8 @@ def applyDiacritics(text):
     text = text.replace("\\xba", "ş")
 
     # Big diacritics
+    text = text.replace("\\xc3", "Ă")
+    text = text.replace("\\xc2", "Â")
     text = text.replace("\\xaa", "Ş")
     text = text.replace("\\xce", "Î")
     text = text.replace("\\xde", "Ţ")

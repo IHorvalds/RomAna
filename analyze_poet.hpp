@@ -110,7 +110,7 @@ class PoetAnalyzer {
     
     // Save in the file "poet_words_frequencies.txt"
     // The encoding is:
-    // On the first line of the file: countPoems = [how many poems the poet has] countWord = [how many words in his entire work]
+    // On the first line of the file: countPoems = [how many poems the poet has] countWords = [how many words in his entire work]
     // word = [word] count = [number of poems the words appears in] [list of "count" frequencies]
     out << countPoems << " " << countWords << "\n";
     for (auto iter: wordToFreqs) {
