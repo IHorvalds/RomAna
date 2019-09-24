@@ -1,11 +1,15 @@
 #include <iostream>
 #include <cstdlib>
+#include <cassert>
 
+#include "util.hpp"
+#include "polynomial/polynomial_util.hpp"
 #include "trie.cpp"
 #include "parserOltean.hpp"
 #include "analyze_poet.hpp"
 
 using namespace std;
+using Coord = util::Coord;
 
 #define BUILD_TRIE 0
 #define PROCESS_TEXT 1
@@ -17,6 +21,46 @@ void errorArgs(int32_t option, int32_t argc, int32_t expected) {
     std::cout << "You have chosen the option " << option << ", but the number of args is false! There should be " << expected << " args " << std::endl;
     exit(0);
   }
+}
+
+void testFitting() {
+  // Test sample spline with poets
+  std::vector<Coord> spline;
+  auto addToSpline = [&spline](double x, double y) { spline.push_back(std::make_pair(x, y)); };
+  
+  // Vorsicht! The spline should be sorted by x-coordinates!
+  addToSpline(0.1, 0.1);
+  addToSpline(0.2, 0.5);
+  addToSpline(0.3, 0.65);
+  addToSpline(0.6, 0.80);
+  addToSpline(0.9, 0.87);
+  addToSpline(1.0, 1);
+  
+  // Don't exceed 16. After this degree, it could be possible that a SegFault occurs.
+  const double maxDegreeAccepted = 16;
+  std::vector<double> poly = polynomial_util::getBestFittingPoly(spline, maxDegreeAccepted);
+  
+  // Compute errors and derivatives
+  double avgError = 0;
+  for (auto coord: spline) {
+    double x = coord.first;
+    double real = coord.second;
+    double eval = polynomial_util::hornerEvaluation(poly, x);
+    
+    double error = real - eval;
+    if (error < 0)
+      error = -error;
+    avgError += error;
+    
+    std::cerr << "For " << x << " error = " << error << " and p'(" << x << ") = "<< polynomial_util::derivate(poly, x) << std::endl;
+  }
+  avgError /= spline.size();
+  std::cerr << "Degree = " << poly.size() - 1 << " & Fitting Error = " << avgError << std::endl;
+}
+
+void testPolynomial() {
+  std::vector<double> poly = {1, 4, -1, 3};
+  assert(polynomial_util::derivate(poly, 5) == 219);
 }
 
 void dictionaryTask(trie& dict, char* textName) {
@@ -45,6 +89,12 @@ void dictionaryTask(trie& dict, char* textName) {
 
 int main(int argc, char** argv) {
   if (argc < 3) {
+    // For Alex: Debug -> Test fitting spline
+    if ((argc == 2) && (atoi(argv[1]) == -1)) {
+      testFitting();
+      return 0;
+    }
+    
     std::cout << "The following options are available: 0(BUILD_TRIE) or 1 (PROCESS_TEXT) or 2 (UPDATE_DICT) or 3 (PROCESS_POET)]" << std::endl;
     std::cout << "You should insert one of the following schemas: " << std::endl;
     std::cout << "BUILD_TRIE: " << argv[0] << " 0 [file to read the inflections from] [file in which to save the dictionary]" << std::endl;
