@@ -75,8 +75,8 @@ namespace polynomial_util {
     // limits of x-coordinates
     double a = util::globalSpline.front().first, b = util::globalSpline.back().first;
     
-    // pin says: must be the first coefficient zero? 
-    bool pin = false;
+    // The rational approximation passes through the origin? Then pin = true. Obviously only set this to true if R(0) must be zero. This is typically used when trying to preserve a root at [0,0] while also optimising for relative error. 
+    bool pin = true;
     
     // Should we optimize for relative error?
     // No. In this idea we use only the chebyshev error.

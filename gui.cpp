@@ -1,9 +1,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <cassert>
+#include <fstream>
+#include <algorithm>
+#include <set>
 
 #include "util.hpp"
-#include "polynomial/polynomial_util.hpp"
+#include "derivative_function.hpp"
 #include "trie.cpp"
 #include "parserOltean.hpp"
 #include "analyze_poet.hpp"
@@ -23,11 +26,30 @@ void errorArgs(int32_t option, int32_t argc, int32_t expected) {
   }
 }
 
-void testFitting() {
+// TODO: Keep them for debug
+#if 0
+void testFittingWithoutSums() {
   // Test sample spline with poets
   std::vector<Coord> spline;
   auto addToSpline = [&spline](double x, double y) { spline.push_back(std::make_pair(x, y)); };
   
+  std::ifstream file("input_spline.in");
+  std::vector<double> ys;
+  double y;
+  
+  while (file >> y)
+    ys.push_back(y * 1000000);
+  file.close();
+  
+  std::sort(ys.begin(), ys.end());
+  
+  double init = 100000, curr = 0;
+  for (auto y: ys) {
+    curr += init;
+    addToSpline(curr, y);
+  }
+  
+#if 0
   // Vorsicht! The spline should be sorted by x-coordinates!
   addToSpline(0.1, 0.1);
   addToSpline(0.2, 0.5);
@@ -35,10 +57,18 @@ void testFitting() {
   addToSpline(0.6, 0.80);
   addToSpline(0.9, 0.87);
   addToSpline(1.0, 1);
+#endif
   
   // Don't exceed 16. After this degree, it could be possible that a SegFault occurs.
   const double maxDegreeAccepted = 16;
   std::vector<double> poly = polynomial_util::getBestFittingPoly(spline, maxDegreeAccepted);
+ 
+  unsigned pow = 0;
+  for (auto elem: poly) {
+    std::cout << elem << " * x^" << (pow++) << "+ ";
+  }
+  std::cout << std::endl;
+  
   
   // Compute errors and derivatives
   double avgError = 0;
@@ -52,10 +82,92 @@ void testFitting() {
       error = -error;
     avgError += error;
     
-    std::cerr << "For " << x << " error = " << error << " and p'(" << x << ") = "<< polynomial_util::derivate(poly, x) << std::endl;
+    std::cout << "For " << x << " error = " << error << " and p'(" << x << ") = "<< polynomial_util::derivate(poly, x) << std::endl;
   }
   avgError /= spline.size();
-  std::cerr << "Degree = " << poly.size() - 1 << " & Fitting Error = " << avgError << std::endl;
+  std::cout << "Degree = " << poly.size() - 1 << " & Fitting Error = " << avgError << std::endl;
+}
+
+void testFittingWithSums() {
+  // Test sample spline with poets
+  std::vector<Coord> spline;
+  auto addToSpline = [&spline](double x, double y) { spline.push_back(std::make_pair(x, y)); };
+  
+  std::ifstream file("input_spline.in");
+  std::vector<double> ys;
+  double y, total = 0;
+  while (file >> y) {
+    ys.push_back(y);
+  }
+  file.close();
+  
+  std::sort(ys.begin(), ys.end());
+  
+  double init = 1 / ys.size(), curr = 0, currSum = 0;
+  for (auto y: ys) {
+    curr += init;
+    currSum += y;
+    addToSpline(curr, currSum);
+  }
+  
+#if 0
+  // Vorsicht! The spline should be sorted by x-coordinates!
+  addToSpline(0.1, 0.1);
+  addToSpline(0.2, 0.5);
+  addToSpline(0.3, 0.65);
+  addToSpline(0.6, 0.80);
+  addToSpline(0.9, 0.87);
+  addToSpline(1.0, 1);
+#endif
+  
+  // Don't exceed 16. After this degree, it could be possible that a SegFault occurs.
+  const double maxDegreeAccepted = 16;
+  std::vector<double> poly = polynomial_util::getBestFittingPoly(spline, maxDegreeAccepted);
+  
+  unsigned pow = 0;
+  for (auto elem: poly) {
+    if (elem < 0) {
+      std::cout << "-" << -elem << " * x^" << (pow++) 
+    }
+    std::cout << elem << " * x^" << (pow++) << "+ ";
+  }
+  std::cout << std::endl;
+  
+  // Compute errors and derivatives
+  double avgError = 0;
+  for (auto coord: spline) {
+    double x = coord.first;
+    double real = coord.second;
+    double eval = polynomial_util::hornerEvaluation(poly, x);
+    
+    double error = real - eval;
+    if (error < 0)
+      error = -error;
+    avgError += error;
+    
+    std::cout << "For " << x << " error = " << error << " and p'(" << x << ") = "<< polynomial_util::derivate(poly, x) << std::endl;
+  }
+  avgError /= spline.size();
+  std::cout << "Degree = " << poly.size() - 1 << " & Fitting Error = " << avgError << std::endl;
+}
+#endif
+
+void testDerivative() {
+  std::ifstream gini_file("input_spline.in");
+  std::ifstream poets_file("poets.txt");
+  
+  std::set<std::pair<double, std::string>> freqToPoet;
+  double gini;
+  std::string poet;
+  while (gini_file >> gini) {
+    poets_file >> poet;
+    freqToPoet.insert(std::make_pair(gini, poet));
+  }
+  
+  std::vector<std::pair<double, std::string>> derivativeToPoet = derivative::getDerivatives(freqToPoet);
+  for (auto elem: derivativeToPoet) {
+    std::cerr << elem.second << " -> " << elem.first << std::endl;
+  }
 }
 
 void testPolynomial() {
@@ -89,9 +201,9 @@ void dictionaryTask(trie& dict, char* textName) {
 
 int main(int argc, char** argv) {
   if (argc < 3) {
-    // For Alex: Debug -> Test fitting spline
+    // For Alex: Debug -> Test polynomial derivative - Insert: ./gui -1
     if ((argc == 2) && (atoi(argv[1]) == -1)) {
-      testFitting();
+      testDerivative();
       return 0;
     }
     
