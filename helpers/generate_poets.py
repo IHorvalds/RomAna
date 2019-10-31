@@ -1,9 +1,9 @@
 import os
 
 def main():
-    num_lines = sum(1 for line in open('poets.txt'))
+    num_lines = sum(1 for line in open('poets/poets.txt'))
     curr_count = 0
-    file = open("poets.txt", "r")
+    file = open("poets/poets.txt", "r")
     for line in file:
         poet = line.strip().rstrip()
         if poet:
