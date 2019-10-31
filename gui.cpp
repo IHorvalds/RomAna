@@ -5,19 +5,18 @@
 #include <algorithm>
 #include <set>
 
-#include "util.hpp"
-#include "derivative_function.hpp"
-#include "trie.cpp"
-#include "parserOltean.hpp"
-#include "analyze_poet.hpp"
+#include "processing/trie.cpp"
+#include "processing/parserOltean.hpp"
+#include "processing/analyze_poet.hpp"
+#include "processing/gen_gini.hpp"
 
 using namespace std;
-using Coord = util::Coord;
 
 #define BUILD_TRIE 0
 #define PROCESS_TEXT 1
 #define UPDATE_DICT 2
-#define PROCESS_POET 3
+#define ANALYZE_POET 3
+#define GINIFY_POET 4
 
 void errorArgs(int32_t option, int32_t argc, int32_t expected) {
   if (argc != expected) {
@@ -26,162 +25,13 @@ void errorArgs(int32_t option, int32_t argc, int32_t expected) {
   }
 }
 
-// TODO: Keep them for debug
-#if 0
-void testFittingWithoutSums() {
-  // Test sample spline with poets
-  std::vector<Coord> spline;
-  auto addToSpline = [&spline](double x, double y) { spline.push_back(std::make_pair(x, y)); };
-  
-  std::ifstream file("input_spline.in");
-  std::vector<double> ys;
-  double y;
-  
-  while (file >> y)
-    ys.push_back(y * 1000000);
-  file.close();
-  
-  std::sort(ys.begin(), ys.end());
-  
-  double init = 100000, curr = 0;
-  for (auto y: ys) {
-    curr += init;
-    addToSpline(curr, y);
-  }
-  
-#if 0
-  // Vorsicht! The spline should be sorted by x-coordinates!
-  addToSpline(0.1, 0.1);
-  addToSpline(0.2, 0.5);
-  addToSpline(0.3, 0.65);
-  addToSpline(0.6, 0.80);
-  addToSpline(0.9, 0.87);
-  addToSpline(1.0, 1);
-#endif
-  
-  // Don't exceed 16. After this degree, it could be possible that a SegFault occurs.
-  const double maxDegreeAccepted = 16;
-  std::vector<double> poly = polynomial_util::getBestFittingPoly(spline, maxDegreeAccepted);
- 
-  unsigned pow = 0;
-  for (auto elem: poly) {
-    std::cout << elem << " * x^" << (pow++) << "+ ";
-  }
-  std::cout << std::endl;
-  
-  
-  // Compute errors and derivatives
-  double avgError = 0;
-  for (auto coord: spline) {
-    double x = coord.first;
-    double real = coord.second;
-    double eval = polynomial_util::hornerEvaluation(poly, x);
-    
-    double error = real - eval;
-    if (error < 0)
-      error = -error;
-    avgError += error;
-    
-    std::cout << "For " << x << " error = " << error << " and p'(" << x << ") = "<< polynomial_util::derivate(poly, x) << std::endl;
-  }
-  avgError /= spline.size();
-  std::cout << "Degree = " << poly.size() - 1 << " & Fitting Error = " << avgError << std::endl;
-}
-
-void testFittingWithSums() {
-  // Test sample spline with poets
-  std::vector<Coord> spline;
-  auto addToSpline = [&spline](double x, double y) { spline.push_back(std::make_pair(x, y)); };
-  
-  std::ifstream file("input_spline.in");
-  std::vector<double> ys;
-  double y, total = 0;
-  while (file >> y) {
-    ys.push_back(y);
-  }
-  file.close();
-  
-  std::sort(ys.begin(), ys.end());
-  
-  double init = 1 / ys.size(), curr = 0, currSum = 0;
-  for (auto y: ys) {
-    curr += init;
-    currSum += y;
-    addToSpline(curr, currSum);
-  }
-  
-#if 0
-  // Vorsicht! The spline should be sorted by x-coordinates!
-  addToSpline(0.1, 0.1);
-  addToSpline(0.2, 0.5);
-  addToSpline(0.3, 0.65);
-  addToSpline(0.6, 0.80);
-  addToSpline(0.9, 0.87);
-  addToSpline(1.0, 1);
-#endif
-  
-  // Don't exceed 16. After this degree, it could be possible that a SegFault occurs.
-  const double maxDegreeAccepted = 16;
-  std::vector<double> poly = polynomial_util::getBestFittingPoly(spline, maxDegreeAccepted);
-  
-  unsigned pow = 0;
-  for (auto elem: poly) {
-    if (elem < 0) {
-      std::cout << "-" << -elem << " * x^" << (pow++) 
-    }
-    std::cout << elem << " * x^" << (pow++) << "+ ";
-  }
-  std::cout << std::endl;
-  
-  // Compute errors and derivatives
-  double avgError = 0;
-  for (auto coord: spline) {
-    double x = coord.first;
-    double real = coord.second;
-    double eval = polynomial_util::hornerEvaluation(poly, x);
-    
-    double error = real - eval;
-    if (error < 0)
-      error = -error;
-    avgError += error;
-    
-    std::cout << "For " << x << " error = " << error << " and p'(" << x << ") = "<< polynomial_util::derivate(poly, x) << std::endl;
-  }
-  avgError /= spline.size();
-  std::cout << "Degree = " << poly.size() - 1 << " & Fitting Error = " << avgError << std::endl;
-}
-#endif
-
-void testDerivative() {
-  std::ifstream gini_file("input_spline.in");
-  std::ifstream poets_file("poets.txt");
-  
-  std::set<std::pair<double, std::string>> freqToPoet;
-  double gini;
-  std::string poet;
-  while (gini_file >> gini) {
-    poets_file >> poet;
-    freqToPoet.insert(std::make_pair(gini, poet));
-  }
-  
-  std::vector<std::pair<double, std::string>> derivativeToPoet = derivative::getDerivatives(freqToPoet);
-  for (auto elem: derivativeToPoet) {
-    std::cerr << elem.second << " -> " << elem.first << std::endl;
-  }
-}
-
-void testPolynomial() {
-  std::vector<double> poly = {1, 4, -1, 3};
-  assert(polynomial_util::derivate(poly, 5) == 219);
-}
-
 void dictionaryTask(trie& dict, char* textName) {
   // Open the normal file
   text txt(textName);
   
   // Open the latin_file
   std::string tmp = textName;
-  std::string pythonCommand = "python3 convert_into_latin.py " + tmp;
+  std::string pythonCommand = "python3 processing/convert_into_latin.py " + tmp;
   int warning = system(pythonCommand.data());
   tmp = "latin_" + tmp;
   text latin_txt(tmp); 
@@ -201,18 +51,13 @@ void dictionaryTask(trie& dict, char* textName) {
 
 int main(int argc, char** argv) {
   if (argc < 3) {
-    // For Alex: Debug -> Test polynomial derivative - Insert: ./gui -1
-    if ((argc == 2) && (atoi(argv[1]) == -1)) {
-      testDerivative();
-      return 0;
-    }
-    
     std::cout << "The following options are available: 0(BUILD_TRIE) or 1 (PROCESS_TEXT) or 2 (UPDATE_DICT) or 3 (PROCESS_POET)]" << std::endl;
     std::cout << "You should insert one of the following schemas: " << std::endl;
     std::cout << "BUILD_TRIE: " << argv[0] << " 0 [file to read the inflections from] [file in which to save the dictionary]" << std::endl;
     std::cout << "PROCESS_TEXT: " << argv[0] << " 1 [dictionary file name] [input file name] [output file name]" << std::endl;
     std::cout << "UPDATE_DICT: " << argv[0] << " 2 [dictionary file name] [input file name] [output file name] [new dictionary file name]" << std::endl;
-    std::cout << "PROCESS_POET: " << argv[0] << " 3 [poet name from poets.txt]" << std::endl;
+    std::cout << "ANALYZE_POET: " << argv[0] << " 3 [poet name from poets.txt]" << std::endl;
+    std::cout << "GINIFY_POET: " << argv[0] << " 4 [poet name from poets.txt]" << std::endl;
     return -1;
   }
   
@@ -226,7 +71,7 @@ int main(int argc, char** argv) {
       
       // Create the latin_file with python
       std::string tmp = file_name;
-      std::string pythonCommand = "python3 convert_into_latin.py " + tmp;
+      std::string pythonCommand = "python3 processing/convert_into_latin.py " + tmp;
       int warning = system(pythonCommand.data());
       tmp = "latin_" + tmp;
       const char* latin_file_name = tmp.data();
@@ -272,12 +117,22 @@ int main(int argc, char** argv) {
       dict.saveExternal(argv[5]);
       break;
     }
-    case PROCESS_POET : {
-      errorArgs(PROCESS_POET, argc, 3);
+    case ANALYZE_POET : {
+      errorArgs(ANALYZE_POET, argc, 3);
       
+      // Compute the frequencies of each word
       std::string poetName = argv[2];  
       PoetAnalyzer analyzer(poetName);
       analyzer.saveFrequencies();
+      break;
+    }
+    case GINIFY_POET : {
+      errorArgs(GINIFY_POET, argc, 3);
+      
+      // Ginify the poet, i.e, compute the gini coefficient for each word
+      std::string poetName = argv[2];
+      authorGini gini(poetName);
+      gini.save();
       break;
     }
     default : {

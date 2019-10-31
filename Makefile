@@ -1,3 +1,3 @@
-gui: gui.cpp parserOltean.hpp util.hpp derivative_function.hpp polynomial/polynomial_util.hpp special_characters.hpp trie.cpp trie.hpp analyze_poet.hpp language_support.hpp
+gui: gui.cpp processing/parserOltean.hpp processing/special_characters.hpp processing/trie.cpp processing/trie.hpp processing/analyze_poet.hpp processing/language_support.hpp processing/gen_gini.hpp helpers/compute_ginis.R
 	g++ -O3 gui.cpp -o gui
 

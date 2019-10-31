@@ -20,7 +20,7 @@ class PoetAnalyzer {
     
     // Open the latin_file
     std::string tmp = textName;
-    std::string pythonCommand = "python3 convert_into_latin.py " + tmp;
+    std::string pythonCommand = "python3 processing/convert_into_latin.py " + tmp;
     int warning = system(pythonCommand.data());
     tmp = "latin_" + tmp;
     text latin_txt(tmp); 
@@ -46,7 +46,7 @@ class PoetAnalyzer {
   }
   
   void processPoems() {
-    std::string filename = "poets/" + poet + "_list_poems.txt";
+    std::string filename = "poets/poems/" + poet + "_list_poems.txt";
     ifstream in(filename);
     
     // Don't alloc the dictionary
@@ -97,7 +97,7 @@ class PoetAnalyzer {
   }
   
   void saveFrequencies() {
-    std::string filename = "poets/" + poet + "_words_frequencies.txt";
+    std::string filename = "poets/frequency/" + poet + "_words_frequencies.txt";
     ofstream out(filename);
     
     // Parse all his/her poems
