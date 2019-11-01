@@ -16,7 +16,7 @@ def main():
     
     output = open("poets/" + sys.argv[2] + "/" + sys.argv[1] + "_" + sys.argv[3] + ".txt" , "w")
     for elem in sorted_all:
-        output.write(str(elem) + "\n")
+        output.write(elem[0] + " " + str(elem[1]) + "\n")
     
 if __name__ == '__main__':
     main()
