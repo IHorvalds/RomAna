@@ -1,6 +1,8 @@
 library(ineq)
 library(hash)
 library(tuple)
+library(polynom)
+library(PolynomF)
 
 accumulate_all = function() {
     poetsToDistribution <- hash()
@@ -64,6 +66,14 @@ get_poets_to_id = function(poetsToDistribution) {
 
 }
 
+revert_table = function(poetToId) {
+    id_to_poet <- hash()
+    for (poet in keys(poetToId)) {
+        id_to_poet[[toString(poetToId[[poet]])]] = poet
+    }
+    return(id_to_poet)
+}
+
 get_global_words = function(poetsToDistribution) {
     global_words <- hash()
     for (poet in keys(poetsToDistribution)) {
@@ -74,7 +84,7 @@ get_global_words = function(poetsToDistribution) {
     return(global_words)
 }
 
-get_devs = function(count_poets, idToDistribution) {
+get_global_gini = function(count_poets, idToDistribution) {
     distr <- c()
     for (id in keys(idToDistribution)) {
         distr <- c(distr, idToDistribution[[id]])
@@ -84,7 +94,7 @@ get_devs = function(count_poets, idToDistribution) {
     return(Gini(distr))
 }
 
-devs_all = function(count_poets, poetsToDistribution, global_words) {
+gini = function(count_poets, poetsToDistribution, global_words) {
     poetToId = get_poets_to_id(poetsToDistribution) 
     
     output <- file(paste("poets/words_distribution_gini.txt", sep=""), "w")
@@ -96,7 +106,7 @@ devs_all = function(count_poets, poetsToDistribution, global_words) {
                 curr[poetToId[[poet]]] = poetsToDistribution[[poet]][[word]]
             }
         }
-        global_gini = get_devs(count_poets, curr)
+        global_gini = get_global_gini(count_poets, curr)
         write(paste(word, global_gini, sep=" "), output, append=TRUE)
     }
     close(output)
@@ -120,13 +130,115 @@ idf = function(count_poets, poetsToDistribution, global_words) {
     close(output)
 }
 
+get_devs = function(count_poets, idToDistr) {
+    # Transform the hash table into a matrix
+    keys_ = ls(idToDistr)
+    vals_ = c()
+    for (id in keys_)
+        vals_ = c(vals_, idToDistr[[id]])
+    if (length(keys_) == 1) {
+        # count_poets is the derivate of the function f(x) = ax + b
+        # with a = count_poets and b = 1 - count_poets
+        ret <- hash()
+        ret[[keys_[1]]] <- count_poets
+        return(ret)
+    } else {
+        mat = matrix(c(keys_, vals_, rep(0, length(keys_))), ncol = 3)
+        # print(m)
+        
+        # Sort the distribution value increasingly
+        mat = mat[order(mat[,2]),]
+    
+        totalSum = as.double(0)
+        for (row in 1:nrow(mat))
+            totalSum = totalSum + as.double(mat[row, 2])
+        
+        sum = as.double(0)
+        for(row in 1:nrow(mat)) {
+            sum = sum + as.double(mat[row, 2])
+            mat[row, 2] = as.double(sum / totalSum)
+        }
+        
+        # Create the axis
+        eps = 1 / count_poets
+        mul = count_poets - nrow(mat)
+        
+        xs <- c(mul * eps)
+        ys <- c(0)
+        
+        # Go one step further, because 0 has already been added
+        mul = mul + 1
+        for(row in 1:nrow(mat)) {
+            mat[row, 3] = as.double(mul * eps)
+            mul = mul + 1
+            xs <- c(xs, as.double(mat[row, 3]))
+            ys <- c(ys, as.double(mat[row, 2]))
+        }
+        
+        # Tune the degree
+        degree <- min(length(xs) - 1, 4)
+        fitted <- as_polynom(as.vector(coef(lm(ys ~ poly(xs, degree, raw=TRUE)))))
+        
+        dev <- deriv(fitted)
+
+        ret <- hash()
+        for(row in 1:nrow(mat)) {
+            ret[[mat[row, 1]]] <- as.function(dev)(as.double(mat[row, 3]))
+        }
+        return(ret)
+    }
+}
+
+devs_all = function(count_poets, poetsToDistribution, global_words) {
+    poetToId = get_poets_to_id(poetsToDistribution) 
+    idToPoet = revert_table(poetToId)
+    
+    for (word in keys(global_words)) {
+        curr <- hash()
+        for (poet in keys(poetsToDistribution)) {
+            if (has.key(word, poetsToDistribution[[poet]])) {
+                curr[as.numeric(poetToId[[poet]])] = as.numeric(poetsToDistribution[[poet]][[word]])
+            }
+        }
+        
+        # Compute the derivatives on Lorenz curve
+        devs = get_devs(count_poets, curr)
+    
+        if (FALSE) {
+            # Normalize the derivatives
+            sum = as.double(0)
+            for (dev in keys(devs))
+                sum = sum + as.double(devs[[dev]])
+            for (dev in keys(devs))
+                devs[[dev]] = devs[[dev]] / sum
+        }
+        
+        # Update the values for each poet with this word
+        for (dev in keys(devs)) {
+            poetsToDistribution[[ idToPoet[[dev]] ]][[word]] <- devs[[dev]]
+        }
+    }
+    
+    print("All derivatives computed. Now copy into files")
+    
+    for (poet in keys(poetsToDistribution)) {
+        output <- file(paste("poets/derivative/", poet, "_pure_devs.txt", sep=""), "w")
+        for (word in keys(poetsToDistribution[[poet]])) {
+            write(paste(word, poetsToDistribution[[poet]][[word]], sep=" "), output, append=TRUE)
+        }
+        print(paste("Derivatives of", poet, "done", sep = " "))
+        close(output)
+    }
+}
+
 main <- function(argv)
 {
     options(warn=1)
     ret = accumulate_all()
     global_words = get_global_words(ret[[2]])
+    # gini(ret[[1]], ret[[2]], global_words)
+    # idf(ret[[1]], ret[[2]], global_words)
     devs_all(ret[[1]], ret[[2]], global_words)
-    idf(ret[[1]], ret[[2]], global_words)
     return (0);
 }
 

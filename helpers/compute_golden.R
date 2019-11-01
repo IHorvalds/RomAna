@@ -50,7 +50,7 @@ golden_poet = function(poet) {
         
         gini_based = giniDistr[[word]] * currFreq
         idf_based = idfDistr[[word]] * currFreq
-        mixed_based = 1 / (1 - giniDistr[[word]]) * giniDistr[[word]] * idfDistr[[word]] * currFreq
+        mixed_based = giniDistr[[word]]^3 * idfDistr[[word]]^(0) * currFreq
         
         write(paste(word, gini_based, sep=" "), output_gini_based, append=TRUE)
         write(paste(word, idf_based, sep=" "), output_idf_based, append=TRUE)
