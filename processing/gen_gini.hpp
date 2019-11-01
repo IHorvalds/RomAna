@@ -29,6 +29,8 @@ public:
     
     call("final", "gini");
     call("final", "idf");
+    call("final", "pure_dev");
+    call("final", "norm_dev");
     call("final", "mixed");
     call("normal", "normal");
   }
