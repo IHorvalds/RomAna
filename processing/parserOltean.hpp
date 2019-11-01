@@ -14,8 +14,8 @@ class text {
   int currSize;
   int index;
 
-  static constexpr unsigned COUNT_UNALLOWED = 5; 
-  static constexpr char unallowed[COUNT_UNALLOWED] = {' ', ',', '\n', '-', '/'};
+  static constexpr unsigned COUNT_UNALLOWED = 6; 
+  static constexpr char unallowed[COUNT_UNALLOWED] = {' ', ',', '\n', '-', '/', '\t'};
   
 public:
   text() {

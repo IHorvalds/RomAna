@@ -28,7 +28,7 @@ class PoetAnalyzer {
     // Read the first words
     std::string word = txt.serveWord();
     std::string latin_word = latin_txt.serveWord();
-    
+
     // Continue parsing the text until its end
     while ((word != " <EOF> ") && (latin_word != " <EOF> ")) {
       // Update the frequencies
@@ -63,9 +63,9 @@ class PoetAnalyzer {
       // Reset the trie with the initial dictionary
       dict.reset("dict.bin");
       
-      // Parse the poetry and save the frequencies in trie
+      // Parse the poetry and save the frequencies into trie
       dictionaryTask(dict, "parsed.txt");
-      
+    
       // Get the frequencies from inflections
       std::vector<std::pair<uint32_t, std::string>> freqs = dict.getFrequencies();
       
