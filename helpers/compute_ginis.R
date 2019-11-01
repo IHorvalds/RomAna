@@ -26,6 +26,7 @@ ginify_poet = function(poet) {
         freqs = c(rep(0, completeBy), freqs)
         write(paste(word, Gini(freqs), sep=" "), output, append=TRUE)
     }
+    close(output)
 }
 
 main <- function(argv)
