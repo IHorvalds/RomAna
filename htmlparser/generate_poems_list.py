@@ -6,10 +6,10 @@ import sys
 import extract_poems
 
 def main():
-    f = open("../poets.txt")
+    f = open("poets/poets.txt")
     for line in f:
         poet = line.strip()
-        extract_poems.savePoems(poet, "../poets/" + poet + "_list_poems.txt")
+        extract_poems.savePoems(poet, "poets/poems/" + poet + "_list_poems.txt")
         
 if __name__ == '__main__':
     main()
