@@ -1,0 +1,185 @@
+3 74594
+adânc 1 1
+afla 2 1 1
+al 2 2 3
+alb 3 2 2 3
+alt 1 2
+altul 1 1
+alunecind 3 1 1 1
+apoi 1 1
+ar 1 1
+arbor 3 1 1 1
+aripă 3 1 1 1
+arunca 1 1
+as 1 1
+atât 2 1 1
+așa 1 1
+ca 3 1 1 2
+cald 3 1 1 1
+capricorn 1 1
+car 1 1
+catarg 1 1
+categoric 1 1
+ce 2 1 2
+ceas 3 2 2 2
+ceată 3 1 1 1
+ceață 3 1 1 1
+cer 3 1 1 2
+cetiniș 3 1 1 1
+clătina 1 1
+constelație 1 1
+copac 3 1 1 1
+corabie 1 2
+corăbia 1 1
+croi 1 1
+cu 3 2 3 6
+culm 3 1 1 1
+cum 1 1
+câine 1 3
+când 3 5 5 5
+cât 1 1
+dac 1 1
+de 3 5 7 8
+deasupra 1 1
+dens 3 1 1 1
+din 3 2 4 5
+dor 3 2 2 2
+dormi 1 2
+drept 1 1
+el 3 2 6 7
+elegant 1 1
+eternitate 1 1
+eu 1 1
+exclama 1 1
+fi 3 3 4 6
+fin 1 1
+foșnet 3 1 1 1
+fregată 1 1
+fumega 3 1 1 1
+fâță 1 1
+genunche 1 1
+genune 3 1 1 1
+gingaș 1 1
+grădină 1 1
+gură 1 1
+gălbui 1 1
+iar 3 1 1 1
+iarnă 1 1
+ieși 3 1 1 1
+important 1 1
+la 2 1 1
+larg 3 1 1 1
+legăna 1 1
+lemn 3 1 1 1
+lipi 1 1
+lovi 3 1 1 1
+lume 1 2
+lumină 1 2
+luneca 1 1
+lună 3 1 1 1
+m 1 1
+mai 1 1
+mare 2 1 2
+mereu 1 1
+meu 1 1
+miră 1 1
+moarte 1 1
+mult 1 1
+mumă 1 1
+munte 3 2 2 3
+mușchi 3 1 1 1
+nervură 3 1 1 1
+nici 2 1 2
+nicicând 1 1
+noapte 1 1
+nou 1 1
+nu 1 2
+numai 1 1
+ocean 1 1
+octombrie 1 1
+om 1 1
+or 1 1
+oraș 1 1
+orion 1 2
+pajiște 1 1
+palmă 3 1 1 1
+parcă 1 1
+part 1 2
+pe 3 1 2 3
+pestă 3 3 3 6
+piele 1 1
+pisc 3 1 1 1
+platină 1 1
+pleca 1 1
+plin 1 1
+ploaie 3 2 2 2
+ploua 3 1 1 1
+poiană 3 1 1 1
+prelinge 3 1 1 1
+primăvară 1 1
+prin 3 1 1 1
+printre 3 2 2 2
+privi 1 1
+prunc 1 1
+pumn 1 1
+pur 1 1
+purta 1 1
+pântec 1 1
+pădure 3 1 1 2
+pământ 1 1
+pătrunde 3 1 1 1
+păși 3 1 1 1
+ram 3 1 1 1
+rege 1 1
+rigid 1 1
+roată 3 1 1 1
+roșcat 3 1 1 1
+răsuna 3 1 1 1
+rătăci 1 1
+semn 1 2
+septentrion 1 1
+servietă 1 2
+si 3 7 10 12
+singurătate 3 1 1 1
+spaimă 1 1
+sta 3 2 2 2
+stradă 1 1
+strânge 1 1
+străbate 1 1
+străluc 1 1
+stăpân 1 1
+sud 1 1
+suflet 3 1 1 1
+suna 3 1 1 1
+sus 1 1
+său 1 1
+toamnă 1 1
+tot 3 1 2 2
+trece 1 2
+trup 1 1
+uimi 1 1
+umbră 3 1 1 1
+un 3 3 3 5
+urca 1 1
+ușor 3 1 1 1
+vad 1 1
+veni 3 1 1 1
+vreme 1 1
+vreodată 1 1
+vulpe 3 1 1 1
+vultur 3 1 1 1
+vâna 3 2 2 2
+vârf 1 1
+zid 1 1
+în 3 4 5 5
+înalt 1 1
+îngheța 1 1
+înseta 3 1 1 1
+înstela 3 1 1 1
+întinde 3 1 1 1
+întoarce 1 2
+întra 1 2
+întreba 1 1
+înverzi 1 1
+înțelege 1 1
+șină 3 1 1 3

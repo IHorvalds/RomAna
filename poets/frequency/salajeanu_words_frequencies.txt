@@ -1,0 +1,193 @@
+6 74624
+adevăr 1 1
+adinc 1 1
+adinci 1 1
+afară 1 1
+ai 1 5
+ajunge 1 3
+al 2 1 2
+alb 6 2 2 2 2 2 3
+altar 1 1
+alunecind 6 1 1 1 1 1 1
+amar 1 2
+apropia 1 1
+ar 1 2
+arbor 6 1 1 1 1 1 1
+aripă 6 1 1 1 1 2 2
+as 1 1
+asculta 2 1 1
+asfinți 1 1
+avea 1 3
+ațița 1 1
+ațâța 1 1
+braț 2 1 1
+ca 6 1 1 1 1 3 3
+cald 6 1 1 1 1 1 1
+car 1 1
+ce 1 1
+ceară 1 1
+ceas 6 2 2 2 2 2 2
+ceată 6 1 1 1 1 1 1
+ceață 6 1 1 1 1 1 1
+cenușă 1 1
+cer 6 1 1 1 1 1 2
+cetiniș 6 1 1 1 1 1 1
+chema 2 1 1
+cintec 1 1
+cit 1 1
+colindă 1 1
+contempla 1 1
+contopi 1 1
+copac 6 1 1 1 1 1 1
+cu 6 2 2 2 2 3 4
+culm 6 1 1 1 1 1 1
+cum 2 1 1
+când 6 5 5 5 5 5 6
+căuta 2 1 1
+dar 1 1
+de 6 3 4 5 5 5 6
+deget 1 1
+dens 6 1 1 1 1 1 1
+deschide 1 1
+desfăca 2 1 1
+din 6 2 2 2 2 2 4
+dintre 1 1
+dor 6 2 2 2 2 2 3
+drum 1 2
+duce 1 1
+dur 1 1
+dăltui 1 1
+el 6 2 2 2 3 3 4
+eu 4 1 1 2 2
+femeie 1 1
+fi 6 2 2 2 3 4 4
+floare 2 1 1
+foșnet 6 1 1 1 1 1 1
+freamăt 1 1
+frânge 1 1
+fulger 1 1
+fumega 6 1 1 1 1 1 1
+furtună 1 1
+fără 1 1
+genune 6 1 1 1 1 1 1
+gol 1 1
+iar 6 1 1 1 1 1 1
+iarnă 2 1 1
+ieși 6 1 1 1 1 1 1
+in 3 1 1 3
+iubi 2 1 1
+ivi 1 1
+iț 2 1 1
+joacă 1 1
+la 1 1
+larg 6 1 1 1 1 1 1
+lemn 6 1 1 1 1 1 1
+lipi 1 1
+lovi 6 1 1 1 1 1 1
+luindu 1 1
+lună 6 1 1 1 1 1 1
+mai 1 1
+mare 1 1
+meu 1 1
+miini 1 1
+milenar 1 1
+mingiie 1 1
+mingiiere 1 1
+mintă 1 1
+molid 1 1
+mugur 1 1
+munte 6 2 2 2 2 2 2
+mușchi 6 1 1 1 1 1 1
+măr 1 1
+nedesfăcut 1 1
+neliniște 1 1
+nervură 6 1 1 1 1 1 1
+nesfirsit 1 1
+nu 1 2
+născoci 1 1
+oară 1 1
+ochi 1 1
+palmă 6 1 1 1 1 1 1
+par 1 1
+pas 1 1
+pe 6 1 1 1 1 1 2
+pentru 1 1
+pestă 6 3 3 3 3 3 4
+pisc 6 1 1 1 1 1 1
+ploaie 6 2 2 2 2 3 3
+ploua 6 1 1 1 1 1 1
+plânge 1 1
+poartă 1 1
+poiană 6 1 1 1 1 1 1
+pot 2 1 1
+potecă 1 1
+prelinge 6 1 1 1 1 1 1
+prin 6 1 1 1 1 1 1
+prinde 1 1
+printre 6 2 2 2 2 2 2
+puls 1 1
+purtind 1 1
+putea 2 1 2
+pădure 6 1 1 1 1 1 2
+pătrunde 6 1 1 1 1 1 1
+păși 6 1 1 1 1 1 1
+radă 1 1
+ram 6 1 1 1 1 1 1
+retrezirea 1 1
+roată 6 1 1 1 1 1 1
+roșcat 6 1 1 1 1 1 1
+rupe 2 1 1
+răscoli 1 1
+răsuna 6 1 1 1 1 1 1
+scoarță 1 1
+si 6 7 7 7 7 8 11
+simț 1 1
+singurătate 6 1 1 1 1 1 1
+sinț 2 1 3
+soare 2 1 2
+speranță 1 1
+spre 1 1
+sta 6 2 2 2 2 2 2
+stinci 1 1
+suflet 6 1 1 1 1 1 2
+suna 6 1 1 1 1 1 1
+său 1 1
+ta 1 1
+taină 1 1
+tală 1 1
+toamnă 1 1
+tot 6 1 1 1 1 1 1
+trebui 1 1
+tristețe 1 1
+trunchi 1 1
+tu 2 1 4
+tăcea 3 1 1 1
+tău 1 1
+ultim 1 1
+umbră 6 1 1 1 1 1 1
+un 6 3 3 3 3 3 4
+univers 1 1
+ureche 1 1
+urmă 1 2
+ușor 6 1 1 1 1 1 1
+veni 6 1 1 1 1 1 1
+viață 1 1
+vint 3 1 1 1
+vioară 1 1
+vreodată 1 1
+vulpe 6 1 1 1 1 1 1
+vultur 6 1 1 1 1 1 1
+vâna 6 2 2 2 2 2 2
+văr 1 1
+în 6 2 2 3 3 3 3
+încet 1 1
+închipui 1 1
+înseta 6 1 1 1 1 1 1
+înstela 6 1 1 1 1 1 1
+întinde 6 1 1 1 1 1 2
+întra 1 1
+înălța 2 1 1
+înțelege 1 2
+șa 3 1 1 2
+șină 6 1 1 2 2 3 3
+ți 1 1

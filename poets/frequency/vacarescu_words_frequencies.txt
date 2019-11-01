@@ -1,11 +1,15 @@
-4 44526
+4 65755
 acolo 1 1
 adânc 1 1
 al 3 1 1 2
+alb 4 2 2 2 2
 altul 1 1
+alunecind 4 1 1 1 1
 amar 1 1
 amărî 1 1
 apă 1 2
+arbor 4 1 1 1 1
+aripă 4 1 1 1 1
 arăta 1 2
 ascunde 1 1
 atât 1 1
@@ -13,16 +17,24 @@ bea 1 2
 biet 1 1
 bine 1 1
 boală 1 2
-ca 3 1 1 1
+ca 4 1 2 2 2
+cald 4 1 1 1 1
 ce 1 5
+ceas 4 2 2 2 2
+ceată 4 1 1 1 1
+ceață 4 1 1 1 1
+cer 4 1 1 1 1
+cetiniș 4 1 1 1 1
 chinui 1 1
 cinsti 1 1
+copac 4 1 1 1 1
 crește 1 1
-cu 1 1
+cu 4 2 2 2 3
+culm 4 1 1 1 1
 cum 1 1
 cunoaște 1 1
 cuvânt 1 1
-când 1 3
+când 4 5 5 5 8
 cât 1 1
 câteodată 1 1
 că 1 1
@@ -31,74 +43,104 @@ cădea 1 1
 căuta 1 1
 da 1 1
 dar 1 2
-de 1 5
+de 4 3 3 3 8
 decât 1 1
-din 1 1
+dens 4 1 1 1 1
+din 4 2 2 2 3
 dohtorie 1 1
-dor 1 1
+dor 4 2 2 2 3
 dori 1 1
 duce 1 2
 dumbravă 1 1
 durea 1 2
 ei 1 1
-el 3 1 7 8
+el 4 2 3 9 10
 eu 3 2 3 4
-fi 2 3 6
+fi 4 2 2 5 8
 floare 2 1 1
+foșnet 4 1 1 1 1
 frică 1 1
+fumega 4 1 1 1 1
 fă 1 2
+genune 4 1 1 1 1
 grădină 1 1
+iar 4 1 1 1 1
+ieși 4 1 1 1 1
 inimioară 1 2
 inimă 1 1
 jale 1 1
 jaleste 1 1
 lang 1 1
+larg 4 1 1 1 1
 laș 2 1 1
-lemn 1 1
+lemn 4 1 1 1 2
 limbă 1 1
 livede 1 1
-lovi 1 1
+lovi 4 1 1 1 2
 lumină 1 1
+lună 4 1 1 1 1
 mai 1 5
 mei 1 1
 moară 1 1
 moștean 1 1
 muncă 1 1
+munte 4 2 2 2 2
+mușchi 4 1 1 1 1
 mânca 1 1
+nervură 4 1 1 1 1
 nici 1 3
 nu 1 8
 oh 1 1
 om 1 1
+palmă 4 1 1 1 1
 patrie 1 1
+pe 4 1 1 1 1
 pedepsi 1 1
 pentru 1 1
+pestă 4 3 3 3 3
 pierde 1 1
+pisc 4 1 1 1 1
+ploaie 4 2 2 2 2
+ploua 4 1 1 1 1
+poiană 4 1 1 1 1
 pre 1 2
+prelinge 4 1 1 1 1
 pricepe 1 1
-prin 1 4
+prin 4 1 1 1 5
+printre 4 2 2 2 2
 putea 1 1
 până 1 1
-pădure 1 1
+pădure 4 1 1 1 2
 păsărică 1 1
+pătrunde 4 1 1 1 1
+păși 4 1 1 1 1
+ram 4 1 1 1 1
 ramură 1 1
 rece 1 1
 repune 1 1
+roată 4 1 1 1 1
 romanesc 1 1
+roșcat 4 1 1 1 1
 rugă 1 1
 rădica 1 1
 răpune 1 2
 răspunde 1 1
+răsuna 4 1 1 1 1
 răuplatnic 1 1
 sadă 1 2
-si 3 1 1 4
+si 4 7 8 8 11
 simți 1 1
 singurel 1 1
+singurătate 4 1 1 1 1
 soție 1 1
 soțioară 1 1
 spune 2 1 5
+sta 4 2 2 2 2
 strica 2 1 1
+suflet 4 1 1 1 1
+suna 4 1 1 1 1
 să 2 1 5
-tot 1 3
+tot 4 1 1 1 4
 trece 1 3
 trăi 1 1
 tu 2 1 5
@@ -108,26 +150,34 @@ turturea 1 1
 tăia 1 1
 uita 1 1
 umbla 1 1
-un 1 1
+umbră 4 1 1 1 1
+un 4 3 3 3 4
 undă 1 3
 urmaș 1 1
 usca 1 1
+ușor 4 1 1 1 1
 vai 1 1
 vază 1 1
 veda 1 3
+veni 4 1 1 1 1
 verde 1 2
-vâna 1 1
+vulpe 4 1 1 1 1
+vultur 4 1 1 1 1
+vâna 4 2 2 2 3
 vânător 1 1
 văcări 1 1
 zară 1 1
 zbura 1 1
-în 1 1
+în 4 2 2 2 3
 înalt 1 1
 începe 1 1
 încât 1 1
+înseta 4 1 1 1 1
 însoți 1 1
+înstela 4 1 1 1 1
+întinde 4 1 1 1 1
 întra 1 1
 șa 1 1
-șină 3 1 1 4
+șină 4 1 2 2 5
 ț 1 1
 ți 2 2 3

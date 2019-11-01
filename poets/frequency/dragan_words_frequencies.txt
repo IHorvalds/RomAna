@@ -1,0 +1,287 @@
+7 117447
+acela 1 1
+adevăr 1 1
+adulmeca 1 1
+aer 1 1
+afla 1 2
+ai 1 2
+ajunge 1 1
+al 3 1 3 5
+alb 7 2 2 2 2 2 2 2
+alerga 2 1 2
+alt 1 2
+alunecind 7 1 1 1 1 1 1 1
+an 1 1
+apel 1 1
+apoi 1 1
+ar 2 1 3
+arbor 7 1 1 1 1 1 1 2
+aripă 7 1 1 1 1 1 2 2
+armă 1 1
+as 1 1
+atent 1 1
+atmosferă 1 2
+au 2 1 1
+auzi 3 1 1 1
+avar 1 1
+avea 2 2 4
+azi 1 1
+bicicletă 1 2
+boare 1 1
+bozie 1 1
+brad 1 1
+bretea 1 1
+ca 7 1 1 2 2 2 4 4
+cald 7 1 1 1 1 1 1 1
+cală 1 1
+capră 1 1
+car 4 1 1 1 1
+ce 1 1
+ceas 7 2 2 2 2 2 2 2
+ceată 7 1 1 1 1 1 1 1
+ceață 7 1 1 1 1 1 1 1
+cer 7 1 1 1 1 1 1 1
+cetiniș 7 1 1 1 1 1 1 1
+ceva 2 1 2
+chema 1 1
+chizbuita 1 1
+cină 2 1 1
+cocoș 1 1
+coif 1 1
+colț 1 1
+cometă 1 1
+contră 1 1
+copac 7 1 1 1 1 1 1 1
+cosmic 2 1 2
+cu 7 2 2 3 3 4 4 6
+cucurigu 1 1
+culm 7 1 1 1 1 1 1 1
+cum 2 1 1
+cuvânt 1 1
+cuțit 1 1
+când 7 5 5 5 5 5 5 6
+cât 1 1
+cădea 2 1 3
+călca 1 1
+către 1 1
+da 1 1
+darnic 1 1
+de 7 3 4 4 5 5 6 7
+deasupra 1 1
+decât 2 1 1
+del 1 1
+dens 7 1 1 1 1 1 1 1
+departe 1 1
+deschide 1 1
+descrie 1 1
+din 7 2 2 2 2 2 2 3
+dincolo 1 1
+direcție 1 1
+distant 1 1
+doar 3 1 1 1
+doborî 1 1
+dor 7 2 2 2 2 2 2 3
+drept 1 1
+duce 1 1
+după 1 2
+ei 1 1
+el 7 2 2 3 3 6 7 9
+eră 2 1 2
+eu 3 2 4 9
+exista 1 1
+face 2 1 1
+femeie 1 1
+fenomen 1 1
+ferm 1 1
+fi 7 2 3 3 4 5 5 8
+fix 1 1
+floare 1 2
+foșnet 7 1 1 1 1 1 1 1
+frig 1 1
+frunte 1 1
+frunză 1 1
+fumega 7 1 1 1 1 1 1 1
+galinacee 1 1
+genune 7 1 1 1 1 1 1 1
+glas 1 1
+gras 1 1
+gresie 1 1
+găta 1 2
+hohot 1 1
+hotar 1 1
+hun 1 1
+iar 7 1 1 1 1 1 1 1
+ieși 7 1 1 1 1 1 1 1
+impresie 1 1
+in 1 1
+inimă 2 1 1
+interesa 1 1
+interior 1 1
+intersecție 1 1
+interzice 1 1
+intra 1 1
+jos 1 1
+la 4 1 1 1 3
+lactee 1 1
+lance 1 1
+larg 7 1 1 1 1 1 1 1
+lemn 7 1 1 1 1 1 1 1
+liniște 1 2
+livid 1 1
+lovi 7 1 1 1 1 1 1 3
+lua 1 1
+lună 7 1 1 1 1 1 1 1
+lup 1 1
+luptă 1 1
+m 1 2
+macaroană 1 2
+mai 5 1 1 1 2 2
+mană 1 1
+mare 1 1
+medieval 1 1
+meteorit 1 1
+meterez 1 1
+meu 1 2
+mintă 1 1
+mult 1 1
+munte 7 2 2 2 2 2 2 2
+mușchi 7 1 1 1 1 1 1 1
+măgar 1 1
+mărgea 1 1
+mărunt 1 1
+mărșălui 1 1
+nervură 7 1 1 1 1 1 1 1
+nevăzut 1 1
+nici 2 1 1
+nicăieri 2 1 2
+nimeni 1 1
+niște 2 1 1
+nostru 1 1
+nu 6 1 1 1 3 3 4
+număra 1 1
+oaie 1 1
+oală 1 3
+obraz 1 1
+ochi 1 1
+palmă 7 1 1 1 1 1 1 1
+pană 1 2
+par 1 1
+parcă 1 1
+patron 1 1
+paște 1 1
+pe 7 1 1 1 1 1 1 5
+pentru 2 2 2
+pestă 7 3 3 3 3 3 4 6
+piatră 1 1
+picior 1 1
+pioneză 1 1
+pisc 7 1 1 1 1 1 1 1
+ploaie 7 2 2 2 2 2 2 3
+ploua 7 1 1 1 1 1 1 1
+pluton 1 1
+poiană 7 1 1 1 1 1 1 1
+prelinge 7 1 1 1 1 1 1 1
+prin 7 1 1 1 1 1 1 1
+printre 7 2 2 2 2 2 2 3
+prăbuși 1 1
+pune 1 2
+putea 3 1 1 2
+pădure 7 1 1 1 1 1 1 1
+pălămidă 1 1
+părea 1 1
+pătrunde 7 1 1 1 1 1 1 1
+păși 7 1 1 1 1 1 1 1
+rad 1 1
+ram 7 1 1 1 1 1 1 1
+rebel 1 1
+rece 1 1
+regelmentara 1 1
+roată 7 1 1 1 1 1 1 1
+romantic 1 1
+roșcat 7 1 1 1 1 1 1 1
+rugină 1 2
+rupe 2 1 1
+rână 1 2
+răspunde 1 2
+răsuci 1 1
+răsuna 7 1 1 1 1 1 1 1
+război 1 1
+satelit 1 1
+scutura 2 1 1
+scăpăta 1 1
+semn 1 1
+sens 1 1
+sentiment 2 1 1
+si 7 7 7 8 8 10 10 13
+siguranță 1 1
+singurătate 7 1 1 1 1 1 1 1
+somn 1 1
+soț 1 1
+speranță 1 1
+spune 1 1
+sta 7 2 2 2 2 2 3 4
+strajă 1 1
+stâng 1 1
+suflet 7 1 1 1 1 1 1 2
+suna 7 1 1 1 1 1 2 4
+supă 1 3
+sus 1 1
+să 4 1 2 2 3
+sălbatec 1 2
+său 2 1 1
+tinichea 1 1
+tină 1 1
+tot 7 1 1 1 1 1 1 2
+trage 1 1
+trang 1 1
+treaz 1 1
+trebui 1 1
+treizeci 1 1
+trozneau 1 1
+tu 2 3 6
+tulipă 1 1
+tun 1 1
+tânăr 1 1
+tăia 1 1
+ud 1 1
+uita 1 1
+umbră 7 1 1 1 1 1 1 2
+umăr 1 2
+un 7 3 3 3 3 3 3 6
+usca 2 1 1
+ușor 7 1 1 1 1 1 1 1
+variabil 1 1
+vară 1 1
+vecin 1 1
+vedea 1 1
+veni 7 1 1 1 1 1 2 2
+venă 1 1
+vid 1 1
+vită 1 1
+vreasc 1 1
+vulpe 7 1 1 1 1 1 1 1
+vultur 7 1 1 1 1 1 1 2
+vâna 7 2 2 2 2 2 2 2
+za 1 1
+zbura 1 1
+zi 1 1
+zid 1 1
+în 7 2 3 3 4 4 4 7
+încinge 1 1
+încuraja 1 1
+încă 1 1
+îndrăzneală 1 1
+înflori 1 1
+înfășura 1 1
+înger 1 1
+înseta 7 1 1 1 1 1 1 1
+înstela 7 1 1 1 1 1 1 1
+întinde 7 1 1 1 1 1 1 1
+întoarce 1 1
+întra 1 1
+întreba 1 1
+înșela 1 1
+șină 7 1 1 2 2 2 3 3
+ști 1 1
+ți 1 3
+țintă 1 1

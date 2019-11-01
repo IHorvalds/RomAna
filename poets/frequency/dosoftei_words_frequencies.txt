@@ -1,17 +1,20 @@
-5 108953
+5 128553
 adevăra 2 1 1
 adins 1 1
 aduce 1 2
 agiutoriu 1 1
 ai 3 1 2 2
 al 3 1 2 6
-alb 1 1
+alb 5 2 2 2 2 3
 alerga 1 1
+alunecind 5 1 1 1 1 1
 antonie 1 2
 apleca 1 1
 ar 1 1
 ara 3 1 1 2
+arbor 5 1 1 1 1 1
 arde 1 1
+aripă 5 1 1 1 1 1
 armă 1 1
 arăta 1 1
 as 1 1
@@ -30,27 +33,34 @@ bun 4 1 1 2 3
 bunătate 1 3
 buză 1 1
 buăr 1 1
-ca 1 2
+ca 5 1 1 1 1 3
+cald 5 1 1 1 1 1
 cală 1 1
 cap 1 1
 ce 5 1 1 2 2 7
 cea 2 1 2
-ceas 1 1
+ceas 5 2 2 2 2 3
+ceată 5 1 1 1 1 1
+ceață 5 1 1 1 1 1
 cel 3 1 1 2
 cela 2 1 1
+cer 5 1 1 1 1 1
 cetate 1 1
+cetiniș 5 1 1 1 1 1
 chip 1 1
 cinste 1 1
 cină 1 1
 coarnă 1 1
 colac 1 1
+copac 5 1 1 1 1 1
 cruce 1 1
-cu 3 3 3 14
+cu 5 2 2 5 5 16
+culm 5 1 1 1 1 1
 curatasti 1 1
 curateste 1 1
 cură 1 1
 cuvânt 1 1
-când 1 1
+când 5 5 5 5 5 6
 cânta 1 1
 cât 2 1 1
 că 5 1 1 1 3 3
@@ -58,36 +68,41 @@ căi 1 1
 cătră 3 1 1 3
 da 2 1 4
 dar 1 1
-de 5 2 3 4 5 24
+de 5 5 6 7 8 27
 decât 1 1
 denainte 1 1
+dens 5 1 1 1 1 1
 depreună 1 1
 depărta 1 1
 dereptatea 1 1
 deschide 1 1
 destrăma 1 1
-din 2 1 1
+din 5 2 2 2 3 3
 dirept 1 3
 doamnă 1 8
 domn 3 1 1 5
+dor 5 2 2 2 2 2
 duce 1 1
 ducă 1 1
 duh 1 3
 dulce 1 2
 dumnezaiesc 1 1
 dumnezău 3 1 2 2
-el 5 1 1 4 5 11
+el 5 3 3 6 7 13
 eu 2 3 20
 face 3 1 1 7
 fală 1 1
 ferinti 1 1
-fi 3 1 2 7
+fi 5 2 2 3 4 9
+foșnet 5 1 1 1 1 1
 frataie 1 1
 fratasca 1 1
 frânge 1 1
 fugă 1 1
+fumega 5 1 1 1 1 1
 fâță 1 2
 fără 2 1 3
+genune 5 1 1 1 1 1
 giudeț 1 1
 greață 2 1 1
 gresele 1 1
@@ -102,9 +117,11 @@ hs 1 2
 ia 1 1
 iacute 1 1
 iacă 1 1
+iar 5 1 1 1 1 1
 ieftinătate 1 1
 ierta 1 1
 ierusalim 1 1
+ieși 5 1 1 1 1 1
 im 1 2
 inemă 1 2
 ioan 1 2
@@ -114,13 +131,16 @@ jartvele 1 1
 jărtvă 1 2
 la 3 2 3 4
 lance 1 1
+larg 5 1 1 1 1 1
 lega 1 2
-lemn 1 2
+lemn 5 1 1 1 1 3
 limbă 1 1
 limpede 1 1
 loc 1 1
+lovi 5 1 1 1 1 1
 lucra 1 1
 lume 2 1 1
+lună 5 1 1 1 1 1
 lăcui 1 1
 m 1 4
 mai 2 1 1
@@ -136,11 +156,14 @@ milostiv 1 2
 milă 2 1 1
 mișel 1 1
 mulțămi 1 1
+munte 5 2 2 2 2 2
+mușchi 5 1 1 1 1 1
 mângâia 1 1
 mântuință 1 2
 mărturie 1 1
 naval 1 1
 ndireapta 1 1
+nervură 5 1 1 1 1 1
 nesmintit 1 1
 ni 1 1
 nu 1 6
@@ -155,30 +178,46 @@ onisifor 1 1
 onisifore 1 1
 os 1 1
 pace 4 1 1 1 1
+palmă 5 1 1 1 1 1
 par 1 1
 part 1 1
 paște 1 1
+pe 5 1 1 1 1 1
 pentru 2 1 5
+pestă 5 3 3 3 3 3
+pisc 5 1 1 1 1 1
 place 2 1 2
 plat 1 1
 pleaci 1 1
+ploaie 5 2 2 2 2 2
+ploua 5 1 1 1 1 1
 pofti 1 1
+poiană 5 1 1 1 1 1
 portal 1 1
 pot 1 1
 pre 4 3 4 4 6
 preacuvios 2 1 1
 pregiur 1 1
-prin 2 1 1
+prelinge 5 1 1 1 1 1
+prin 5 1 1 1 2 2
 prinos 1 1
+printre 5 2 2 2 2 2
 putea 1 1
 pâine 1 1
 păcat 1 1
+pădure 5 1 1 1 1 1
 pământ 2 1 1
 pănă 1 1
+pătrunde 5 1 1 1 1 1
+păși 5 1 1 1 1 1
 pășune 1 1
+ram 5 1 1 1 1 1
 roadă 1 1
+roată 5 1 1 1 1 1
 rost 1 1
+roșcat 5 1 1 1 1 1
 rugă 1 1
+răsuna 5 1 1 1 1 1
 răuplatnic 1 2
 răutate 1 2
 samneadza 1 1
@@ -187,9 +226,9 @@ scaldă 1 1
 scoate 1 1
 scripasca 1 1
 scund 1 1
-sf 1 3
-sfânt 1 1
-si 4 1 2 3 10
+sfânt 1 4
+si 5 7 8 9 10 17
+singurătate 5 1 1 1 1 1
 sion 1 1
 slav 1 1
 slugă 1 1
@@ -199,13 +238,14 @@ spodobita 1 1
 sprijineală 1 1
 spune 1 1
 spăla 1 2
-sta 2 1 1
+sta 5 2 2 2 3 3
 stih 1 5
 strigă 1 1
 strungă 1 1
 strâmbătate 1 1
 strânge 1 1
-suflet 1 1
+suflet 5 1 1 1 1 2
+suna 5 1 1 1 1 1
 svinte 1 2
 svânt 2 1 1
 svânta 3 1 1 5
@@ -219,7 +259,7 @@ taină 1 1
 tală 1 2
 tară 2 1 1
 toati 1 1
-tot 2 2 4
+tot 5 1 1 1 3 5
 tu 1 6
 turmă 1 1
 turn 1 1
@@ -228,12 +268,15 @@ tăia 1 1
 tău 1 1
 uacute 1 1
 ucide 1 2
+umbră 5 1 1 1 1 1
+un 5 3 3 3 3 3
 unt 1 1
 urmă 1 1
 urni 1 1
+ușor 5 1 1 1 1 1
 veac 2 1 1
 veda 2 1 1
-veni 1 1
+veni 5 1 1 1 1 2
 vestă 1 1
 veșcă 3 1 1 1
 viață 2 1 2
@@ -243,7 +286,9 @@ vitai 1 1
 vitejasca 1 1
 vrea 2 1 5
 vreme 1 1
-xcntul 1 3
+vulpe 5 1 1 1 1 1
+vultur 5 1 1 1 1 1
+vâna 5 2 2 2 2 2
 zasa 1 1
 zdrobi 1 1
 zgău 1 1
@@ -251,11 +296,14 @@ zidi 2 1 1
 zidiuri 1 1
 zămisli 1 1
 împreuna 1 1
-în 4 1 3 3 4
+în 5 2 3 5 5 6
 înainte 2 1 1
 înalt 1 1
 închina 1 1
 înfrânge 1 1
+înseta 5 1 1 1 1 1
+înstela 5 1 1 1 1 1
+întinde 5 1 1 1 1 1
 întoarce 1 2
 întra 2 1 2
 învinci 1 1
@@ -264,6 +312,7 @@ zămisli 1 1
 înșelăciune 1 1
 înțelepciune 1 1
 șa 1 1
+șină 5 1 1 1 1 1
 șterge 1 1
 ști 1 1
 știț 1 1
