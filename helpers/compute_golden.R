@@ -1,6 +1,33 @@
 library(ineq)
 library(hash)
 
+get_ps = function(poet) {
+    table <- hash()
+    
+    inFile = paste("poets/gini/", poet, "_ginis.txt", sep="")
+    con = file(inFile, "r");
+
+    max = 0
+    while (TRUE) {
+        line = readLines(con, n = 1);
+        if (length(line) == 0)
+            break;
+        elems = strsplit(line, " ")[[1]]
+        word = elems[1]
+        distr = as.double(elems[2])
+        table[[word]] <- (1 - distr);
+        if ((1 - distr) > max)
+            max = 1 - distr
+    }
+    
+    # Normalize them to the maximum
+    for (word in keys(table))
+        table[[word]] = table[[word]] / max
+    
+    close(con)
+    return(table)
+}
+
 get_devs = function(poet) {
     table <- hash()
     
@@ -46,6 +73,7 @@ get_distr = function(distribution_type) {
     inFile = paste("poets/words_distribution_", distribution_type, ".txt", sep="")
     con = file(inFile, "r");
     
+    max = 0
     while (TRUE) {
         line = readLines(con, n = 1);
         if (length(line) == 0)
@@ -54,7 +82,15 @@ get_distr = function(distribution_type) {
         word = elems[1]
         distr = as.double(elems[2])
         table[[word]] <- distr;
+        if (distr > max)
+            max = distr;
     }
+    
+    if (distribution_type == "gini") {
+        for (word in keys(table))
+            table[[word]] = table[[word]] / max
+    }
+    
     close(con)
     return(table)
 }
@@ -79,6 +115,7 @@ golden_poet = function(poet) {
     giniDistr = get_distr("gini")
     idfDistr = get_distr("idf")
     devDistr = get_devs(poet)
+    predDistr = get_ps(poet)
     normDevDistr = get_norm_devs(poet)
     
     # Read all the other lines
@@ -96,7 +133,12 @@ golden_poet = function(poet) {
         dev_based = devDistr[[word]] * currFreq
         norm_dev_based = normDevDistr[[word]] * currFreq
         
-        mixed_based = devDistr[[word]] * sqrt(idfDistr[[word]]) * currFreq
+        mixed_based = 1 / (exp(1 / (1 - (1 - predDistr[[word]]) ^ 2)) * exp(1 / (1 - (1 - giniDistr[[word]]) ^ 0.5)))
+        
+        
+        # 1 / (log(1 / (1 - (1 - predDistr[[word]]) ^ (1 / 3))) * log(1 / (1 - (1 - giniDistr[[word]]) ^ (1 / 3)))) * sqrt(currFreq)
+        
+        # print(paste(word, predDistr[[word]], giniDistr[[word]], mixed_based, sep = " "))
         
         write(paste(word, gini_based, sep=" "), output_gini_based, append=TRUE)
         write(paste(word, idf_based, sep=" "), output_idf_based, append=TRUE)

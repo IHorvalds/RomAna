@@ -6,7 +6,6 @@ ginify_poet = function(poet) {
     firstLine = readLines(con, n = 1);
     param = strsplit(firstLine, " ")[[1]]
     
-    
     output <- file(paste("poets/gini/", poet, "_ginis.txt", sep=""), "w")
     write(firstLine, output)
     
