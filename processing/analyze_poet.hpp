@@ -123,7 +123,7 @@ class PoetAnalyzer {
   }
   
   void saveFrequencies() {
-    std::string filename = "poets/local/frequencies/" + poet + "_words_frequencies.txt";
+    std::string filename = "poets/local/frequencies/" + poet + "_local_frequencies.txt";
     std::ofstream out(filename);
     
     // Parse all his/her poems
@@ -139,8 +139,14 @@ class PoetAnalyzer {
       word = [word] count = [number of poems the words appears in] [list of pair(absolute frequency, index of poem)]
     **/
     
+    // Print the first 2 lines
     out << countPoems << " " << countWords << "\n";
-    for (auto iter: wordToFreqs) {
+    for (auto e : sizeOfPoems)
+        out << e << " ";
+    out << "\n";
+    
+    // And the rest
+    for (auto iter : wordToFreqs) {
       std::string word = iter.first;
       std::vector<std::pair<uint32_t, uint32_t>> freqs = iter.second;
 
