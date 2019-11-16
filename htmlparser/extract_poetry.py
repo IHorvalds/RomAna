@@ -22,6 +22,13 @@ def applyDiacritics(text):
     text = text.replace("\\xde", "Ţ")
     return text
 
+def erase(text, begin, end):
+    # Erase the portion of text, which is between "begin" and "end"
+    posBegin = text.find(begin)
+    posEnd = text.find(end, posBegin)
+    toReplace = text[posBegin:posEnd]
+    return text.replace(toReplace, "")
+
 def keepOnlyPoetry(text):
     # The utf-8 decoded file has some problems. First solve them
     text = applyDiacritics(text)
@@ -46,6 +53,10 @@ def keepOnlyPoetry(text):
     
     # Clean any brClauses
     text = text.replace(brClause, "")
+
+    # Clean up the "Your browser doesn't support audio" sentences
+    text = erase(text, "<audio", "</audio>")
+    text = erase(text, "<i>", "</i>")
 
     # Continue with a thread-based algorithm
     # How many opened "<" are currenly in the text
