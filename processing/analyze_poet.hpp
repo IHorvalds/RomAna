@@ -101,6 +101,7 @@ class PoetAnalyzer {
         wordToFreqs[word].push_back(std::make_pair(currFreq, countPoems - 1));
       }
     }
+    std::cout << "[100%]: " << this->poet << " is finished" << std::endl;
   }
 
   public:
@@ -131,18 +132,14 @@ class PoetAnalyzer {
     
     /** Save in the file "poet_words_frequencies.txt"
       The encoding is:
-      
-      On the first line of the file: countPoems = [how many poems the poet has] countWords = [how many words in his entire work]
-      
-      On the second line of the file: sizeOfPoems = [size of each poem]
-      
+      On the first line of the file: [countPoems] [sizeOfEachPoem]
       word = [word] count = [number of poems the words appears in] [list of pair(absolute frequency, index of poem)]
     **/
     
     // Print the first 2 lines
-    out << countPoems << " " << countWords << "\n";
+    out << countPoems;
     for (auto e : sizeOfPoems)
-        out << e << " ";
+        out << " " << e;
     out << "\n";
     
     // And the rest

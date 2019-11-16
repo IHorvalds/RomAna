@@ -25,6 +25,8 @@ def applyDiacritics(text):
 def keepOnlyPoetry(text):
     # The utf-8 decoded file has some problems. First solve them
     text = applyDiacritics(text)
+
+    print(text)
     
     ## Observation: the poetry is delimitated by the first <br> 
     # and the next "<font" or the next "<hr"
@@ -32,30 +34,21 @@ def keepOnlyPoetry(text):
     # Find the first <br>. From that point begins the poetry
     brClause = "<br>"
     text = text[(text.find(brClause) + len(brClause)):]
-    
-    # Find the next <fond>. At that point ends the poetry
-    fontClause = "<font"
-    fontPos = text.find(fontClause)
-    
+        
     # Find the next <hr>. At that point ends the poetry
-    hrClause = "<hr";
+    hrClause = "<hr color";
     hrPos = text.find(hrClause)
-    
-    lastPos = -1
-    if fontPos == -1:
-        lastPos = hrPos
-    elif hrPos == -1:
-        lastPos = fondPos
-    else:
-        lastPos = min(fontPos, hrPos)
-    
+
+    # Set the last position of the text    
+    lastPos = hrPos
+
     # Cut if any variant was found
     if lastPos != -1:
         text = text[:lastPos]
     
     # Clean any brClauses
     text = text.replace(brClause, "")
-    
+
     # Continue with a thread-based algorithm
     # How many opened "<" are currenly in the text
     countWriters = 0
