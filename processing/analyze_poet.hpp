@@ -126,7 +126,7 @@ class PoetAnalyzer {
   }
   
   void saveFrequencies() {
-    std::string filename = "poets/local/frequencies/" + poet + "_local_frequencies.txt";
+    std::string filename = "poets/local/frequency/" + poet + "_local_frequencies.txt";
     std::ofstream out(filename);
     
     // Parse all his/her poems

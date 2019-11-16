@@ -7,7 +7,7 @@
 #include "processing/trie.cpp"
 #include "processing/parserOltean.hpp"
 #include "processing/analyze_poet.hpp"
-#include "processing/gen_gini.hpp"
+#include "processing/compute_local_ginis.hpp"
 
 using namespace std;
 
@@ -121,7 +121,7 @@ int main(int argc, char** argv) {
     case ANALYZE_POET : {
       errorArgs(ANALYZE_POET, argc, 3);
       
-      // Compute the frequencies of each word
+      // Compute the local frequencies of each word
       std::string poetName = argv[2];  
       PoetAnalyzer analyzer(poetName);
       analyzer.saveFrequencies();
@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
     case GINIFY_POET : {
       errorArgs(GINIFY_POET, argc, 3);
       
-      // Ginify the poet, i.e, compute the gini coefficient for each word
+      // Ginify the poet, i.e, compute the local ginis
       std::string poetName = argv[2];
       authorGini gini(poetName);
       gini.save();
