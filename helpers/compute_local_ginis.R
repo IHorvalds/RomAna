@@ -55,8 +55,9 @@ ginify_poet = function(poet) {
 
 main <- function(argv)
 {
-    options(warn=1)
-    ginify_poet(argv[1])
+    options(warn = 1)
+    poet <- argv[1]
+    ginify_poet(poet)
     return (0);
 }
 

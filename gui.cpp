@@ -7,7 +7,7 @@
 #include "processing/trie.cpp"
 #include "processing/parserOltean.hpp"
 #include "processing/analyze_poet.hpp"
-#include "processing/compute_local_ginis.hpp"
+#include "processing/util.hpp"
 
 using namespace std;
 
@@ -132,7 +132,7 @@ int main(int argc, char** argv) {
       
       // Ginify the poet, i.e, compute the local ginis
       std::string poetName = argv[2];
-      authorGini gini(poetName);
+      LocalGiniGenerator gini(poetName);
       gini.save();
       break;
     }
@@ -141,7 +141,7 @@ int main(int argc, char** argv) {
       
       // Ginify the poet, i.e, compute the gini coefficient for each word
       std::string poetName = argv[2];
-      authorGolden golden(poetName);
+      GoldenGenerator golden(poetName);
       golden.save();
       break;
     }
