@@ -42,7 +42,6 @@ public:
     input.seekg(0, input.end);
     fileSize = input.tellg();
     input.seekg(0, input.beg);
-    std::cerr << fileSize << std::endl;
   }
   
   char getByte() {
