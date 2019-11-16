@@ -1,0 +1,358 @@
+9 58 39 133 101 80 83 50 104 112
+absent 1 1 4
+absurd 1 1 5
+acest 3 1 4 1 5 1 7
+acesta 1 1 6
+acoperi 1 1 5
+adevăr 1 1 4
+adinc 1 1 8
+adincii 1 1 3
+afară 1 1 8
+afla 1 1 4
+agat 1 1 2
+aici 1 1 5
+ajuta 1 1 5
+al 4 1 3 1 7 2 8 4 5
+albastru 1 1 0
+albină 1 1 7
+amarnic 1 1 6
+amuletă 1 1 5
+anunța 1 1 3
+apleca 1 1 5
+apoi 1 1 7
+aporie 1 2 3
+aproape 2 1 6 1 7
+apă 1 1 8
+ara 1 1 5
+arbor 1 1 7
+arc 1 1 8
+arde 2 1 2 1 4
+armie 1 1 3
+arăta 2 1 3 1 4
+as 1 2 1
+ascunde 1 1 3
+atent 1 1 1
+atinge 1 1 1
+au 3 1 3 1 6 1 7
+aur 1 1 7
+auzi 1 1 0
+azvirlitura 1 1 6
+așa 1 1 0
+aștepta 1 1 7
+baga 1 1 8
+bea 1 1 3
+beu 1 1 2
+bioinstalatii 1 1 3
+birocrat 1 1 3
+boală 1 1 8
+buimac 1 1 5
+buză 1 1 7
+bât 1 1 6
+bărdacă 1 1 2
+ca 8 1 1 1 5 2 0 2 2 2 3 2 8 3 4 7 7
+caldarim 1 1 5
+calm 1 1 8
+candelabru 1 1 7
+captiv 1 1 0
+car 5 1 1 1 3 1 8 2 5 3 7
+castană 1 1 5
+ce 3 1 3 2 5 2 6
+cel 1 3 0
+cer 2 1 2 3 4
+chema 1 1 0
+chiar 2 1 3 1 4
+chilie 1 1 3
+chip 1 1 8
+ci 1 1 8
+ciini 1 1 2
+ciinii 1 1 2
+cinabru 1 1 7
+cinzeacă 1 1 2
+cină 2 1 0 1 6
+cireadă 1 1 7
+clepsidră 1 1 8
+clinic 1 2 7
+cloroform 1 1 2
+coapsă 1 1 8
+cob 1 1 5
+cocleală 1 1 3
+coliliu 1 1 3
+colină 1 1 7
+comoară 1 1 7
+compilație 1 1 3
+condamnat 1 1 4
+contur 1 1 2
+copac 1 1 8
+copilă 1 1 0
+cosaș 1 1 1
+cotieră 1 1 3
+credincios 1 1 4
+crește 1 1 0
+cu 6 1 1 1 7 1 8 2 2 2 4 2 6
+culoar 2 1 3 1 7
+cum 2 1 2 3 0
+cuminte 2 1 6 1 8
+când 3 1 2 1 3 1 6
+că 1 1 7
+cădea 1 1 4
+da 2 1 6 5 2
+dar 3 1 0 1 2 1 4
+de 7 1 6 2 5 2 8 3 3 3 4 3 7 4 2
+deci 3 1 1 1 5 1 8
+decorație 1 1 3
+degeaba 1 1 4
+deget 2 1 2 1 7
+des 1 1 3
+desfrinata 1 1 0
+dezbrăca 1 1 8
+din 4 1 1 3 3 5 2 5 8
+dinlăuntru 1 1 6
+dinte 1 1 6
+dintru 1 1 0
+doamnă 1 5 2
+doar 3 1 2 1 3 1 8
+doi 2 1 2 1 8
+domnișoară 1 1 8
+dormi 1 1 2
+drac 1 1 8
+drept 1 1 0
+drum 2 1 5 1 7
+dudui 1 1 6
+dumneata 2 1 1 1 4
+dumnezeu 1 1 0
+dușcă 1 1 2
+ei 1 1 1
+el 9 1 0 1 1 1 6 1 8 2 3 4 4 4 5 6 7 8 2
+elitră 1 1 7
+eu 7 1 0 1 8 2 3 2 4 2 6 3 5 7 2
+face 3 1 4 1 5 2 2
+fată 1 1 4
+femeie 1 1 0
+fi 6 2 2 2 4 2 6 3 1 3 8 5 7
+fintina 1 1 2
+fistichiu 1 1 3
+floare 1 1 5
+foc 1 2 2
+foșni 1 1 8
+frate 1 1 3
+fremăta 1 1 7
+frig 1 1 8
+frumos 1 1 6
+frunză 2 1 7 1 8
+fugă 1 1 0
+furiș 1 1 7
+fâță 1 1 0
+galben 2 1 8 2 7
+gard 1 1 2
+gardenie 1 1 5
+gaură 1 1 4
+geană 1 1 5
+genunche 1 1 5
+gitul 1 1 4
+grația 2 1 3 1 5
+greu 1 1 7
+grăbi 1 1 5
+gură 2 1 2 1 6
+gând 1 1 4
+haiku 1 1 4
+hain 1 1 2
+harfă 1 1 5
+hifi 1 4 8
+iarbă 1 1 1
+iată 1 1 4
+ieși 2 1 6 1 8
+infatua 1 1 3
+inflație 1 1 3
+inimă 1 1 3
+intra 1 4 8
+iubi 1 1 5
+iț 1 2 4
+jaguar 1 1 2
+jur 1 1 2
+la 3 1 0 1 5 1 6
+lacrimă 1 1 8
+lapte 1 1 2
+lehuză 1 1 7
+limpede 1 1 8
+linge 1 1 4
+litruta 1 1 2
+loc 1 1 5
+lovi 1 1 6
+lumină 1 1 3
+luneca 1 1 1
+lung 1 1 5
+m 1 1 2
+mai 3 1 4 1 6 2 3
+maninca 1 1 7
+mare 1 2 0
+mască 1 1 8
+mat 1 1 4
+maternitate 1 1 7
+merge 1 1 3
+meu 2 1 0 1 3
+mină 2 1 8 2 1
+mireasmă 1 1 1
+miros 1 1 2
+moarte 1 1 3
+monedă 1 1 7
+mortuar 1 1 8
+muribund 1 1 5
+muscă 2 1 2 1 8
+nașparliu 1 1 2
+nimeni 1 1 6
+nimic 1 1 5
+ninge 1 1 8
+nisip 1 1 8
+noapte 2 1 5 2 2
+nu 6 1 0 1 1 1 5 1 6 1 8 3 2
+numai 2 1 6 1 8
+nur 1 1 3
+oară 1 1 4
+ochi 2 1 5 2 0
+odată 1 1 6
+off 1 1 2
+oglindă 1 1 0
+opri 1 1 5
+os 1 1 5
+par 1 1 3
+parcă 2 1 0 1 7
+parfuma 1 1 4
+pas 1 1 5
+pe 5 1 8 2 3 3 0 3 5 4 7
+pentru 1 2 2
+perste 1 1 7
+pesinele 1 1 8
+pestă 2 1 7 2 8
+piele 1 1 8
+piept 2 1 0 1 3
+pikamerul 1 1 4
+pină 1 1 3
+pivnicer 1 1 2
+pleca 1 1 6
+ploaie 2 1 3 1 7
+poem 1 1 6
+portret 1 1 6
+prea 1 1 1
+precum 2 1 1 1 8
+pretutindeni 1 1 4
+prezent 1 2 4
+prin 3 1 0 1 4 1 6
+prizonier 1 1 4
+pudic 1 1 3
+pun 1 1 5
+pune 1 1 5
+pupilă 1 1 0
+pămint 1 1 7
+păr 1 1 4
+părinte 1 1 3
+rachiu 1 1 2
+rai 2 1 6 1 7
+regină 1 1 8
+roadă 1 1 3
+rotocol 1 1 8
+roză 1 1 3
+rădăcină 1 1 4
+rămâne 1 1 8
+saturnalia 1 1 5
+schit 1 1 3
+sclipi 2 1 4 1 5
+scrie 1 1 6
+scurge 1 1 8
+scurt 1 2 4
+sepie 1 1 5
+septembrie 1 8 7
+si 9 1 2 1 7 2 0 2 1 2 6 3 5 4 3 4 4 8 8
+sigur 2 1 5 1 7
+siguranță 1 1 5
+simți 1 1 7
+sin 1 1 2
+sinucigaș 1 1 1
+sinț 2 1 4 1 8
+sistolic 1 1 5
+somn 1 1 8
+sta 1 1 2
+stapina 1 1 1
+stimă 1 1 8
+stinge 1 1 7
+subsire 1 1 8
+subțire 1 1 1
+sufla 1 1 5
+suflet 1 1 3
+surpa 2 1 7 1 8
+sânt 1 1 2
+să 5 1 0 1 5 2 3 3 6 16 2
+săbia 1 1 4
+săra 1 1 2
+său 3 1 0 1 2 1 6
+ta 2 1 2 1 8
+tainic 1 1 5
+tală 2 1 5 1 8
+tină 1 2 0
+toamnă 1 1 7
+tocmai 1 1 0
+tot 1 1 6
+totuși 1 2 4
+tragic 1 1 5
+trece 1 1 5
+trei 2 1 0 1 4
+tremura 2 1 2 1 5
+trup 1 1 3
+trăda 1 1 1
+tu 5 2 4 3 0 3 1 3 3 4 8
+tuciuriu 1 1 2
+turbă 1 1 2
+tăcea 1 2 2
+tărie 2 1 2 1 3
+tău 1 1 5
+ui 1 1 2
+umil 1 1 3
+un 5 1 3 2 2 2 7 3 4 4 8
+undui 1 1 2
+urca 1 1 2
+uzurpa 1 1 3
+vad 1 1 2
+var 1 1 2
+veda 1 2 5
+veni 5 1 2 1 3 2 1 2 4 2 6
+viață 2 1 3 1 7
+vilcele 1 1 7
+vint 2 1 4 1 5
+vioară 1 1 7
+vis 1 1 8
+viteaz 1 1 0
+vopsi 1 1 7
+vrea 4 1 1 1 2 2 3 6 8
+vulpe 2 1 3 1 7
+vâna 1 1 3
+zbor 1 1 8
+zdreanță 1 1 5
+zeu 1 1 2
+zidi 2 1 0 1 4
+zugrav 1 1 8
+zăpadă 1 1 8
+îmbia 1 1 3
+îmbiba 1 1 2
+îmbăta 1 1 2
+în 9 1 1 1 4 1 6 2 0 3 5 4 2 5 7 5 8 6 3
+începe 1 1 7
+încet 1 1 7
+închisoare 1 1 4
+încolona 1 1 3
+îneca 1 1 3
+înger 4 1 2 1 3 1 5 1 8
+însemna 1 1 4
+întinde 1 1 8
+întoarce 1 1 7
+întra 2 1 7 1 8
+întrupa 1 1 8
+întuneric 1 1 5
+ăst 2 1 2 1 4
+șevalet 1 1 7
+șină 4 1 4 1 6 4 7 5 3
+șterge 2 1 3 1 7
+ști 2 1 0 1 1
+ți 2 1 2 2 3
+țigan 1 1 7
+ține 2 1 0 1 1
+țoi 1 1 2
+țărm 1 1 3

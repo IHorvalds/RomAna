@@ -1,0 +1,134 @@
+3 101 74 39
+adânc 1 1 2
+afla 2 1 0 1 2
+al 2 2 1 3 0
+alb 1 1 0
+alt 1 2 1
+altul 1 1 1
+apoi 1 1 0
+ar 1 1 1
+arunca 1 1 1
+as 1 1 1
+atât 2 1 0 1 1
+așa 1 1 0
+ca 1 1 1
+capricorn 1 1 0
+car 1 1 1
+catarg 1 1 0
+categoric 1 1 2
+ce 2 1 1 2 2
+cer 1 1 0
+clătina 1 1 0
+constelație 1 1 0
+corabie 1 2 0
+corăbia 1 1 0
+croi 1 1 1
+cu 2 1 0 4 2
+cum 1 1 0
+câine 1 3 1
+cât 1 1 1
+dac 1 1 1
+de 3 2 2 4 1 5 0
+deasupra 1 1 0
+din 2 2 1 3 0
+dormi 1 2 2
+drept 1 1 2
+el 2 4 0 5 1
+elegant 1 1 0
+eternitate 1 1 0
+eu 1 1 1
+exclama 1 1 2
+fi 3 1 0 2 2 4 1
+fin 1 1 0
+fregată 1 1 0
+fâță 1 1 2
+genunche 1 1 2
+gingaș 1 1 2
+grădină 1 1 0
+gură 1 1 2
+gălbui 1 1 1
+iarnă 1 1 0
+important 1 1 1
+la 2 1 0 1 2
+legăna 1 1 0
+lipi 1 1 1
+lume 1 2 0
+lumină 1 2 0
+luneca 1 1 0
+m 1 1 1
+mai 1 1 0
+mare 2 1 1 2 0
+mereu 1 1 0
+meu 1 1 1
+miră 1 1 1
+moarte 1 1 2
+mult 1 1 0
+mumă 1 1 2
+munte 1 1 0
+nici 2 1 1 2 0
+nicicând 1 1 0
+noapte 1 1 0
+nou 1 1 0
+nu 1 2 0
+numai 1 1 1
+ocean 1 1 0
+octombrie 1 1 0
+om 1 1 1
+or 1 1 2
+oraș 1 1 1
+orion 1 2 0
+pajiște 1 1 0
+parcă 1 1 1
+part 1 2 1
+pe 2 1 0 2 1
+pestă 1 3 0
+piele 1 1 1
+platină 1 1 0
+pleca 1 1 0
+plin 1 1 1
+primăvară 1 1 0
+privi 1 1 1
+prunc 1 1 2
+pumn 1 1 2
+pur 1 1 0
+purta 1 1 1
+pântec 1 1 2
+pădure 1 1 0
+pământ 1 1 2
+rege 1 1 0
+rigid 1 1 2
+rătăci 1 1 1
+semn 1 2 2
+septentrion 1 1 0
+servietă 1 2 1
+si 2 3 1 5 0
+spaimă 1 1 1
+stradă 1 1 1
+strânge 1 1 2
+străbate 1 1 0
+străluc 1 1 0
+stăpân 1 1 0
+sud 1 1 0
+sus 1 1 2
+său 1 1 0
+toamnă 1 1 0
+tot 2 1 0 1 1
+trece 1 2 1
+trup 1 1 2
+uimi 1 1 0
+un 1 2 1
+urca 1 1 0
+vad 1 1 0
+vreme 1 1 0
+vreodată 1 1 0
+vârf 1 1 0
+zid 1 1 1
+în 3 2 0 3 1 3 2
+înalt 1 1 0
+îngheța 1 1 0
+întoarce 1 2 0
+întra 1 2 1
+întreba 1 1 2
+înverzi 1 1 0
+înțelege 1 1 1
+șină 1 2 0

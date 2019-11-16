@@ -1,0 +1,76 @@
+2 49 49
+ac 1 1 0
+acela 1 2 0
+acest 1 1 0
+acum 2 1 0 1 1
+adăoga 1 1 0
+aicea 1 1 1
+al 1 1 0
+au 1 1 0
+avea 1 1 1
+basarabesc 1 1 0
+ca 1 1 0
+ce 1 2 1
+cel 1 1 1
+cela 1 1 1
+cerceta 1 1 1
+cest 2 1 0 2 1
+corb 1 2 0
+cu 2 2 0 2 1
+că 1 1 0
+da 1 1 0
+de 1 1 1
+den 1 1 0
+ei 1 1 0
+el 2 1 1 2 0
+eu 1 2 1
+feric 1 1 0
+fi 2 1 1 2 0
+fără 1 1 1
+greși 1 1 1
+ierta 1 1 1
+ispravă 1 1 0
+jețiu 1 1 0
+la 1 1 0
+laudă 1 1 0
+lut 1 1 1
+lăuda 1 1 1
+mare 1 2 0
+mathei 1 1 1
+mormânt 1 1 1
+neam 1 1 0
+nu 1 1 1
+numai 1 1 1
+oarecând 1 1 1
+om 1 1 0
+pecete 1 2 0
+pentru 1 1 1
+petreace 1 1 1
+piept 1 1 0
+poartă 1 1 0
+poci 1 1 1
+prea 1 1 1
+pururea 1 1 1
+pământ 1 1 1
+reace 1 1 1
+rugă 1 1 1
+scut 1 1 0
+semn 1 1 0
+semna 1 1 0
+suflet 1 1 1
+să 2 1 0 2 1
+teară 1 1 0
+toiag 1 1 0
+tot 2 1 0 2 1
+tu 1 2 1
+un 1 1 0
+vază 1 1 0
+veni 1 1 1
+zăcea 1 2 1
+împresura 1 1 1
+în 1 1 1
+întra 1 1 0
+întuneca 1 1 1
+îî 2 1 0 1 1
+ședea 1 1 0
+șină 1 1 0

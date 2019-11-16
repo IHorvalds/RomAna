@@ -1,0 +1,1024 @@
+20 101 318 103 107 107 120 109 111 102 107 105 118 97 110 113 109 104 54 459 566
+abia 1 1 18
+acel 2 1 8 1 19
+acela 1 1 1
+acest 1 1 19
+acolo 2 1 12 1 13
+acoperi 1 1 4
+acum 1 1 19
+ades 2 1 1 1 11
+adesea 1 1 4
+adia 1 1 15
+adormi 3 1 0 1 1 1 12
+aduce 1 1 19
+adumbri 1 1 18
+adânc 7 1 1 1 10 1 12 1 14 1 16 1 18 1 19
+adâncime 1 1 2
+adăposti 1 1 18
+adăsta 1 1 19
+afară 3 1 6 1 18 1 19
+afla 2 1 11 1 18
+aga 1 1 5
+ager 1 1 16
+ai 5 1 4 1 13 2 14 2 18 10 1
+aievea 2 1 18 1 19
+ajunge 1 1 16
+al 13 2 0 2 7 2 15 2 16 2 17 3 11 4 4 4 6 5 13 6 14 6 18 9 1 11 19
+alb 2 1 3 1 11
+albastru 1 1 19
+alenă 1 1 9
+alina 1 1 19
+alt 1 1 19
+altar 1 1 1
+altmintreli 1 1 18
+altul 1 1 7
+altădată 2 1 18 1 19
+alătura 1 1 19
+amar 6 1 1 1 13 1 14 1 16 1 18 1 19
+amarnic 1 1 8
+amenința 1 1 3
+aminti 7 1 1 1 3 1 4 1 7 1 8 1 14 1 19
+amurg 3 1 0 1 1 1 19
+amândoi 2 1 3 1 18
+amăgi 3 1 1 1 13 1 19
+an 4 1 1 1 4 1 6 2 8
+antereu 1 1 11
+apoi 3 1 1 1 11 1 18
+aprig 4 1 3 1 15 1 18 1 19
+aprinde 3 1 0 1 1 1 17
+apune 4 1 1 1 13 1 15 1 19
+apă 3 1 10 1 13 1 19
+apăsător 1 1 19
+ar 1 1 14
+ara 2 1 5 1 6
+arc 1 1 9
+arde 5 1 2 1 6 1 15 1 18 3 1
+argint 1 1 19
+aripă 1 1 18
+armaș 1 1 5
+armă 1 1 7
+aromeală 1 1 11
+arăta 2 1 2 2 19
+asculta 2 1 0 1 18
+ascunde 6 1 5 1 12 1 13 1 15 1 16 1 18
+asfinți 1 1 10
+aspru 2 1 1 1 19
+astăzi 3 1 1 1 16 1 19
+asupritor 1 1 8
+asurzitor 1 1 1
+atinge 2 1 18 1 19
+atotputernicie 1 1 16
+atunci 6 1 0 1 1 1 4 1 8 1 18 1 19
+atât 2 1 1 2 19
+au 6 1 2 1 6 1 7 1 16 2 17 2 18
+auri 1 1 2
+avea 3 1 4 3 19 5 18
+avuție 1 1 1
+avânt 1 1 1
+avânta 2 1 2 1 19
+azi 2 1 5 1 10
+azimă 1 1 18
+așa 5 1 6 1 7 1 16 1 18 1 19
+așeza 2 1 0 1 19
+aștepta 3 1 3 1 5 1 13
+așterne 1 1 18
+aținti 2 1 16 1 19
+ațipi 2 1 13 1 19
+barbar 1 1 1
+barbă 3 1 3 1 5 1 12
+basaraba 1 1 5
+batjocoră 1 1 8
+bea 1 1 7
+beat 2 1 1 1 11
+becisnic 1 1 11
+beznă 3 1 3 1 17 2 18
+beție 1 1 1
+bine 1 1 18
+blajin 1 1 7
+blană 1 1 11
+blestem 3 1 6 1 18 1 19
+blestema 1 1 3
+blând 3 1 8 1 10 2 18
+blândețe 1 1 19
+blăstăma 1 1 5
+boaltă 1 1 4
+boare 2 1 15 1 19
+bogat 2 1 1 1 5
+boi 1 1 18
+boier 3 1 5 1 11 1 12
+bolborosi 1 1 11
+bondoc 1 1 11
+braț 1 1 11
+brăzda 1 1 16
+buciuma 1 1 1
+bun 2 1 7 1 18
+buric 1 1 11
+butcă 1 1 11
+buză 1 1 17
+bârfi 1 1 5
+bărbăție 1 1 19
+bătrân 7 1 0 1 1 1 5 1 6 1 7 1 8 1 10
+ca 12 1 0 1 1 1 3 1 8 1 10 1 12 1 14 1 16 1 19 2 7 2 9 2 18
+cadă 1 1 14
+cal 1 1 3
+cald 1 1 18
+cală 1 1 19
+candelii 1 1 6
+candelă 1 1 15
+cap 2 1 5 1 6
+car 5 1 8 1 15 1 18 2 1 2 13
+carpate 1 1 1
+cartă 1 1 8
+cazande 1 1 1
+ce 14 1 6 1 9 1 11 1 12 1 13 2 0 2 2 2 10 2 14 3 15 3 16 8 1 12 18 15 19
+cea 3 1 1 1 12 1 18
+ceardac 1 1 12
+ceară 1 1 9
+ceată 3 1 0 1 14 1 18
+cel 3 1 14 1 16 1 19
+cenușă 2 1 1 1 10
+cer 4 1 2 1 15 2 1 2 19
+cere 1 1 13
+ceresc 2 1 0 1 18
+cerne 5 1 2 1 6 1 8 1 10 1 18
+cetate 4 1 0 1 1 1 2 1 15
+ceva 1 1 19
+chema 1 1 19
+chiar 3 1 16 1 18 1 19
+chilie 1 1 8
+chin 1 1 3
+chinui 2 1 14 1 18
+chip 4 1 8 1 13 1 19 2 18
+ci 1 1 18
+cină 1 1 9
+ciorchine 1 1 12
+cislăr 1 1 5
+ciudat 2 1 18 1 19
+clipă 4 1 10 1 13 1 18 1 19
+cobe 1 1 18
+cocon 1 1 3
+codru 2 1 2 1 18
+colină 2 1 12 1 15
+corb 2 1 1 1 10
+crede 1 1 19
+credință 1 2 19
+crește 1 1 11
+creștin 1 1 7
+cronicar 1 1 7
+crud 2 1 5 1 19
+crunt 3 1 2 1 4 1 18
+cu 16 1 0 1 3 1 4 1 6 2 2 2 7 2 9 2 14 2 16 4 5 4 8 4 12 4 18 5 13 6 1 9 19
+cuceritor 1 1 2
+cucă 2 1 12 1 18
+cuget 2 1 7 1 19
+cuib 1 1 18
+culege 1 1 14
+culm 2 1 1 1 5
+culă 1 1 12
+cum 6 1 2 1 10 2 1 2 18 2 19 3 3
+cumplit 5 1 1 1 3 1 6 1 16 1 18
+cunoaște 1 2 19
+cunună 3 1 1 1 7 1 12
+cuprinde 2 1 12 2 1
+curge 2 1 3 1 9
+curte 3 1 4 1 7 1 12
+cură 1 1 19
+cutezător 1 1 19
+cută 1 1 16
+cuvios 1 1 5
+când 14 1 0 1 3 1 4 1 6 1 7 1 8 1 11 1 13 1 14 2 1 2 5 3 10 3 18 5 19
+cânta 1 1 15
+cântec 1 1 7
+cârn 1 1 6
+cârti 1 1 19
+cât 2 1 16 2 19
+câș 1 1 14
+câștiga 1 1 1
+că 5 1 1 1 13 1 16 3 17 4 19
+căci 4 1 0 1 4 1 10 1 19
+cădea 5 1 1 1 4 1 8 1 10 1 15
+căi 2 1 7 1 19
+căință 1 1 19
+călare 2 1 1 1 2
+călător 1 3 18
+călăuz 1 1 19
+căta 2 1 2 1 9
+către 2 1 2 1 12
+cătușă 1 1 19
+da 3 1 1 1 6 1 11
+dac 4 1 1 1 7 1 14 2 19
+dantelă 1 1 17
+dar 15 1 0 1 3 1 7 1 8 1 9 1 10 1 11 1 13 1 16 2 1 2 4 2 5 2 6 2 19 3 18
+darnic 1 1 7
+dator 1 2 18
+de 20 1 13 2 17 2 6 2 14 3 15 4 2 4 3 4 7 4 12 4 11 5 9 5 16 6 10 6 8 6 0 7 5 7 4 12 1 14 18 19 19
+deasupra 1 1 1
+deci 1 1 19
+decât 1 1 19
+deget 1 1 13
+deodată 1 1 3
+deopotrivă 1 1 19
+departe 2 1 8 1 18
+depăna 1 1 8
+depărta 2 1 10 1 19
+des 2 1 7 1 11
+desfăta 1 1 1
+despleti 1 1 12
+despoia 1 1 5
+desprinde 1 1 10
+dezamăgi 1 1 16
+dezgust 1 1 19
+dezrobi 1 1 19
+deșert 2 1 14 1 19
+deșerta 1 1 7
+deștept 2 1 0 1 18
+deștepta 2 1 11 1 19
+dimineață 1 1 19
+din 11 1 0 1 1 1 2 1 3 1 4 1 6 1 11 2 5 2 18 4 10 5 19
+dinte 1 1 5
+disprețui 1 1 19
+doamnă 1 1 4
+doar 1 1 19
+domn 2 1 1 1 11
+domnesc 1 1 18
+domnie 3 1 5 1 7 2 8
+domniță 4 1 3 1 8 1 10 1 12
+dor 7 1 1 1 9 1 10 1 13 1 14 1 18 1 19
+dormi 5 1 10 1 15 1 19 2 18 6 17
+dosnic 1 1 8
+dospi 1 1 11
+dregător 1 1 16
+drept 3 1 3 1 5 1 18
+drum 2 1 14 1 19
+drăcesc 1 1 16
+duce 3 1 7 1 11 1 19
+duh 1 1 16
+duios 2 1 9 1 18
+dulce 3 1 9 1 17 1 18
+după 1 1 8
+dur 1 1 5
+durea 3 1 6 1 14 1 19
+dânsul 3 1 7 1 18 1 19
+ei 4 1 6 1 13 1 14 1 19
+el 19 2 13 3 0 3 14 3 4 3 10 5 8 5 12 6 3 7 2 8 11 8 5 8 16 9 9 10 7 11 6 12 1 12 18 12 15 20 19
+eu 8 1 0 1 2 1 17 3 1 3 15 5 4 17 18 23 19
+face 3 1 1 1 18 1 19
+faimă 2 1 7 1 16
+falfaiesc 1 1 15
+falnic 2 1 2 1 4
+fapt 1 1 10
+farmec 1 1 18
+feri 1 1 8
+feric 2 1 13 1 19
+fericita 1 1 4
+fermanul 1 1 5
+fi 13 1 4 1 14 2 7 2 9 2 13 2 16 4 1 4 6 6 15 8 5 8 11 11 19 13 18
+fier 1 1 1
+fierbe 1 1 18
+ființă 1 1 19
+filă 1 1 0
+fior 1 1 13
+fir 3 1 7 1 9 1 12
+firav 1 1 16
+flacără 2 1 0 1 1
+floare 8 1 1 1 9 1 10 1 13 1 14 1 15 1 17 1 19
+fluid 1 1 19
+foc 1 1 19
+foișor 1 1 10
+freamăt 1 1 0
+frică 1 1 11
+frumos 2 1 4 1 19
+frumusețe 1 1 18
+frunte 2 1 13 1 14
+frunziș 1 1 19
+frunză 2 1 10 1 12
+frânge 2 1 6 1 12
+frământa 1 1 19
+frățește 1 1 18
+fugar 1 1 19
+fugă 2 1 1 1 3
+fulgera 1 2 18
+fund 1 1 15
+furie 1 1 18
+furtună 2 1 1 3 18
+fântână 1 1 19
+fâță 3 1 9 1 11 1 16
+făclie 1 1 17
+făr 1 1 11
+fără 5 1 4 1 6 1 16 2 19 3 18
+fățarnic 1 1 5
+galben 1 1 9
+galeș 1 1 9
+geană 2 1 9 1 18
+gem 1 1 19
+gemă 2 1 6 1 18
+gemăt 1 1 0
+genune 1 1 0
+gheară 2 1 2 1 16
+glas 1 1 19
+glie 1 1 1
+gloată 1 1 1
+goană 1 1 2
+gol 1 1 1
+goni 2 1 1 1 19
+grai 2 1 9 1 18
+grav 1 1 19
+grea 1 1 18
+grecește 1 1 11
+greu 5 1 6 1 9 1 12 1 17 1 19
+grigore 1 1 18
+grijă 2 1 5 1 16
+groaznic 1 1 6
+groază 3 1 15 1 16 1 18
+gros 1 1 19
+grădină 2 1 13 1 19
+gură 3 1 5 1 11 1 13
+gând 5 1 3 1 8 1 14 1 17 1 19
+gândi 1 1 19
+găsi 1 1 18
+găta 1 1 18
+hai 1 1 18
+hain 5 1 3 1 4 1 6 1 18 1 19
+hanger 2 1 4 1 11
+harap 1 1 5
+horbot 1 1 9
+hrăpi 1 1 5
+huli 1 1 8
+hârcă 1 1 1
+hărăzi 1 1 7
+ia 2 1 18 1 19
+iar 7 1 6 1 8 1 14 1 16 2 13 2 18 3 19
+iarbă 1 1 12
+iaz 1 1 12
+iederă 2 1 12 1 15
+ierta 1 1 18
+iezer 1 1 5
+incomand 1 1 1
+inel 1 1 17
+inimă 2 1 1 1 4
+iscusi 1 1 16
+ispită 2 1 9 1 19
+ispăși 1 1 18
+istovi 1 1 14
+iubi 3 1 1 1 7 2 19
+ivi 1 1 19
+izbândă 1 1 1
+izvod 2 1 4 1 8
+ișlic 1 1 11
+iț 1 1 1
+jale 4 1 4 1 15 1 16 1 18
+jar 1 1 0
+jefui 1 1 1
+jertfi 1 1 19
+jivină 1 1 1
+joacă 1 1 11
+jupui 1 1 6
+jur 2 1 2 1 15
+jura 1 1 5
+la 8 1 0 1 5 1 11 1 13 1 14 2 1 2 19 6 18
+lacrimă 2 1 4 1 19
+lanț 1 1 3
+laș 1 1 19
+lega 2 1 18 2 19
+legăna 3 1 9 1 11 1 19
+lespede 1 1 18
+leș 1 1 2
+liber 1 1 19
+liliac 1 1 15
+lin 6 1 7 1 8 1 9 1 10 1 18 1 19
+liniște 3 1 10 1 18 1 19
+loc 1 1 19
+locuință 1 1 18
+luciu 2 1 12 1 13
+lume 3 1 4 1 16 1 18
+lumină 2 1 1 1 6
+lung 2 1 12 1 13
+lună 1 1 13
+luptă 4 1 1 1 3 1 5 1 6
+luptător 1 1 2
+lângă 2 1 5 1 19
+lăcrăma 1 1 18
+lăsa 2 1 14 1 19
+m 2 1 4 1 19
+mai 8 1 1 1 4 1 5 1 8 1 13 2 10 2 18 10 19
+mal 1 1 3
+manea 1 1 11
+mantă 2 1 12 1 18
+mare 4 1 0 1 7 1 15 1 16
+margine 1 1 19
+mei 1 1 4
+melancolie 1 1 19
+mereu 2 1 7 1 19
+merge 3 1 0 1 9 2 18
+metanie 1 1 11
+meu 2 2 4 3 19
+mic 2 1 5 1 11
+miere 2 1 18 1 19
+milui 1 1 7
+milă 1 1 4
+mintă 2 1 16 1 19
+minune 1 1 18
+mireasmă 2 1 14 1 15
+mistic 1 1 19
+mișca 4 1 8 1 9 1 12 1 18
+moare 1 1 9
+moarte 6 1 2 1 3 1 4 1 10 1 11 1 17
+mohorî 4 1 1 1 8 1 13 1 18
+molatec 1 1 9
+molcom 2 1 18 1 19
+mor 1 1 19
+mormânt 6 1 1 1 7 1 10 1 14 1 15 1 19
+mort 1 1 15
+mugi 1 1 1
+muia 3 1 8 1 9 1 15
+mult 7 1 1 1 5 1 6 1 10 1 16 1 18 3 19
+mulțime 1 1 7
+muncă 1 1 4
+mur 1 1 10
+murmur 1 1 19
+mustră 1 1 19
+mut 2 1 13 1 19
+mușca 1 1 17
+mușchi 2 1 12 1 15
+mândru 5 1 0 1 3 1 4 1 12 1 19
+mângâia 3 1 11 1 14 1 19
+mânia 1 1 18
+mână 7 1 1 1 7 1 8 1 9 1 11 1 17 2 3
+măcel 1 1 1
+măiestri 1 1 8
+mănăstire 3 1 4 1 5 1 18
+măreț 4 1 1 1 4 1 9 1 19
+mărinimos 1 1 7
+mărturisi 1 1 19
+măscară 1 1 11
+neam 2 1 5 1 6
+nedeslușit 1 1 19
+negri 1 1 18
+negru 10 1 0 1 1 1 6 1 9 1 10 1 12 1 14 1 15 1 18 1 19
+negură 2 1 1 1 18
+nelegiuire 1 1 18
+nemulțumi 1 1 6
+nenumărat 1 1 1
+nepăsare 1 1 19
+nepăsător 1 1 14
+nesfârșit 2 1 18 1 19
+nesimțit 1 1 19
+nestimat 1 1 9
+neted 1 1 19
+netulburat 2 1 17 1 19
+neîmpăcat 1 1 1
+neîndurat 1 1 1
+neînțeles 1 1 19
+nici 4 1 6 1 7 1 17 3 18
+nimeni 2 1 7 1 19
+nimic 2 2 6 2 19
+nisip 1 1 19
+noapte 5 1 0 1 6 1 14 2 19 4 18
+nobil 1 1 18
+noian 1 1 19
+nor 5 1 0 1 1 1 2 1 13 1 18
+norod 1 1 5
+noroi 1 1 3
+nostalgic 1 1 19
+nu 13 1 0 1 1 1 3 1 4 1 5 1 15 2 7 2 12 3 6 3 10 4 14 10 19 11 18
+numai 1 1 11
+nume 2 1 1 1 18
+nădejde 1 2 19
+nădăjdui 1 1 19
+năframă 1 1 9
+nălucă 3 1 3 1 13 1 19
+năprasnic 2 1 6 1 18
+năpădi 2 1 15 1 18
+nărămziu 1 1 9
+năvăli 1 1 1
+oară 1 1 18
+oaste 1 1 4
+obosi 1 1 0
+ochi 4 1 6 1 8 1 9 1 13
+odată 2 1 4 1 11
+odihnă 1 2 18
+odinioară 1 1 10
+odoare 1 1 2
+ofili 2 1 13 1 16
+oglindi 3 1 4 1 15 1 18
+oglindă 4 1 10 1 13 1 16 1 19
+om 1 1 18
+omenesc 1 1 19
+oploși 1 1 18
+opri 3 1 3 1 14 1 18
+orb 1 1 18
+orice 1 1 8
+oricât 1 1 14
+os 2 1 1 1 11
+ospăta 2 1 7 1 18
+ostrov 1 1 12
+osândi 1 1 18
+pace 2 1 18 1 19
+pajere 1 1 0
+pal 2 1 3 1 15
+palmă 1 1 19
+paloș 1 1 18
+pană 2 1 8 1 12
+papă 1 1 18
+par 5 1 0 1 1 1 2 1 12 1 15
+parc 1 1 19
+parcă 1 1 10
+part 1 1 18
+pas 1 1 18
+pasă 1 1 19
+pasăre 1 1 18
+patimă 5 1 8 1 14 1 16 1 18 1 19
+pe 13 1 5 1 16 2 2 2 3 2 8 2 9 2 11 3 1 3 15 4 7 4 12 4 19 5 18
+peltic 1 1 11
+pestă 4 1 10 1 14 1 16 2 6
+petrece 1 1 7
+pia 1 1 19
+piatră 1 1 15
+piept 3 1 1 1 7 1 19
+pierde 5 1 1 1 9 1 14 1 18 1 19
+pieri 5 1 1 1 3 1 6 1 13 1 19
+platoșă 1 1 3
+pleca 2 1 14 2 18
+pleoapă 1 1 17
+pletos 2 1 1 1 2
+plin 5 1 3 1 5 1 8 1 9 1 10
+pluti 1 1 19
+plânge 8 1 1 1 6 1 7 1 13 1 14 1 15 1 18 1 19
+plăpând 1 1 3
+poartă 4 1 2 1 9 1 11 1 16
+pogorî 2 1 6 1 18
+popor 1 1 7
+porni 2 1 19 2 18
+posac 2 1 1 1 10
+posti 1 1 5
+pot 1 3 18
+potir 1 1 9
+poveste 3 1 0 1 1 1 19
+pradă 4 1 1 1 2 1 14 1 19
+prag 2 1 0 1 14
+precum 2 1 1 1 19
+preget 1 1 6
+pregeta 1 1 18
+pribeag 1 1 19
+pricepe 1 1 18
+prigoni 1 1 13
+prim 2 1 18 1 19
+primejdie 1 1 18
+prin 4 1 14 2 3 3 19 4 18
+prinde 1 1 5
+printre 1 1 8
+pripă 1 1 18
+privi 8 1 0 1 1 1 3 1 10 1 12 1 16 2 18 2 19
+prostește 1 1 11
+prunc 1 1 2
+prăbuși 2 1 0 1 4
+psaltire 1 1 5
+puf 1 1 11
+pui 1 1 18
+purcede 1 1 4
+purpură 3 1 0 1 1 1 2
+purta 3 1 12 1 14 2 18
+pustietate 1 1 15
+putea 4 1 1 1 6 1 19 2 18
+puternic 1 1 10
+putred 2 1 5 1 11
+pușcă 3 1 4 1 12 1 19
+pândi 2 1 1 1 18
+pângări 1 1 1
+pânză 1 1 16
+până 1 1 19
+pâr 1 1 5
+pârgui 1 1 1
+păcat 1 1 18
+pădure 3 1 1 1 3 1 18
+păgân 4 1 3 1 4 1 19 2 1
+păli 1 1 17
+pământ 2 1 0 1 1
+pământesc 1 1 19
+păr 1 1 9
+părinte 2 1 4 1 7
+părtini 1 1 8
+părăsi 4 1 10 1 12 1 14 1 18
+păstra 1 1 7
+pătimaș 1 1 9
+pătimi 1 1 6
+pătrunde 1 1 13
+păși 2 1 9 1 19
+raclă 2 1 7 1 18
+radă 1 1 8
+rană 5 1 3 1 4 1 8 1 9 1 17
+rar 1 1 15
+rece 4 1 1 1 14 1 17 1 18
+reda 1 1 19
+regesc 1 1 1
+regăsi 1 1 19
+renaște 1 1 19
+respinge 2 1 14 1 19
+restriște 2 1 8 1 15
+revărsa 1 1 9
+ridica 1 1 19
+roabă 2 1 1 1 2
+roadă 1 1 9
+roată 1 1 10
+robi 1 1 3
+robie 1 1 19
+roș 1 1 1
+rudă 1 1 5
+rug 3 1 0 1 1 1 2
+rugă 2 1 4 1 19
+ruină 5 1 4 1 10 1 12 1 15 1 18
+rună 1 1 1
+rusalie 1 1 5
+râde 2 1 1 1 11
+rând 1 1 8
+rânjitor 3 1 1 1 2 1 13
+râpă 1 1 3
+râvni 1 1 7
+rămâne 3 1 14 1 19 2 18
+răpi 2 1 1 1 3
+răscoli 1 1 6
+răsfăța 1 1 9
+răspunde 2 1 19 2 18
+răstigni 2 1 2 1 16
+răsări 6 1 8 1 10 1 13 1 14 1 19 2 1
+rătăci 1 1 18
+rătăcitor 1 1 18
+răzbuna 2 1 6 1 19
+răzgâia 1 1 11
+răzvrăti 2 1 0 1 19
+salcă 1 1 12
+sapă 1 1 5
+sașiu 1 1 11
+scaldă 1 1 1
+schelă 1 1 2
+schit 1 1 10
+scrie 1 1 8
+scump 1 1 19
+scânteia 1 1 6
+scăpa 1 1 19
+seamă 2 1 11 1 19
+searbedele 1 1 13
+searbăd 2 1 18 1 19
+seară 5 1 0 1 1 1 10 1 14 1 15
+sec 1 1 19
+selbă 1 1 18
+semeț 3 1 5 1 18 1 19
+semeție 1 1 19
+seminție 2 1 1 1 19
+semănător 1 1 16
+senin 4 1 4 1 7 1 10 1 19
+seninătate 1 1 19
+setă 2 1 5 1 18
+sfios 2 1 14 1 18
+sfânt 4 1 1 1 4 1 18 1 19
+sfârși 2 1 4 1 19
+sfâșietor 1 1 18
+sfărâmă 1 1 1
+si 19 1 15 1 13 2 17 2 4 2 14 2 12 2 8 2 10 3 2 5 9 5 7 5 6 5 3 5 16 5 1 6 11 7 5 10 18 15 19
+sihăstrie 1 1 18
+simț 1 1 19
+simți 1 1 3
+singur 3 1 13 2 18 2 19
+singurătate 2 1 15 2 19
+sireap 1 1 1
+slav 4 1 1 1 16 1 18 1 19
+smeri 1 1 16
+smulge 3 1 3 1 5 1 18
+soare 2 1 1 1 10
+soartă 4 1 4 1 8 1 13 1 18
+somn 2 1 18 3 17
+sorb 1 1 14
+soț 1 1 6
+spaimă 1 1 18
+spelb 2 1 9 1 19
+spijele 1 1 1
+spinos 1 1 14
+spinteca 1 1 2
+spre 5 1 1 1 3 1 10 1 14 4 19
+sprinceană 1 1 9
+spulbera 4 1 4 1 15 1 19 2 1
+spune 1 1 18
+spătar 1 1 5
+sta 7 1 0 1 7 1 11 1 14 1 16 2 5 2 18
+stambul 1 1 5
+stejar 2 1 0 1 18
+stemă 1 1 10
+sterp 2 1 15 1 19
+stinge 4 1 13 1 15 1 16 1 19
+stingher 1 1 6
+stol 2 1 0 1 6
+strajă 1 1 15
+strană 1 1 5
+streasini 1 1 12
+strâmb 2 1 5 1 11
+strâmtoare 2 1 1 1 2
+strânge 1 1 1
+străbun 1 1 0
+străin 5 1 7 1 8 1 11 1 19 3 18
+străluc 2 1 0 1 1
+strămoșesc 1 1 0
+străveziu 2 1 9 1 19
+stâlp 1 1 12
+stâncă 1 1 15
+stâng 1 1 5
+stârni 1 1 1
+stăpân 1 1 18
+stăpâni 1 1 12
+stăpână 2 1 0 2 1
+stărui 1 1 18
+sub 7 1 0 1 2 1 4 1 9 1 16 2 18 2 19
+subțire 1 1 9
+suflet 5 1 0 1 1 1 6 2 19 3 15
+suliță 1 1 2
+sumbru 3 1 1 1 18 1 19
+suna 1 1 18
+supune 1 1 1
+sur 1 1 5
+surguci 1 1 12
+surlă 1 1 1
+surpa 1 1 12
+sus 2 1 14 2 19
+suspina 1 1 18
+sută 1 1 6
+sân 2 1 1 1 2
+sânge 4 1 3 1 9 1 15 2 1
+sângera 3 1 4 1 8 1 19
+să 12 1 0 1 2 1 4 1 5 1 8 1 10 1 13 1 14 2 11 3 1 6 19 8 18
+săbia 1 1 6
+săgeta 3 1 1 1 2 1 9
+sălbatic 4 1 1 1 3 1 18 1 19
+sălbătăci 1 1 12
+săpa 2 1 1 1 18
+sărman 2 1 4 1 11
+săruta 1 1 17
+său 1 2 16
+ta 3 1 14 2 18 3 1
+tainic 6 1 1 1 7 1 8 1 15 1 18 1 19
+taină 5 1 0 1 10 1 13 1 14 1 18
+tară 1 1 16
+teamă 1 1 18
+tei 1 1 19
+tel 1 2 18
+tigvă 1 1 2
+timp 1 1 19
+tindă 1 1 19
+tinerețe 3 1 9 1 13 1 19
+tină 1 1 18
+toamnă 1 1 1
+toarce 1 1 7
+tocmai 1 1 5
+tolăni 1 1 11
+tot 6 1 9 2 1 2 7 2 18 3 6 3 19
+totuși 2 1 18 1 19
+trandafir 2 1 1 1 9
+trece 6 1 1 1 3 1 6 1 14 1 19 3 18
+tremura 3 1 8 1 12 1 18
+tremurător 1 1 19
+treptat 2 1 16 1 19
+tresălta 3 1 0 1 13 1 19
+trezi 1 1 1
+trist 5 1 8 1 10 1 14 1 15 1 19
+tristețe 2 1 9 1 18
+troianele 1 1 0
+troienescc 1 1 10
+trudă 2 1 16 1 18
+trufaș 2 1 9 1 18
+trufie 3 1 1 1 14 2 19
+trup 2 1 2 1 4
+trândav 1 1 11
+trântor 1 1 11
+trăda 3 1 1 1 2 1 19
+trăi 3 1 7 1 16 1 19
+tu 6 1 0 4 14 5 1 5 13 8 19 14 18
+tulbura 2 1 9 1 13
+turbura 1 1 19
+turbă 2 1 1 1 3
+turlă 1 1 1
+turn 3 1 0 1 15 1 18
+tâmplă 1 1 19
+tânji 1 1 9
+tânăr 1 1 11
+târziu 2 1 14 1 19
+tăcea 2 1 12 3 19
+tăia 3 1 3 1 5 1 6
+tăinui 1 1 12
+tămâia 1 1 16
+tău 3 1 14 1 18 2 1
+ucide 1 1 5
+ucigător 1 1 1
+uita 9 1 1 1 4 1 7 1 10 1 12 1 14 1 15 1 17 1 19
+ulm 2 1 7 1 10
+umbri 1 1 0
+umbros 2 1 10 1 19
+umbră 6 1 1 1 8 1 13 1 14 1 18 1 19
+umilință 1 1 19
+un 11 1 0 1 2 1 5 1 10 1 19 2 1 2 3 2 7 2 9 2 18 3 15
+undă 4 1 3 1 15 2 13 2 19
+unelti 1 1 16
+urdie 2 1 2 1 4
+urgie 1 1 18
+urgisi 1 1 4
+uriaș 2 1 0 1 2
+urla 3 1 2 1 6 2 1
+urmaș 1 1 11
+urmă 2 1 18 2 19
+urs 1 1 4
+ursuz 1 1 13
+urî 1 1 11
+ură 2 1 6 1 13
+usca 1 1 4
+ușor 2 1 10 1 19
+ușă 1 1 8
+vai 1 1 18
+vaier 1 1 18
+vajnic 1 1 3
+val 1 1 3
+vale 3 1 3 1 10 1 14
+vatră 1 1 18
+veac 6 1 7 1 8 1 12 1 16 1 18 1 19
+vechi 3 1 15 1 19 2 18
+vecie 1 1 18
+vedea 2 1 1 1 18
+vedenie 1 1 0
+veghe 2 1 6 1 15
+veni 4 1 1 1 6 1 19 3 18
+venin 2 1 6 1 8
+verde 3 1 9 1 12 1 15
+veselie 2 1 1 1 5
+veșmânt 2 1 1 1 9
+veșnic 3 1 11 1 15 1 17
+veșted 1 1 13
+viață 3 1 4 1 7 1 19
+viclean 3 1 9 1 12 1 13
+vier 1 1 1
+vifor 1 1 3
+vigelie 1 1 18
+viitor 1 1 8
+vijelie 1 1 1
+vis 3 1 4 1 17 1 18
+visa 5 1 7 1 12 1 13 1 15 1 19
+viteaz 1 1 5
+vită 2 1 11 1 12
+voie 1 1 19
+voievod 3 1 3 1 4 1 5
+voios 1 1 7
+voluptate 1 1 19
+vrajă 3 1 0 1 10 1 12
+vrea 4 1 14 1 19 2 13 5 18
+vreme 3 1 1 1 18 1 19
+vutcă 1 1 11
+vâltoare 1 1 1
+vâlvoare 1 1 0
+vâna 4 1 1 1 4 1 7 1 10
+vânt 5 1 0 1 1 1 6 1 15 1 18
+vânătoare 1 1 2
+vârf 1 1 2
+văl 1 1 0
+văpaie 1 1 6
+văpăi 2 1 1 1 10
+văzduh 3 1 3 1 10 1 13
+za 1 1 2
+zadar 3 1 13 1 16 1 19
+zadarnic 1 1 14
+zară 7 1 0 1 2 1 3 1 8 1 18 2 19 3 1
+zbat 1 1 2
+zbor 1 1 10
+zbura 2 1 1 1 3
+zdreanță 1 1 4
+zdrobi 2 1 1 1 2
+zeu 1 1 2
+zgomot 1 1 8
+zgripțor 1 1 0
+zgudui 1 1 1
+zguduitor 1 1 19
+zi 3 1 8 1 18 1 19
+zice 2 1 5 1 18
+zid 1 1 15
+zidi 1 1 4
+zidărie 1 1 12
+zimbru 2 1 1 1 2
+zori 2 1 1 1 13
+zvâcni 1 1 4
+zâmbet 1 1 16
+zâmbi 3 1 10 1 12 1 13
+zăbranic 1 1 19
+zăcea 3 1 0 1 3 1 12
+zădărnicie 1 1 19
+zăvoi 1 1 10
+zăvorî 1 1 8
+îmbelșuga 1 1 7
+îmbia 1 1 18
+îmbina 1 1 9
+îmblânzi 1 1 6
+îmbălsăma 4 1 0 1 10 1 17 1 19
+împila 1 1 6
+împinge 1 1 18
+împleti 2 1 12 1 19
+împodobi 1 1 12
+împotriva 1 1 19
+împovăra 1 1 4
+împurpura 2 1 10 1 19
+împăca 1 1 2
+împăra 1 1 11
+împărăți 1 1 1
+împărți 1 1 18
+în 20 2 16 2 6 3 4 3 7 3 12 4 3 4 5 4 14 5 17 5 8 5 15 6 1 6 13 6 11 6 10 6 9 6 2 7 0 17 18 24 19
+înainte 2 1 14 2 18
+înalt 5 1 1 1 9 1 10 1 12 1 19
+înapoi 1 1 3
+începe 1 2 19
+încerca 1 1 19
+încet 2 1 16 1 19
+înceta 1 1 18
+închega 2 1 13 1 19
+închide 2 1 8 1 15
+închina 1 1 5
+încinde 1 1 1
+încleșta 1 1 0
+încolăci 1 1 12
+încovoia 1 1 6
+încrede 1 1 19
+încremeni 1 1 0
+încununa 2 1 13 1 16
+încânta 1 2 19
+încât 1 1 1
+încă 1 1 19
+încăleca 1 1 11
+îndelung 1 1 1
+îndemn 1 1 14
+îndemna 1 1 18
+îndepărta 1 1 15
+înduioșa 2 1 14 1 19
+îndura 2 1 4 1 16
+îndurera 1 1 7
+îneca 2 1 0 1 15
+înfige 1 1 2
+înfiora 3 1 9 1 17 1 18
+înfiripa 1 1 0
+înflăcăra 1 1 3
+înfrigura 1 1 19
+înfrunta 2 1 4 1 18
+înfrâna 1 1 19
+înfrânge 2 1 1 1 14
+înfășura 1 1 0
+îngenunchea 1 1 2
+îngheța 1 1 19
+înghiți 1 1 3
+îngrozitor 1 1 1
+îngrășa 1 1 11
+îngâna 2 1 0 1 19
+îngălbeni 1 1 0
+înjura 1 1 11
+înmuia 1 1 6
+înnegura 1 1 2
+înnăbuși 3 1 6 1 14 1 19
+însenina 1 1 19
+înspăimânta 1 1 1
+înstrăina 1 1 14
+însul 1 1 19
+însângera 3 1 1 1 2 1 19
+însă 1 1 8
+întinde 2 1 2 1 10
+întipări 1 1 18
+întoarce 4 1 3 1 14 1 18 1 19
+întotdeauna 1 1 19
+întra 3 1 2 2 1 2 19
+întraripa 1 1 19
+întreba 1 1 16
+întrece 1 1 1
+întreg 3 1 1 1 16 2 19
+întruchipa 2 1 16 1 18
+întunecime 1 1 18
+înveli 1 1 12
+învenina 1 1 9
+înverșuna 2 1 8 1 18
+învia 2 1 8 1 13
+învinge 2 1 2 1 3
+învolt 1 1 19
+înălța 1 1 2
+înăuntru 1 1 18
+înșelător 1 1 13
+înșira 1 1 8
+înțelege 1 1 19
+înțelepciune 1 1 19
+înțelept 1 1 7
+înțepeni 1 1 2
+îî 14 1 0 1 1 1 2 1 3 1 4 1 6 1 7 1 8 1 9 1 10 1 11 1 12 1 16 1 18
+șa 2 1 16 1 18
+șal 1 1 11
+șea 1 1 4
+șină 15 1 0 1 1 1 7 1 10 1 12 1 15 1 18 2 2 2 3 2 5 2 9 2 16 3 8 3 11 11 19
+șiroi 1 1 3
+șoaptă 1 1 19
+șopti 2 1 7 1 19
+șovăi 1 1 19
+șoș 1 1 5
+șterge 2 1 1 1 19
+ști 3 1 13 1 18 1 19
+țar 2 1 4 1 8
+ți 19 1 0 1 5 1 6 1 8 1 15 2 4 2 9 2 10 2 11 3 12 3 18 3 17 4 2 4 3 4 7 6 19 7 14 8 13 13 1
+ține 1 1 16
+ținti 1 1 12
+țipa 1 1 18
+țop 1 1 19
+țărm 1 1 16

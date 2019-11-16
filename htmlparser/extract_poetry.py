@@ -26,8 +26,6 @@ def keepOnlyPoetry(text):
     # The utf-8 decoded file has some problems. First solve them
     text = applyDiacritics(text)
 
-    print(text)
-    
     ## Observation: the poetry is delimitated by the first <br> 
     # and the next "<font" or the next "<hr"
     

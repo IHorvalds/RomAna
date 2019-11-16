@@ -1,0 +1,133 @@
+4 30 151 54 13
+acolo 1 1 1
+adânc 1 1 1
+al 3 1 2 1 3 2 1
+altul 1 1 0
+amar 1 1 1
+amărî 1 1 1
+apă 1 2 1
+arăta 1 2 2
+ascunde 1 1 2
+atât 1 1 1
+bea 1 2 1
+biet 1 1 1
+bine 1 1 1
+boală 1 2 2
+ca 3 1 0 1 1 1 2
+ce 1 5 2
+chinui 1 1 2
+cinsti 1 1 3
+crește 1 1 3
+cu 1 1 1
+cum 1 1 1
+cunoaște 1 1 2
+cuvânt 1 1 2
+când 1 3 1
+cât 1 1 1
+câteodată 1 1 1
+că 1 1 0
+căci 1 1 1
+cădea 1 1 1
+căuta 1 1 2
+da 1 1 2
+dar 1 2 1
+de 1 5 1
+decât 1 1 1
+din 1 1 2
+dohtorie 1 1 2
+dor 1 1 1
+dori 1 1 1
+duce 1 2 1
+dumbravă 1 1 1
+durea 1 2 2
+ei 1 1 1
+el 3 1 2 7 0 8 1
+eu 3 2 0 3 1 4 2
+fi 2 3 0 6 1
+floare 2 1 0 1 1
+frică 1 1 0
+fă 1 2 2
+grădină 1 1 0
+inimioară 1 2 2
+inimă 1 1 1
+jale 1 1 1
+jaleste 1 1 1
+lang 1 1 0
+laș 2 1 0 1 3
+lemn 1 1 1
+limbă 1 1 3
+livede 1 1 1
+lovi 1 1 1
+lumină 1 1 0
+mai 1 5 1
+mei 1 1 3
+moară 1 1 1
+moștean 1 1 3
+muncă 1 1 2
+mânca 1 1 1
+nici 1 3 1
+nu 1 8 1
+oh 1 1 1
+om 1 1 1
+patrie 1 1 3
+pedepsi 1 1 1
+pentru 1 1 1
+pierde 1 1 1
+pre 1 2 1
+pricepe 1 1 2
+prin 1 4 1
+putea 1 1 1
+până 1 1 1
+pădure 1 1 1
+păsărică 1 1 1
+ramură 1 1 1
+rece 1 1 1
+repune 1 1 1
+romanesc 1 1 3
+rugă 1 1 2
+rădica 1 1 0
+răpune 1 2 2
+răspunde 1 1 2
+răuplatnic 1 1 1
+sadă 1 2 1
+si 3 1 0 1 2 4 1
+simți 1 1 1
+singurel 1 1 1
+soție 1 1 1
+soțioară 1 1 1
+spune 2 1 1 5 2
+strica 2 1 0 1 1
+să 2 1 2 5 1
+tot 1 3 1
+trece 1 3 1
+trăi 1 1 1
+tu 2 1 3 5 2
+tulpină 1 1 0
+turbura 1 2 1
+turturea 1 1 1
+tăia 1 1 0
+uita 1 1 1
+umbla 1 1 1
+un 1 1 2
+undă 1 3 1
+urmaș 1 1 3
+usca 1 1 1
+vai 1 1 1
+vază 1 1 1
+veda 1 3 1
+verde 1 2 1
+vâna 1 1 0
+vânător 1 1 1
+văcări 1 1 3
+zară 1 1 0
+zbura 1 1 1
+în 1 1 2
+înalt 1 1 1
+începe 1 1 2
+încât 1 1 1
+însoți 1 1 1
+întra 1 1 0
+șa 1 1 1
+șină 3 1 0 1 2 4 1
+ț 1 1 3
+ți 2 2 2 3 1

@@ -5,6 +5,7 @@
 #include <map>
 #include <numeric>
 #include <vector>
+#include <cassert>
 #include "trie.hpp"
 
 class PoetAnalyzer {
@@ -90,6 +91,7 @@ class PoetAnalyzer {
       uint32_t poemSize = 0;
       for (auto e : freqs)
         poemSize += e.first;
+      assert(poemSize);
       sizeOfPoems.push_back(poemSize);
     
       // Update the map with frequencies per word
