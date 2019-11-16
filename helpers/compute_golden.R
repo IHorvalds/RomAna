@@ -96,7 +96,7 @@ get_distr = function(distribution_type) {
 }
 
 golden_poet = function(poet) {
-    inFile = paste("poets/frequency/", poet, "_words_frequencies.txt", sep="")
+    inFile = paste("poets/frequencies/", poet, "_words_frequencies.txt", sep="")
     con = file(inFile, "r");
     firstLine = readLines(con, n = 1);
     param = strsplit(firstLine, " ")[[1]]
@@ -133,8 +133,9 @@ golden_poet = function(poet) {
         dev_based = devDistr[[word]] * currFreq
         norm_dev_based = normDevDistr[[word]] * currFreq
         
-        mixed_based = 1 / (exp(1 / (1 - (1 - predDistr[[word]]) ^ 2)) * exp(1 / (1 - (1 - giniDistr[[word]]) ^ 0.5)))
-        
+        mixed_based = 1 / (exp(1 / (predDistr[[word]] ^ 0.5)) * exp(1 / (giniDistr[[word]] ^ 2)))
+            
+        # 1 / (exp(1 / (1 - (1 - predDistr[[word]]) ^ 2)) * exp(1 / (1 - (1 - giniDistr[[word]]) ^ 0.5)))
         
         # 1 / (log(1 / (1 - (1 - predDistr[[word]]) ^ (1 / 3))) * log(1 / (1 - (1 - giniDistr[[word]]) ^ (1 / 3)))) * sqrt(currFreq)
         

@@ -47,18 +47,22 @@ namespace specialChars {
 
   // Clean up the word of punctuations
   static void cleanUpWord(std::string& word) {
-    // First get rid of the punctuation of 1 byte, using "ispunct"
-    word.erase(std::remove_if(word.begin(), word.end(), ::ispunct), word.end());
+    if (!word.empty()) {
+      // First get rid of the punctuation of 1 byte, using "ispunct"
+      word.erase(std::remove_if(word.begin(), word.end(), ::ispunct), word.end());
       
-    // Also get rid of digits
-    word.erase(std::remove_if(word.begin(), word.end(), ::isdigit), word.end());
+      // Also get rid of digits
+      word.erase(std::remove_if(word.begin(), word.end(), ::isdigit), word.end());
       
-    // Then look at the punctuation of many more bytes
-    int amount;
-    for (int i = 0; i < word.size(); i++) {
-      amount = isPunctuation(&word[i]) + isdigit(word[i]);
-      word.erase(i, amount);
-      i -= (amount > 0);
+#if 0
+      // TODO: fix it
+      // Then look at the punctuation of many more bytes
+      for (int i = 0; i < word.size(); i++) {
+        int amount = isPunctuation(&word[i]) + isdigit(word[i]);
+        word.erase(i, amount);
+        i -= (amount > 0);
+      }
+#endif
     }
   }  
 #if 0

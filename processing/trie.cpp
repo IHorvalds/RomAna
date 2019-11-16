@@ -94,7 +94,8 @@ void trie::dealloc_() {
     if (staticTrieAccess(i)->sons != nullptr)
       delete[] staticTrieAccess(i)->sons;
   }
-  delete[] staticTrie;
+  if (bufferPos)
+    delete[] staticTrie;
 
   // Free auxTrie, if it has been reallocated
   if ((mode != BUILD_MODE) && (auxTrie_size))

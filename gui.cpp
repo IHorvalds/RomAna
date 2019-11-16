@@ -3,7 +3,6 @@
 #include <cassert>
 #include <fstream>
 #include <algorithm>
-#include <set>
 
 #include "processing/trie.cpp"
 #include "processing/parserOltean.hpp"

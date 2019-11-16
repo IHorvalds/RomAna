@@ -5,7 +5,7 @@ library(polynom)
 library(PolynomF)
 
 compute_rel_freqs = function(poet) {
-    inFile = paste("poets/frequency/", poet, "_words_frequencies.txt", sep="")
+    inFile = paste("poets/frequencies/", poet, "_words_frequencies.txt", sep="")
     con = file(inFile, "r");
     firstLine = readLines(con, n = 1);
     param = strsplit(firstLine, " ")[[1]]

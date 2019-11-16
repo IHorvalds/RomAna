@@ -7,8 +7,10 @@ def main():
     for line in file:
         poet = line.strip().rstrip()
         if poet:
-            print("Generating frequencies for " + poet + "\n")
-            command = "./gui 3 " + poet
+            print("Generating ginis for " + poet + "\n")
+            command = "python3 helpers/sort_final.py " + poet + " derivative rel_devs"
+            os.system(command)
+            command = "python3 helpers/sort_final.py " + poet + " derivative rel_simple_devs"
             os.system(command)
             curr_count += 1
             print("Total progess: [" + str(int(float(curr_count / num_lines) * 100)) + "%]")  

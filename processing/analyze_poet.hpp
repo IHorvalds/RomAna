@@ -1,4 +1,3 @@
-// TODO: for poets with few poems it works. But for eminescu, segfault
 #ifndef ANALYZE_POET_H
 #define ANALYZE_POET_H
 
@@ -10,10 +9,15 @@
 
 class PoetAnalyzer {
   private:
-  unsigned countPoems;
+  uint32_t countPoems;
+  uint64_t countWords;
   std::string poet;
-  std::map<std::string, std::vector<uint32_t>> wordToFreqs;
+  std::vector<uint32_t> sizeOfPoems;
   
+  // For which word we store the absolute frequency and the index of the respective poem
+  // We do so, in order not to lose the precision when reading from files
+  std::map<std::string, std::vector<std::pair<uint32_t, uint32_t>>> wordToFreqs;
+    
   void dictionaryTask(trie& dict, const char* textName) {
     // Open the normal file
     text txt(textName);
@@ -36,6 +40,7 @@ class PoetAnalyzer {
       word = txt.serveWord();
       latin_word = latin_txt.serveWord();
     }
+    txt.close();
   }
 
   void receivePoem(std::string poem) {
@@ -47,15 +52,27 @@ class PoetAnalyzer {
   
   void processPoems() {
     std::string filename = "poets/poems/" + poet + "_list_poems.txt";
-    ifstream in(filename);
+    std::ifstream in;
+    
+    // Compute the number of poems
+    in.open(filename);
+    uint32_t totalCountOfPoems = 0;
+    std::string str;
+    while (in >> str)
+      ++totalCountOfPoems;
+    in.close();
     
     // Don't alloc the dictionary
-    trie dict(false);
+    trie dict;
     
     // Read each poem from the list
+    in.open(filename);
     std::string currPoem; 
+    std::cout << "Start the analysis of " << this->poet << std::endl;
     while (in >> currPoem) {
       ++countPoems;
+      
+      std::cout << "[" << static_cast<unsigned>(100 * (double)(countPoems - 1) / totalCountOfPoems) << "%]" << ":  currently analyzing '" << currPoem << "'" << std::endl;
       
       // Read the poetry from the html file
       receivePoem(currPoem);
@@ -66,15 +83,22 @@ class PoetAnalyzer {
       // Parse the poetry and save the frequencies into trie
       dictionaryTask(dict, "parsed.txt");
     
-      // Get the frequencies from inflections
+      // Get the frequencies of inflections
       std::vector<std::pair<uint32_t, std::string>> freqs = dict.getFrequencies();
-      
+    
+      // Compute the size of the current poem and store it
+      uint32_t poemSize = 0;
+      for (auto e : freqs)
+        poemSize += e.first;
+      sizeOfPoems.push_back(poemSize);
+    
       // Update the map with frequencies per word
       for (auto iter: freqs) {
         std::string word = iter.second;
         uint32_t currFreq = iter.first;
         
-        wordToFreqs[word].push_back(currFreq);
+        // Store the index of the poem along the absolute frequency
+        wordToFreqs[word].push_back(std::make_pair(currFreq, countPoems - 1));
       }
     }
   }
@@ -83,12 +107,14 @@ class PoetAnalyzer {
   
   PoetAnalyzer(std::string poet_name) : poet(poet_name) {
     countPoems = 0;
+    countWords = 0;
     wordToFreqs.clear();
   }
-  
+
   void setPoet(std::string poet) {
     this->poet = poet;
     countPoems = 0;
+    countWords = 0;
     wordToFreqs.clear();
   }
   
@@ -97,35 +123,36 @@ class PoetAnalyzer {
   }
   
   void saveFrequencies() {
-    std::string filename = "poets/frequency/" + poet + "_words_frequencies.txt";
-    ofstream out(filename);
+    std::string filename = "poets/local/frequencies/" + poet + "_words_frequencies.txt";
+    std::ofstream out(filename);
     
     // Parse all his/her poems
     processPoems();
     
-    // Count how many words in his entire work
-    uint64_t countWords = 0;
-    for (auto iter: wordToFreqs)
-      countWords += std::accumulate(iter.first.begin(), iter.first.end(), 0);
+    /** Save in the file "poet_words_frequencies.txt"
+      The encoding is:
+      
+      On the first line of the file: countPoems = [how many poems the poet has] countWords = [how many words in his entire work]
+      
+      On the second line of the file: sizeOfPoems = [size of each poem]
+      
+      word = [word] count = [number of poems the words appears in] [list of pair(absolute frequency, index of poem)]
+    **/
     
-    // Save in the file "poet_words_frequencies.txt"
-    // The encoding is:
-    // On the first line of the file: countPoems = [how many poems the poet has] countWords = [how many words in his entire work]
-    // word = [word] count = [number of poems the words appears in] [list of "count" frequencies]
     out << countPoems << " " << countWords << "\n";
     for (auto iter: wordToFreqs) {
       std::string word = iter.first;
-      std::vector<uint32_t> freqs = iter.second;
+      std::vector<std::pair<uint32_t, uint32_t>> freqs = iter.second;
 
       // Sort the frequencies
       std::sort(freqs.begin(), freqs.end(), [](auto& left, auto& right) {
-        return (left < right);
+        return (left.first < right.first);
       });
 
       // And print the file
       out << word << " " << freqs.size();
-      for (auto freq: freqs)
-        out << " " << freq; 
+      for (auto elem : freqs)
+        out << " " << elem.first << " " << elem.second; 
       out << "\n";
     }
   }
