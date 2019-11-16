@@ -1,10 +1,11 @@
 library(ineq)
 library(hash)
 
-build_local_distribution = function(poet, distributionType) {
+build_local_distribution = function(poet, distributionType, shouldBeNormalized) {
   table <- hash()
   
   plural <- hash()
+  plural[["gini"]] = "ginis"
   plural[["relative"]] = "relatives"
   plural[["richness"]] = "richness"
   
@@ -19,12 +20,15 @@ build_local_distribution = function(poet, distributionType) {
     elems = strsplit(line, " ")[[1]]
     word = elems[1]
     distributionValue = as.double(elems[2])
+    if (distributionType == "gini")
+        distributionValue <- 1 - distributionValue
     table[[word]] <- distributionValue
     if (distributionValue > max)
       max = distributionValue
   }
-  # Normalize them to the maximum
-  for (word in keys(table))
+  # Normalize them to the maximum, if needed
+  if (shouldBeNormalized)
+    for (word in keys(table))
       table[[word]] = table[[word]] / max
   close(inFile)
   return(table)
@@ -58,10 +62,10 @@ build_global_distribution = function(distributionType, shouldBeNormalized) {
 
 golden_poet = function(poet) {
   # Build all the distributions
-  local_richness <- build_local_distribution(poet, "richness")
-  local_relatives <- build_local_distribution(poet, "relative")
-  global_richness <- build_global_distribution("richness", TRUE)
-  global_relatives <- build_global_distribution("relative", TRUE)
+  local_richness <- build_local_distribution(poet, "gini", FALSE)
+  local_relatives <- build_local_distribution(poet, "relative", FALSE)
+  global_richness <- build_global_distribution("richness", FALSE)
+  global_relatives <- build_global_distribution("relative", FALSE)
   
   # Open the file, into which the local weights will be written
   outFile <- file(paste("poets/local/weight/", poet, "_local_weights", ".txt", sep=""), "w")
@@ -79,12 +83,11 @@ golden_poet = function(poet) {
     z <- local_relatives[[word]]
     
     # The smaller the exponent, the more important the respective axis
-    # weight <- 1 / (exp(0.001 * ((1 / (1 - (1 - x) ^ 0.07)) + (1 / (1 - (1 - y) ^ 0.01)) + (1 / (1 - (1 - z) ^ 0.15)))))
+    weight <- 1 / (exp(0.001 * ((1 / (1 - (1 - x) ^ 1)) + (1 / (1 - (1 - y) ^ 0.05)) + (1 / (1 - (1 - z) ^ 10)))))
     
-    # weight <- 1 / (exp((1 / (1 - (1 - x) ^ 2)) + (1 / (1 - (1 - y) ^ 1))))
+    # weight <- 1 / (exp((1 / (1 - (1 - x) ^ 2)) + (1 / (1 - (1 - y) ^ 0.5))))
     
-    weight <- 1 / (exp(0.001 * ((1 / (1 - (1 - x) ^ 2)) + (1 / (1 - (1 - y) ^ 0.1)) + (1 / (1 - (1 - z) ^ 10)))))
-    
+    # weight <- 1 / (exp(0.001 * ((1 / (1 - (1 - x) ^ 2)) + (1 / (1 - (1 - y) ^ 0.1)) + (1 / (1 - (1 - z) ^ 10)))))
     
     # And write the result
     write(paste(word, weight, sep=" "), outFile, append=TRUE)
