@@ -1,0 +1,5 @@
+[1] "RANK : velicescu -> 0.0118242987410221"
+[1] "WEIGHT : blaga -> 0.406476797006819"
+[1] "RELATIVE : toparceanu -> 0.908832507795042"
+[1] "RICHNESS : blaga -> 0.800587609589819"
+[1] "GINI : blaga -> 0.392758452801281"

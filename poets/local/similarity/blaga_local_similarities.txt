@@ -1,0 +1,5 @@
+[1] "RANK : olaru -> 0.160114656163455"
+[1] "WEIGHT : latcu -> 0.5105492498383"
+[1] "RELATIVE : stanescu -> 0.954259106204244"
+[1] "RICHNESS : stanescu -> 0.905167564438922"
+[1] "GINI : latcu -> 0.489215364908426"

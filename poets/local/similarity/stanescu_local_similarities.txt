@@ -1,0 +1,5 @@
+[1] "RANK : olaru -> 0.0625010506629126"
+[1] "WEIGHT : blandiana -> 0.517258281546312"
+[1] "RELATIVE : blaga -> 0.954259106204244"
+[1] "RICHNESS : blandiana -> 0.92369766078812"
+[1] "GINI : blandiana -> 0.491021607219535"

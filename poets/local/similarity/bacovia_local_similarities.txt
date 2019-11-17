@@ -1,0 +1,5 @@
+[1] "RANK : militaru -> 0.306542383063024"
+[1] "WEIGHT : eminescu -> 0.421092756093359"
+[1] "RELATIVE : blaga -> 0.923754492717402"
+[1] "RICHNESS : stanescu -> 0.878676215662806"
+[1] "GINI : labis -> 0.392681713579605"

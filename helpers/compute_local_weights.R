@@ -81,9 +81,12 @@ golden_poet = function(poet) {
     x <- local_richness[[word]]
     y <- global_distribution
     z <- local_relatives[[word]]
-    
+    exp_x = as.double(1) # 1
+    exp_y = as.double(0.02718) # euler number. Also 0.05
+    exp_z = as.double(2)  # same degree as x, but upper. Also 10
+
     # The smaller the exponent, the more important the respective axis
-    weight <- 1 / (exp(0.001 * ((1 / (1 - (1 - x) ^ 1)) + (1 / (1 - (1 - y) ^ 0.05)) + (1 / (1 - (1 - z) ^ 10)))))
+    weight <- 1 / (exp(0.001 * ((1 / (1 - (1 - x) ^ exp_x)) + (1 / (1 - (1 - y) ^ exp_y)) + (1 / (1 - (1 - z) ^ exp_z)))))
     
     # weight <- 1 / (exp((1 / (1 - (1 - x) ^ 2)) + (1 / (1 - (1 - y) ^ 0.5))))
     

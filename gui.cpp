@@ -17,6 +17,7 @@ using namespace std;
 #define ANALYZE_POET 3
 #define GINIFY_POET 4
 #define GOLDEN_POET 5
+#define COMPUTE_SIMILARITY 6
 
 void errorArgs(int32_t option, int32_t argc, int32_t expected) {
   if (argc != expected) {
@@ -59,6 +60,7 @@ int main(int argc, char** argv) {
     std::cout << "ANALYZE_POET: " << argv[0] << " 3 [poet name from poets.txt]" << std::endl;
     std::cout << "GINIFY_POET: " << argv[0] << " 4 [poet name from poets.txt]" << std::endl;
     std::cout << "GOLDEN_POET: " << argv[0] << " 5 [poet name from poets.txt]" << std::endl;
+    std::cout << "COMPUTE_SIMILARITY: " << argv[0] << " 6 [poet name from poets.txt]" << std::endl;
     return -1;
   }
   
@@ -143,6 +145,15 @@ int main(int argc, char** argv) {
       std::string poetName = argv[2];
       GoldenGenerator golden(poetName);
       golden.save();
+      break;
+    }
+    case COMPUTE_SIMILARITY : {
+      errorArgs(GOLDEN_POET, argc, 3);
+      
+      // Ginify the poet, i.e, compute the gini coefficient for each word
+      std::string poetName = argv[2];
+      SimilarityGenerator cmp(poetName);
+      cmp.save();
       break;
     }
     default : {

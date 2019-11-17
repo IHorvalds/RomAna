@@ -1,0 +1,5 @@
+[1] "RANK : alecsandri -> 0.140189306274652"
+[1] "WEIGHT : alecsandri -> 0.529540411860584"
+[1] "RELATIVE : toparceanu -> 0.967839181945369"
+[1] "RICHNESS : alecsandri -> 0.889017215911626"
+[1] "GINI : alecsandri -> 0.497756544601472"
