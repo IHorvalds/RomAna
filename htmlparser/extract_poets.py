@@ -1,6 +1,7 @@
 # The role of this script:
 # Uses the site poetii-nostri.ro to take all the poets from the website
 import collections
+from operator import itemgetter
 import urllib.request
 import html
 import sys
@@ -38,19 +39,21 @@ def keepPoets(poetRefs):
     closedSlashPos = autorPos
     while closedSlashPos != len(ref) and ref[closedSlashPos] != '/':
       closedSlashPos += 1
-    poetId = 0
+    
+    # Go backwards to find the starting point of the number
     current = closedSlashPos
     while ord(ref[current - 1]) >= ord('0') and ord(ref[current - 1]) <= ord('9'):
-      poetId = poetId * 10 + int(ref[current - 1])
       current -= 1
-    poetId = int(str(poetId)[::-1])
+    
+    # And build up the number
+    poetId = int(ref[current:closedSlashPos])
     dictPoets[poetId] = ref[openSlashPos:closedSlashPos]
   
   # And order by the poetId
   dictPoets = collections.OrderedDict(sorted(dictPoets.items()))
   sorted_ = []
   for poetId, ref in dictPoets.items():
-    sorted_.append([poetId, ref])
+    sorted_.append((poetId, ref))
   return sorted_
 
 def getHtmlText(url):
@@ -85,6 +88,7 @@ def extractForeignPoets():
   return extractTypeOfPoets("strain")
     
 def extractAllPoets(useClassical, useContemporary, useForeign):
+# Extract only poets of the type specified 
   classical = []
   if useClassical:
     classical = extractClassicalPoets()
@@ -96,15 +100,22 @@ def extractAllPoets(useClassical, useContemporary, useForeign):
   foreign = []
   if useForeign:
     foreign = extractForeignPoets()
-    
-  all_ = classical + contemporary + foreign
+  
+  # Merge all into one list
+  all_ = sorted(classical + contemporary + foreign, key=itemgetter(0))
+  
+  # It could be the case that we have some duplicates (one poet can appear in both classical and contemporary class)
   output = open("poets/list_poets.txt", "w")
+  last = -1
   for elem in all_:
-    output.write(elem[1] + '\n')
+    if elem[0] != last:
+      output.write(elem[1] + '\n')
+    last = elem[0]
   output.close()
   return
 
 def main():
+  # python3 htmlparser/extract_poets.py ["clasic" or "contemporan" or "strain"]
   if len(sys.argv) < 2:
     print("Usage: python3 " + sys.argv[0] + " [type of poet]")
     sys.exit(1)
