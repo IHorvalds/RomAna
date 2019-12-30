@@ -9,7 +9,9 @@ def main():
   plural["relative"] = "relatives"
   plural["richness"] = "richness"
   plural["weight"] = "weights"
-  
+  plural["gini"] = "ginis"
+  plural["essential"] = "essentials"
+
   infile = open("poets/" + "local" + "/" + distributionType + "/" + poet + "_local_" + plural[distributionType] + ".txt", "r")
   
   for line in infile:

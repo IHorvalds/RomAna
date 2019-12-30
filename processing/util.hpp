@@ -1,6 +1,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <string>
+
 class LocalGiniGenerator {
 private:
   std::string poet;
@@ -15,16 +17,22 @@ public:
   }
 };
 
-class GoldenGenerator {
+class EssenceGenerator {
 private:
+   constexpr static double procentOfWork = 20;
    std::string poet;
+   std::string distributionType;
+   bool sortValues;
 public:
-  GoldenGenerator(std::string poet) : poet(poet) {};
+  EssenceGenerator(std::string poet, std::string distributionType, bool sortValues) : poet(poet), distributionType(distributionType), sortValues(sortValues) {};
   void save() {
-    std::string rCommand = "Rscript helpers/compute_local_weights.R " + poet;
-    int warning = system(rCommand.data());
-    std::string pyCommand = "python3 helpers/sort_local_distribution.py " + poet + " " + "weight";
-    warning = system(pyCommand.data());
+    std::string pyCommand1 = "python3 helpers/compute_local_essentials.py " + poet + " " + distributionType + " " + std::to_string(procentOfWork);
+    int warning = system(pyCommand1.data());
+    
+    if (sortValues) {
+      std::string pyCommand2 = "python3 helpers/sort_local_distribution.py " + poet + " essential";
+      warning = system(pyCommand2.data());
+    }
   }
 };
 

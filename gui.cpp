@@ -16,7 +16,7 @@ using namespace std;
 #define UPDATE_DICT 2
 #define ANALYZE_POET 3
 #define GINIFY_POET 4
-#define GOLDEN_POET 5
+#define ESSENCE_POET 5
 #define COMPUTE_SIMILARITY 6
 
 void errorArgs(int32_t option, int32_t argc, int32_t expected) {
@@ -52,14 +52,14 @@ void dictionaryTask(trie& dict, char* textName) {
 
 int main(int argc, char** argv) {
   if (argc < 3) {
-    std::cout << "The following options are available: 0(BUILD_TRIE) or 1 (PROCESS_TEXT) or 2 (UPDATE_DICT) or 3 (PROCESS_POET)]" << std::endl;
+    std::cout << "The following options are available: 0(BUILD_TRIE) or 1 (PROCESS_TEXT) or 2 (UPDATE_DICT) or 3 (PROCESS_POET) or 4 (GINIFY_POET) or 5 (ESSENCE_POET) or 6 (COMPUTE_SIMILARITY)" << std::endl;
     std::cout << "You should insert one of the following schemas: " << std::endl;
     std::cout << "BUILD_TRIE: " << argv[0] << " 0 [file to read the inflections from] [file in which to save the dictionary]" << std::endl;
     std::cout << "PROCESS_TEXT: " << argv[0] << " 1 [dictionary file name] [input file name] [output file name]" << std::endl;
     std::cout << "UPDATE_DICT: " << argv[0] << " 2 [dictionary file name] [input file name] [output file name] [new dictionary file name]" << std::endl;
     std::cout << "ANALYZE_POET: " << argv[0] << " 3 [poet name from poets.txt]" << std::endl;
     std::cout << "GINIFY_POET: " << argv[0] << " 4 [poet name from poets.txt]" << std::endl;
-    std::cout << "GOLDEN_POET: " << argv[0] << " 5 [poet name from poets.txt]" << std::endl;
+    std::cout << "ESSENCE_POET: " << argv[0] << " 5 [poet name from poets.txt] [distribution type - richness or relative] [sortValues - if the ratios should be sorted]" << std::endl;
     std::cout << "COMPUTE_SIMILARITY: " << argv[0] << " 6 [poet name from poets.txt]" << std::endl;
     return -1;
   }
@@ -138,17 +138,19 @@ int main(int argc, char** argv) {
       gini.save();
       break;
     }
-    case GOLDEN_POET : {
-      errorArgs(GOLDEN_POET, argc, 3);
+    case ESSENCE_POET : {
+      errorArgs(ESSENCE_POET, argc, 5);
       
       // Ginify the poet, i.e, compute the gini coefficient for each word
       std::string poetName = argv[2];
-      GoldenGenerator golden(poetName);
-      golden.save();
+      std::string distributionType = argv[3];
+      bool sortValues = atoi(argv[4]);
+      EssenceGenerator essence(poetName, distributionType, sortValues);
+      essence.save();
       break;
     }
     case COMPUTE_SIMILARITY : {
-      errorArgs(GOLDEN_POET, argc, 3);
+      errorArgs(COMPUTE_SIMILARITY, argc, 3);
       
       // Ginify the poet, i.e, compute the gini coefficient for each word
       std::string poetName = argv[2];
