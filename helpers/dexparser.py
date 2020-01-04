@@ -1,5 +1,6 @@
 ## -*- coding: utf-8 -*-
 from lxml import etree
+import sys
 
 class Word(object):
     """
@@ -11,10 +12,10 @@ class Word(object):
         self.inflexList = inflexList
 
     def __repr__(self):
-        return self.base + " " + str(self.inflexQ) + " " + "".join(inflex + " " for inflex in self.inflexList)
+        return ",".join(self.inflexList)
 
-    def __str__(self): ## I have no idea which one on these will get called when printing to the file. Fuck it.
-        return self.base + " " + str(self.inflexQ) + " " + "".join(inflex + " " for inflex in self.inflexList)
+    def __str__(self): ## I have no idea which one on these will get called when printing to the file.
+        return ",".join(self.inflexList)
 
 
 
@@ -40,11 +41,11 @@ class Parser(object):
                 for lexem in root.getchildren():
                     form    = lexem.findtext("Form")
                     
-                    print(form)
+                    # print(form)
                     
                     form = form.replace("'", "") ## Base word
 
-                    print(form)
+                    # print(form)
 
                     inflexList = []
                     for inflection in lexem.findall("InflectedForm"):
@@ -66,7 +67,8 @@ class Parser(object):
 
 
 def main():
-    parser = Parser("2019-04-13-lexems.xml")
-    parser.printToFile("inflections.in")
-
+    fileFrom = sys.argv[1]
+    fileTo = sys.argv[2]
+    parser = Parser(fileFrom)
+    parser.printToFile(fileTo)
 main()

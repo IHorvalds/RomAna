@@ -1,6 +1,8 @@
 #ifndef BITS_OPS_H
 #define BITS_OPS_H
 
+#include <cassert>
+
 namespace bitOp {
   static void setBit(uint32_t& x, unsigned index) {
     x |= (1u << index);

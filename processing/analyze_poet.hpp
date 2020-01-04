@@ -6,7 +6,7 @@
 #include <numeric>
 #include <vector>
 #include <cassert>
-#include "trie.hpp"
+#include "InflexEngine.hpp"
 
 class PoetAnalyzer {
   private:
@@ -19,7 +19,7 @@ class PoetAnalyzer {
   // We do so, in order not to lose the precision when reading from files
   std::map<std::string, std::vector<std::pair<uint32_t, uint32_t>>> wordToFreqs;
     
-  void dictionaryTask(trie& dict, const char* textName) {
+  void dictionaryTask(InflexEngine& dict, const char* textName) {
     // Open the normal file
     text txt(textName);
     
@@ -64,7 +64,7 @@ class PoetAnalyzer {
     in.close();
     
     // Don't alloc the dictionary
-    trie dict;
+    InflexEngine dict(InflexEngine::Read);
     
     // Read each poem from the list
     in.open(filename);
@@ -78,10 +78,10 @@ class PoetAnalyzer {
       // Read the poetry from the html file
       receivePoem(currPoem);
       
-      // Reset the trie with the initial dictionary
+      // Reset the InflexEngine with the initial dictionary
       dict.reset("dict.bin");
       
-      // Parse the poetry and save the frequencies into trie
+      // Parse the poetry and save the frequencies into InflexEngine
       dictionaryTask(dict, "parsed.txt");
     
       // Get the frequencies of inflections

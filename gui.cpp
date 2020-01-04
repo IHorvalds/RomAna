@@ -4,7 +4,9 @@
 #include <fstream>
 #include <algorithm>
 
-#include "processing/trie.cpp"
+#include "processing/InflexEngine.hpp"
+#include "processing/InflexEngineCore.cpp"
+#include "processing/InflexEngineUtil.cpp"
 #include "processing/parserOltean.hpp"
 #include "processing/analyze_poet.hpp"
 #include "processing/util.hpp"
@@ -26,7 +28,7 @@ void errorArgs(int32_t option, int32_t argc, int32_t expected) {
   }
 }
 
-void dictionaryTask(trie& dict, char* textName) {
+void dictionaryTask(InflexEngine& dict, char* textName) {
   // Open the normal file
   text txt(textName);
   
@@ -69,38 +71,41 @@ int main(int argc, char** argv) {
     case BUILD_TRIE : {
       errorArgs(BUILD_TRIE, argc, 4); 
       
-      const char* file_name = argv[2];
-      const char* save_into = argv[3];
+      const char* filename = argv[2];
+      const char* saveInto = argv[3];
       
-      // Create the latin_file with python
-      std::string tmp = file_name;
+      // Create the latin file with python
+      std::string tmp = filename;
       std::string pythonCommand = "python3 processing/convert_into_latin.py " + tmp;
       int warning = system(pythonCommand.data());
-      tmp = "latin_" + tmp;
-      const char* latin_file_name = tmp.data();
+      size_t pos = tmp.find_last_of("/");
+      if (pos == std::string::npos)
+        tmp = "latin_" + tmp;
+      else
+        tmp = tmp.substr(0, pos) + "/latin_" + tmp.substr(pos + 1, tmp.size());
+      const char* latinFilename = tmp.data();
       
       // Alloc the dictionary
-      trie A(true);
+      InflexEngine A(InflexEngine::Build, filename, latinFilename);
       
-      // Read the files
-      A.consumeInflexions(file_name, latin_file_name);
+      std::cerr << "Size of InflexEngine = " << A.getSize() << std::endl;
       
-      // And save the trie
-      A.saveExternal(save_into);
+      // And save the InflexEngine
+      A.saveExternal(saveInto);
       
-#if 0
-      std::cerr << "Has this step been reached? Then your dictionary has been succesfully stored in " << save_into << ", although it might exist some problems with the allocation. We will get rid of them in short time." << std::endl;
-#endif
+      // Erase the temporary latin file
+      std::string eraseCommand = "rm " + tmp;
+      warning = system(eraseCommand.data());
       break;
     }
     case PROCESS_TEXT : {
       errorArgs(PROCESS_TEXT, argc, 5); 
       
-      // Use the trie while parsing the text
+      // Use the InflexEngine while parsing the text
       std::string dictName = argv[2];
-      trie dict(dictName.data());
+      InflexEngine dict(InflexEngine::Load, dictName.data());
       dictionaryTask(dict, argv[3]);
-      
+     
       // Print the frequencies obtained
       dict.showFreqs(argv[4]);
       break;
@@ -108,9 +113,10 @@ int main(int argc, char** argv) {
     case UPDATE_DICT : {
       errorArgs(UPDATE_DICT, argc, 6); 
       
-      // Use the trie while parsing the text
+      // Use the InflexEngine while parsing the text
       std::string dictName = argv[2];
-      trie dict(dictName.data()); 
+      InflexEngine dict(InflexEngine::Load, dictName.data()); 
+      
       dictionaryTask(dict, argv[3]);
       
       // Print the frequencies obtained

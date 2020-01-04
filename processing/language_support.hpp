@@ -8,34 +8,36 @@ namespace romanian {
   static constexpr unsigned ROMANIAN_SIGMA = 31;
   static constexpr unsigned ENGLISH_SIGMA = 26;
   
-  // TODO: This should be used in diacriticEncode
-#if 0
-  static constexpr unsigned COUNT_OF_DIACRITICS = 10;
-  static romanian_diacritics[COUNT_OF_DIACRITICS][2] = 
+  static constexpr unsigned COUNT_OF_DIACRITICS = ROMANIAN_SIGMA - ENGLISH_SIGMA;
+  static std::string solveDiacritics[COUNT_OF_DIACRITICS] = {"ă", "â", "î", "ș", "ț"};
+  static uint8_t diacritics[2 * COUNT_OF_DIACRITICS][2] = 
   {
-    {, }, // ă
-    {0xc3, 0x83}, // big ă
+    {0xC4, 0x83}, // ă
+    {0xC3, 0x83}, // Ă
     
-    {, }, // â
-    {0xc3, 0x82}, // big â
+    {0xC3, 0xA2}, // â
+    {0xC3, 0x82}, // Â
     
-    {, }, // î 
-    {0xc3, 0x8e}, // big î
+    {0xC3, 0xAE}, // î 
+    {0xC3, 0x8E}, // Î
     
-    {, }, // ș
-    {, }, // big ș
+    {0xC8, 0x99}, // ș
+    {0xC8, 0x98}, // Ș
   
-    {, }, // ț
-    {, }  // big ț
+    {0xC8, 0x9B}, // ț
+    {0xC8, 0x9A}  // Ț
   };
-#endif
+  
   static bool isEnglishAlphabetIndex(int32_t alphabetIndex) {
     return (0 <= alphabetIndex) && (alphabetIndex < ENGLISH_SIGMA);
   }
   
-  // TODO: is it really precise?
-  static bool isDiacritic(char c) {
-    return ((c > -62) && (c < -55));
+  // TODO: is it really precise? Use the tables!!!
+  static bool isDiacritic(uint8_t byte) {
+    for (unsigned index = 0; index < 2 * COUNT_OF_DIACRITICS; ++index)
+      if (diacritics[index][0] == byte)
+        return true;
+    return false;
   }
 
   // If "c" is a letter, returns the alphabetic order of c. Otherwise, -1.
@@ -53,46 +55,20 @@ namespace romanian {
     if (isEnglishAlphabetIndex(encoding)) {
       ret = 'a' + encoding;
     } else {
-      // particular cases.
-      switch(encoding) {
-        case 26:
-          ret = "ă";
-          break;
-        case 27:
-          ret = "â";
-          break;
-        case 28:
-          ret = "î";
-          break;
-        case 29:
-          ret = "ș";
-          break;
-        case 30:
-          ret = "ț";
-          break;
-        default:
-          ret = "UNKNOWN";
-      }
+      // Case for diacritics
+      ret = "UNKNOWN";
+      for (unsigned index = 0; index < COUNT_OF_DIACRITICS; ++index)
+        if ((ENGLISH_SIGMA + index) == encoding)
+          ret = solveDiacritics[encoding - ENGLISH_SIGMA];
     }
     return ret;
   }
 
-
   // Check two bytes from string to see if you got a diacritică
-  // TODO: Are you sure? Is there other pair of (byte1, byte2) which is not a diacritica, but will still be considered one 
-  static int32_t diacriticEncode(int8_t byte1, int8_t byte2) {
-    int32_t c = byte1 + byte2;
-    if ((c == -186) || (c == -185)) // ă
-      return 26;
-    if ((c == -187) || (c == -155)) // â
-      return 27;
-    if ((c == -175) || (c == -143)) // î
-      return 28;
-    if ((c == -160) || (c == -159)) // ș
-      return 29;
-    if ((c == -158) || (c == -157)) // ț
-      return 30;
-    // no diacritică? ok, call function for regular letter
+  static int32_t diacriticEncode(uint8_t byte1, uint8_t byte2) {
+    for (unsigned index = 0; index < 2 * COUNT_OF_DIACRITICS; ++index)
+      if ((diacritics[index][0] == byte1) && (diacritics[index][1] == byte2))
+        return ENGLISH_SIGMA + (index >> 1);
     return encode(byte1);
   }
   
@@ -101,13 +77,11 @@ namespace romanian {
     if (index == str.size())
       return true;
     if (index == str.size() - 1)
-      return encode(str.back()) != -1;
+        return encode(str.back()) != -1;
     else {
       int ret = romanian::diacriticEncode(str[index], str[index + 1]);
-      if (ret == -1) {
-        // std::cerr << str << std::endl;
+      if (ret == -1)
         return false;
-      }
       return isRomanian(str, index + 1 + !isEnglishAlphabetIndex(ret)); 
     }
   }

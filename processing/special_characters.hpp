@@ -46,7 +46,7 @@ namespace specialChars {
   }
 
   // Clean up the word of punctuations
-  static void cleanUpWord(std::string& word) {
+  static std::string cleanUpWord(std::string word) {
     if (!word.empty()) {
       // First get rid of the punctuation of 1 byte, using "ispunct"
       word.erase(std::remove_if(word.begin(), word.end(), ::ispunct), word.end());
@@ -54,6 +54,8 @@ namespace specialChars {
       // Also get rid of digits
       word.erase(std::remove_if(word.begin(), word.end(), ::isdigit), word.end());
       
+      // And the white spaces
+      word.erase(std::remove_if(word.begin(), word.end(), ::isspace), word.end());
 #if 0
       // TODO: fix it
       // Then look at the punctuation of many more bytes
@@ -64,6 +66,7 @@ namespace specialChars {
       }
 #endif
     }
+    return word;
   }  
 #if 0
   int isDiacritic(char* str) {
