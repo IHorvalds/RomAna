@@ -25,4 +25,4 @@ We store the lexems into a compressed trie, *InflexEngine*, the size of which is
 2) ./gui 0 dexdata/lexems.in dictionary.bin
 ```
 ## Analyze the Poets
-We have already some results (see *poets/local/essential*), but we are now improving the materials which we are working with, in order to obtain the best results.
+We already have some great results (see *poets/local/essential*), but we are now improving the materials which we are working with, in order to obtain the best results.
