@@ -107,12 +107,14 @@ def parsePoemFromLink(link):
   
   poem = ""
   beginContentPattern = "<div class=\"q\">"
+  beginPoetryPattern = "</h3>"
   endContentPattern = "<p class=pa><a href="
   for line in lines:
     if line.find(beginContentPattern) != -1:
+      beginPos = line.find(beginPoetryPattern)
       endPos = line.find(endContentPattern)
-      assert endPos != -1
-      poem = parsePoetry(line[:endPos])
+      assert beginPos != -1 and endPos != -1
+      poem = parsePoetry(line[beginPos : endPos])
       break
   assert poem != ""
   return poem
@@ -131,6 +133,17 @@ def parsePoet(poet):
   for link in links:
     poem = parsePoemFromLink(link)
     output.write(poem + '\n')
+  pass
+    
+def parseAllPoets():
+  with open('poets/list_poets.txt') as input:
+    countLines = sum(1 for _ in input)
+  input = open("poets/list_poets.txt", "r")
+  line = 1
+  for poet in input:
+    print("Parse " + poet.strip() + ": progess=[" + "{0:.2f}".format(float(line / countLines) * 100) + "%]")  
+    parsePoet(poet.strip())
+    line += 1
   pass
     
 def searchPoetRefs(text):
@@ -171,9 +184,9 @@ def extractAllPoetRefs():
   return
 
 def main():
-  # parsePoet("A.C.+Dragodan")
-  # parsePoet("Mihai+Eminescu")
-  print(parsePoemFromLink("http://www.citatepedia.ro/index.php?id=328036"))
- 
+  #extractAllPoetRefs()
+  parseAllPoets()
+  pass
+  
 if __name__ == '__main__':
     main()
