@@ -3,22 +3,14 @@ import html
 import urllib.request
 import sys
 import string
+from ast import literal_eval
+from unidecode import unidecode
+from pyxform.utils import unichr
 
 # TODO: Are there any non-romanian characters?
 def applyDiacritics(text):
   # Transform the slash errors from utf-8 decode into diacritics
   
-  # Special quotes/bars - transform them into the normal ones
-  text = text.replace("\\x93", "\"") # “
-  text = text.replace("\\x94", "\"") # ”
-  text = text.replace("\\x91", "\"") # ‘
-  text = text.replace("\\x92", "\"") # ’
-  text = text.replace("\\x96",  "-") # –
-  text = text.replace("\\x97",  "-") # —
-   
-  # Non-breaking space (\xad)
-  text = text.replace("\\xad", "")
-   
   # Small diacritics
   text = text.replace("\\xe2", "â")
   text = text.replace("\\xee", "î")
@@ -32,6 +24,19 @@ def applyDiacritics(text):
   text = text.replace("\\xaa", "Ş")
   text = text.replace("\\xce", "Î")
   text = text.replace("\\xde", "Ţ")
+  
+  # Other characters (only for 2-bytes code points)
+  repl = {}
+  index = 0
+  limit = len(text)
+  while index != limit - 3:
+    if (text[index] == '\\') and (text[index + 1] == 'x'):
+      curr = text[index : (index + 4)]
+      repl[curr] = unidecode(unichr(ord(literal_eval("b'{}'".format(curr)))))
+      index += 3
+    index += 1
+  for prev in repl.keys():
+    text = text.replace(prev, repl[prev])
   return text
 
 def getHtmlText(url):
@@ -166,7 +171,9 @@ def extractAllPoetRefs():
   return
 
 def main():
-  parsePoet("Mihai+Eminescu")
-  
+  # parsePoet("A.C.+Dragodan")
+  # parsePoet("Mihai+Eminescu")
+  print(parsePoemFromLink("http://www.citatepedia.ro/index.php?id=328036"))
+ 
 if __name__ == '__main__':
     main()
