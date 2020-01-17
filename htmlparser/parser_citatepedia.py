@@ -7,10 +7,8 @@ from ast import literal_eval
 from unidecode import unidecode
 from pyxform.utils import unichr
 
-# TODO: Are there any non-romanian characters?
 def applyDiacritics(text):
-  # Transform the slash errors from utf-8 decode into diacritics
-  
+# Transform the slash errors from utf-8 decode into diacritics or variants  
   # Small diacritics
   text = text.replace("\\xe2", "â")
   text = text.replace("\\xee", "î")
@@ -25,7 +23,7 @@ def applyDiacritics(text):
   text = text.replace("\\xce", "Î")
   text = text.replace("\\xde", "Ţ")
   
-  # Other characters (only for 2-bytes code points)
+  # Replace other characters (only for 2-bytes code points)
   repl = {}
   index = 0
   limit = len(text)
@@ -53,6 +51,7 @@ def getHtmlText(url):
   return text
 
 def computeNumberOfPages(poet):
+# Compute how many pages in the website poet has
   initialUrl = "http://poezii.citatepedia.ro/de.php?a=" + poet
   text = getHtmlText(initialUrl)
   pagePattern = "<option value=\"p="
@@ -66,6 +65,7 @@ def computeNumberOfPages(poet):
   return noPages
   
 def extractLinksFromPage(poet, page):
+# Extract the links from the current page of poet 
   pageUrl = "http://poezii.citatepedia.ro/de.php?a=" + poet + "&p=" + str(page)
   text = getHtmlText(pageUrl)
   pattern = "data-url=\""
@@ -73,6 +73,7 @@ def extractLinksFromPage(poet, page):
   links = []
   pos = text.find(pattern)
   while pos != -1:
+    # Extract the link
     offset = pos + len(pattern)
     link = text[offset:(offset + text[offset:].find('"'))]
     
@@ -84,6 +85,7 @@ def extractLinksFromPage(poet, page):
   return links
 
 def parsePoetry(line):
+# Parse the poetry from the current line, by eliminating the rest of html code
   # How many opened "<" are currenly in the text
   countWriters = 0
   poetry = ""
@@ -102,24 +104,35 @@ def parsePoetry(line):
   return poetry
 
 def parsePoemFromLink(link):
+# Parse the poem from the current link
   text = getHtmlText(link)
   lines = text.splitlines()
   
   poem = ""
+  # Pattern with which the content begins
   beginContentPattern = "<div class=\"q\">"
+  # Pattern with which the poetry may begin (for those poems where there is no title)
   beginPoetryPattern = "</h3>"
+  # Pattern with which the content ends
   endContentPattern = "<p class=pa><a href="
   for line in lines:
-    if line.find(beginContentPattern) != -1:
+    posContent = line.find(beginContentPattern)
+    # Have we found the line with the content?
+    if posContent != -1:
+      # Any title?
       beginPos = line.find(beginPoetryPattern)
+      if beginPos == -1:
+        beginPos = posContent
       endPos = line.find(endContentPattern)
-      assert beginPos != -1 and endPos != -1
+      assert endPos != -1
+      # Return the poem without its title (if any)
       poem = parsePoetry(line[beginPos : endPos])
       break
   assert poem != ""
   return poem
 
 def extractLinks(poet):
+# Extract the links to the poems of the current poet
   noPages = computeNumberOfPages(poet)
   links = []
   print(poet + " has " + str(noPages) + " page(s)") 
@@ -128,49 +141,71 @@ def extractLinks(poet):
   return links
     
 def parsePoet(poet):
-  output = open("poets/poetry/" + poet + "_poems.txt", "w")
+# Parse all the poetry of the current poet, if he has any links to his poems
   links = extractLinks(poet)
-  for link in links:
-    poem = parsePoemFromLink(link)
-    output.write(poem + '\n')
-  pass
+  hadLinks = len(links) != 0
+  if hadLinks:
+    output = open("poets/poetry/" + poet + "_poems.txt", "w")
+    for link in links:
+      poem = parsePoemFromLink(link)
+      output.write(poem + '\n')
+  return hadLinks
     
-def parseAllPoets():
+def parseAllPoets(firstLine = 1):
+# Parse the poetry of each of the poets present in the file
+# Start with firstLine of the file
+  # Compute how big the list is
   with open('poets/list_poets.txt') as input:
     countLines = sum(1 for _ in input)
   input = open("poets/list_poets.txt", "r")
+  
+  # If a poet did not have any poems, update the list, by removing his/her name
+  nonEmptyPoets = []
   line = 1
   for poet in input:
-    print("Parse " + poet.strip() + ": progess=[" + "{0:.2f}".format(float(line / countLines) * 100) + "%]")  
-    parsePoet(poet.strip())
+    if line >= firstLine:
+      print("Parse " + poet.strip() + ": progess=[" + "{0:.2f}".format(float(line / countLines) * 100) + "%]")  
+      if parsePoet(poet.strip()):
+        nonEmptyPoets.append(poet)
     line += 1
+
+  # And update the list
+  output = open("poets/list_poets.txt", "w")
+  for poet in nonEmptyPoets:
+    output.write(poet)
   pass
     
 def searchPoetRefs(text):
+# Return the references to poets from the current html text
   pattern = "de.php?a="
   lenPattern = len(pattern)
   poetRefs = []
   lines = text.splitlines()
   for line in lines:
     curr = line
+    
+    # Search for a reference to a poet
     pos = curr.find(pattern)
     while pos != -1:
+      # And take only the portion with his/her name
       posQuote = pos + lenPattern
       while posQuote < len(curr) and curr[posQuote] != '"':
         posQuote += 1
       poet = curr[(pos + lenPattern):posQuote]
       poetRefs.append(poet)
-      # Continue the search on this line
+
+      # Continue to search on this line
       curr = curr[posQuote:]
       pos = curr.find(pattern)
   return poetRefs
     
 def extractPoetsWithLetter(capitalLetter):
+# Extract the names of poets which begin with capitalLetter
   url = "http://poezii.citatepedia.ro/autori.php?c=" + capitalLetter
-  text = getHtmlText(url)
-  return searchPoetRefs(text)
+  return searchPoetRefs(getHtmlText(url))
   
 def extractAllPoetRefs():
+# Extract the names of poets and write them into file
   output = open("poets/list_poets.txt", "w")
   count = 0
   for capitalLetter in string.ascii_uppercase:
@@ -184,8 +219,10 @@ def extractAllPoetRefs():
   return
 
 def main():
-  #extractAllPoetRefs()
-  parseAllPoets()
+  # Generate the list of poets
+  extractAllPoetRefs()
+  # Parse the poems of each poet
+  # parseAllPoets(4050)
   pass
   
 if __name__ == '__main__':
