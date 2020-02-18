@@ -286,7 +286,7 @@ unsigned process(VS& xs, VS& ys) {
 }
 
 uint32_t fileSize(std::string poetRef) {
-  std::string fileName = "../poets/poetry/" + poetRef + "_poems.txt", line;
+  std::string fileName = "../../poets/poetry/" + poetRef + "_poems.txt", line;
   std::ifstream input(fileName);
 
   if (!input.is_open())
@@ -362,6 +362,7 @@ int main(int argc, char** argv) {
   tableVS splitted;
   while (input >> poet) {
     unsigned countOfPoems = fileSize(poet);
+    std::cerr << countOfPoems << std::endl;
     if (!countOfPoems)
       continue;
     std::string refined = refine(poet);
