@@ -19,7 +19,7 @@
 **/
 
 template<class T>
-void solve_dense(const std::vector<std::vector<T>> &cost, std::vector<int> &Lmate, std::vector<int> &Rmate) {
+void lapSolver(const std::vector<std::vector<T>> &cost, std::vector<int> &Lmate, std::vector<int> &Rmate) {
 	typedef std::vector<T> VD;
 	typedef std::vector<VD> VVD;
 	typedef std::vector<int> VI;
